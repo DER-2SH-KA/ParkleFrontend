@@ -39,10 +39,24 @@ onMounted(() => {
   color: var(--text-color-dark-theme);
   text-align: center;
   font-size: 32pt;
-  min-width: 100vw;
+  padding: 10px 20px;
 
   &::first-letter {
     color: #6f00ff;
+  }
+
+  &:hover {
+    border-radius: 20px;
+    animation: outline 150ms ease-out forwards;
+  }
+}
+
+@keyframes outline {
+  from {
+    border: 0px;
+  }
+  to {
+    border: 3px var(--text-color-dark-theme) solid;
   }
 }
 </style>
