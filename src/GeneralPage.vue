@@ -1,20 +1,30 @@
 <script setup lang="ts">
-import { TYPE } from 'vue-toastification'
-import { showAlert } from './scripts/createToasts.ts'
-import { ref } from 'vue'
-
-const textFieldValue = ref<string>('')
+import WelcomePhraseComponent from './subComponents/WelcomePhraseComponent.vue'
 </script>
 
 <template>
   <main>
-    <v-text-field
-      v-model="textFieldValue"
-      label="Some text"
-      hint="Place some text there"
-      placeholder="Some text"
-      type="input"
-    ></v-text-field>
-    <button @click="showAlert(textFieldValue, TYPE.SUCCESS)">Show Toast</button>
+    <div id="main-content">
+      <section>
+        <WelcomePhraseComponent />
+      </section>
+    </div>
   </main>
 </template>
+
+<style lang="scss" scoped>
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+#main-content {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+</style>

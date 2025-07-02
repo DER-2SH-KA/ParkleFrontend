@@ -10,11 +10,11 @@ import HeaderComponent from './HeaderComponent.vue'
   <FooterComponent id="footerComponent" />
 </template>
 
-<style lang="css">
-* {
-  margin: 0px;
-  padding: 0px;
+<style lang="scss">
+body {
+  background-color: var(--background-color-dark-theme);
 }
+
 #app {
   display: flex;
   flex-direction: column;

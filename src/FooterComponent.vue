@@ -2,13 +2,29 @@
 
 <template>
   <footer>
-    <p>Made by DER-2SH-KA with MIT License</p>
+    <p>
+      &copy;Made by
+      <a href="https://github.com/DER-2SH-KA" target="_blank" placeholder="Github">DER-2SH-KA</a>
+      with MIT License
+    </p>
   </footer>
 </template>
 
 <style lang="css" scoped>
 footer {
-  background-color: cyan;
-  width: 100%;
+  background-color: var(--primary-color);
+  min-width: 100%;
+}
+
+footer > p {
+  color: var(--text-color-dark-theme);
+  text-align: center;
+  font-size: 12pt;
+  margin: 10px 0px 10px 0px;
+}
+
+a {
+  color: var(--text-color-dark-theme);
+  text-decoration: underline;
 }
 </style>
