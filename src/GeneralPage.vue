@@ -7,12 +7,14 @@ const textFieldValue = ref<string>('')
 </script>
 
 <template>
-  <v-text-field
-    v-model="textFieldValue"
-    label="Some text"
-    hint="Place some text there"
-    placeholder="Some text"
-    type="input"
-  ></v-text-field>
-  <button @click="showAlert(textFieldValue, TYPE.SUCCESS)">Show Toast</button>
+  <main>
+    <v-text-field
+      v-model="textFieldValue"
+      label="Some text"
+      hint="Place some text there"
+      placeholder="Some text"
+      type="input"
+    ></v-text-field>
+    <button @click="showAlert(textFieldValue, TYPE.SUCCESS)">Show Toast</button>
+  </main>
 </template>

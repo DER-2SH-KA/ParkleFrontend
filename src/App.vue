@@ -5,7 +5,25 @@ import HeaderComponent from './HeaderComponent.vue'
 </script>
 
 <template>
-  <HeaderComponent />
-  <GeneralPage />
-  <FooterComponent />
+  <HeaderComponent id="headerComponent" />
+  <GeneralPage id="mainComponent" />
+  <FooterComponent id="footerComponent" />
 </template>
+
+<style lang="css">
+* {
+  margin: 0px;
+  padding: 0px;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#mainComponent {
+  flex: 1 0 auto;
+}
+#footerComponent {
+  flex: 0 0 auto;
+}
+</style>
