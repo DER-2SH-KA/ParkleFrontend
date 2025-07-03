@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-const searchBarText = ref<string>('')
+const model = defineModel()
 </script>
 
 <template>
@@ -8,12 +7,11 @@ const searchBarText = ref<string>('')
     <v-text-field
       label="Search"
       placeholder="Website name or url"
+      style="font-size: 18pt"
       variant="solo"
       type="text"
       clearable
-      v-model="searchBarText"
+      v-model="model"
     />
   </div>
 </template>
-
-<style lang="scss"></style>

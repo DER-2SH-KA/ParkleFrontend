@@ -12,7 +12,8 @@ import HeaderComponent from './HeaderComponent.vue'
 
 <style lang="scss">
 body {
-  background-color: cyan;
+  /*background-color: cyan;*/
+  background-color: var(--background-color-dark-theme);
 }
 
 #app {
