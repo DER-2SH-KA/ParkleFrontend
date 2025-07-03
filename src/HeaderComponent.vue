@@ -5,17 +5,24 @@ const isLogined = ref<boolean>(false)
 
 <template>
   <header>
-    <div>
-      <p id="logo">Parkle</p>
+    <div id="logo">
+      <img src="./resources/img/png/icon.png" alt="Icon" />
+      <p>Parkle</p>
     </div>
     <div id="empty"></div>
     <div id="authButtonsContainer">
       <div v-if="!isLogined" class="authButtons">
-        <button class="authButton">Sing In</button>
-        <button class="authButton">Sign Up</button>
+        <button class="authButton">
+          <router-link to="/login">Sing In</router-link>
+        </button>
+        <button class="authButton">
+          <router-link to="/registration">Sing Up</router-link>
+        </button>
       </div>
       <div v-else class="authButtons">
-        <button class="authButton">Profile</button>
+        <button class="authButton">
+          <router-link to="/profile">Sing In</router-link>
+        </button>
       </div>
     </div>
   </header>
@@ -32,10 +39,22 @@ header {
 }
 
 #logo {
-  color: var(--text-color-dark-theme);
-  font-size: 28pt;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   width: auto;
   margin-left: 20px;
+}
+
+#logo > img {
+  width: 30pt;
+  aspect-ratio: 1;
+}
+
+#logo > p {
+  color: var(--text-color-dark-theme);
+  font-size: 28pt;
+  margin-left: 10px;
 }
 
 #authButtonsContainer {
@@ -52,12 +71,17 @@ header {
 }
 
 .authButton {
-  color: var(--text-color-dark-theme);
   background-color: transparent;
   border: 2px var(--text-color-dark-theme) solid;
   border-radius: 5px;
   padding: 5px 10px 5px 10px;
   margin: 10px 10px 10px 0px;
+
+  & > a {
+    color: var(--text-color-dark-theme);
+    text-align: center;
+    text-decoration: none;
+  }
 
   &:hover {
     animation: scale-to-one-dot-one ease-in-out 200ms;

@@ -5,12 +5,12 @@ const props = defineProps<{
   website: Website
 }>()
 
-const fLetterColor = props.website.fLetterColor
+const fLetterColor = props.website.hex
 </script>
 
 <template>
   <div class="website-item">
-    <a :href="props.website.url" target="_blank">{{ props.website.name }}</a>
+    <a :href="props.website.url" target="_blank">{{ props.website.title }}</a>
   </div>
 </template>
 

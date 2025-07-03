@@ -4,19 +4,30 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
-// import router from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 
 import Toast, { type PluginOptions, POSITION } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
+import { createVuetify } from 'vuetify'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 
 import { ru } from 'vuetify/locale'
+import MainPage from './MainPage.vue'
+import LoginPage from './LoginPage.vue'
 
 const app = createApp(App)
+
+const routes = [
+  { path: '/', component: MainPage },
+  { path: '/login', component: LoginPage },
+]
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes,
+})
 
 const toastOptions: PluginOptions = {
   position: POSITION.BOTTOM_RIGHT,
@@ -42,7 +53,7 @@ const vuetify = createVuetify({
 })
 
 app.use(createPinia())
-// app.use(router)
+app.use(router)
 app.use(Toast, toastOptions)
 app.use(vuetify)
 

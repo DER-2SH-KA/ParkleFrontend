@@ -7,24 +7,63 @@ import { sortWebsiteByName } from '../scripts/utils'
 const modelSearchBarText = defineModel<string>()
 
 const websites = ref<Website[]>([
-  { id: 0, name: 'AliExpress', url: 'https://aliexpress.ru/', fLetterColor: '#f00' },
+  {
+    id: 0,
+    user_id: 1833719,
+    hex: '#f00',
+    title: 'AliExpress',
+    url: 'https://aliexpress.ru/',
+  },
   {
     id: 1,
-    name: 'NATK',
+    user_id: 1833719,
+    hex: '#0f0',
+    title: 'NATK',
+    description: 'Расписание НАТК группы ПР-22.101',
     url: 'https://natk.ru/stud-grad/schedule/187?group=%D0%9F%D0%A0-22.101',
-    fLetterColor: '#0f0',
   },
-  { id: 2, name: 'VK', url: 'https://vk.com/', fLetterColor: '#0ff' },
-  { id: 3, name: 'Yandex', url: 'https://ya.ru/', fLetterColor: '#ff0' },
-  { id: 4, name: 'AliExpress', url: 'https://aliexpress.ru/', fLetterColor: '#f00' },
+  {
+    id: 2,
+    user_id: 1833719,
+    hex: '#0ff',
+    title: 'VK',
+    url: 'https://vk.com/',
+  },
+  {
+    id: 3,
+    user_id: 1833719,
+    hex: '#f0f',
+    title: 'Yandex',
+    url: 'https://ya.ru',
+  },
+  {
+    id: 4,
+    user_id: 1833719,
+    hex: '#f00',
+    title: 'AliExpress',
+    url: 'https://aliexpress.ru/',
+  },
   {
     id: 5,
-    name: 'NATK',
+    user_id: 1833719,
+    hex: '#0f0',
+    title: 'NATK',
     url: 'https://natk.ru/stud-grad/schedule/187?group=%D0%9F%D0%A0-22.101',
-    fLetterColor: '#0f0',
   },
-  { id: 6, name: 'VK', url: 'https://vk.com/', fLetterColor: '#0ff' },
-  { id: 7, name: 'Yandex', url: 'https://ya.ru/', fLetterColor: '#ff0' },
+  {
+    id: 6,
+    user_id: 1833719,
+    hex: '#0ff',
+    title: 'VK',
+    url: 'https://vk.com/',
+  },
+  {
+    id: 7,
+    user_id: 1833719,
+    hex: '#f0f',
+    title: 'Yandex',
+    url: 'https://ya.ru',
+  },
 ])
 
 const sortedWebsites = computed<Website[]>(() => {
@@ -38,7 +77,7 @@ const websitesToShow = computed<Website[]>(() => {
       return true
     } else {
       return (
-        x.name.toLowerCase().includes(modelSearchBarText.value!.toLowerCase()) ||
+        x.title.toLowerCase().includes(modelSearchBarText.value!.toLowerCase()) ||
         x.url.toLowerCase().includes(modelSearchBarText.value!.toLowerCase())
       )
     }

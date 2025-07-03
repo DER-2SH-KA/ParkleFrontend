@@ -8,5 +8,5 @@ export function chooseRandomStringItemFromList(list: string[]): string {
 }
 
 export function sortWebsiteByName(list: Website[]): Website[] {
-  return list.sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1))
+  return list.sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
 }

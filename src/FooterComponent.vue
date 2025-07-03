@@ -10,7 +10,7 @@
   </footer>
 </template>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 footer {
   background-color: var(--background-second-color-dark-theme);
   min-width: 100%;

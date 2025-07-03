@@ -49,6 +49,7 @@ section {
 
 #search-bar-section {
   max-width: 600px;
+  margin: 5px 0px;
 }
 
 @media (max-width: 768px) {
