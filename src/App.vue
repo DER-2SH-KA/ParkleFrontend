@@ -12,7 +12,7 @@ import HeaderComponent from './HeaderComponent.vue'
 
 <style lang="scss">
 body {
-  background-color: var(--background-color-dark-theme);
+  background-color: cyan;
 }
 
 #app {
@@ -20,9 +20,11 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
 #mainComponent {
   flex: 1 0 auto;
 }
+
 #footerComponent {
   flex: 0 0 auto;
 }

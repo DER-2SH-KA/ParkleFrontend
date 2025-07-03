@@ -12,7 +12,7 @@
 
 <style lang="css" scoped>
 footer {
-  background-color: var(--primary-color);
+  background-color: var(--background-second-color-dark-theme);
   min-width: 100%;
 }
 

@@ -40,6 +40,7 @@ onMounted(() => {
   text-align: center;
   font-size: 32pt;
   padding: 10px 20px;
+  border: 3px transparent solid;
 
   &::first-letter {
     color: #6f00ff;
@@ -47,14 +48,11 @@ onMounted(() => {
 
   &:hover {
     border-radius: 20px;
-    animation: outline 150ms ease-out forwards;
+    animation: outline 100ms ease-out forwards;
   }
 }
 
 @keyframes outline {
-  from {
-    border: 0px;
-  }
   to {
     border: 3px var(--text-color-dark-theme) solid;
   }

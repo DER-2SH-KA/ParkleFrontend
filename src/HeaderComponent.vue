@@ -28,14 +28,14 @@ header {
   align-content: center;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--primary-color);
+  background-color: var(--background-second-color-dark-theme);
 }
 
 #logo {
   color: var(--text-color-dark-theme);
-  font-size: 24pt;
+  font-size: 28pt;
   width: auto;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 #authButtonsContainer {
