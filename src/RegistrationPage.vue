@@ -6,7 +6,9 @@ import { ref } from 'vue'
 const loading = ref<boolean>(false)
 const passwordVisibleType = ref<string>('password')
 const username = ref<string>('')
+const email = ref<string>('')
 const password = ref<string>('')
+const passwordRepeat = ref<string>('')
 
 async function submit(event: SubmitEventPromise) {
   loading.value = true
@@ -32,7 +34,9 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
           <VCol>
             <!-- Login -->
             <VTextField v-model="username" label="Login" type="text" required />
-            <!-- Password -->
+            <!-- EMail -->
+            <VTextField v-model="email" label="Email" type="email" required />
+            <!-- Password 1 -->
             <VRow>
               <VTextField
                 v-model="password"
@@ -42,7 +46,17 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
               />
               <button @click="changeTypeOfPasswordVisible">Show</button>
             </VRow>
-            <VBtn :loading="loading" class="mt-2" text="Sign In" type="submit" block />
+            <!-- Password 2 -->
+            <VRow>
+              <VTextField
+                v-model="passwordRepeat"
+                label="Password repeat"
+                :type="passwordVisibleType"
+                required
+              />
+              <button @click="changeTypeOfPasswordVisible">Show</button>
+            </VRow>
+            <VBtn :loading="loading" class="mt-2" text="Sign Up" type="submit" block />
           </VCol>
         </VContainer>
       </VForm>

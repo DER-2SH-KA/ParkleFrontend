@@ -4,7 +4,14 @@
   <footer>
     <p>
       &copy;Made by
-      <a href="https://github.com/DER-2SH-KA" target="_blank" placeholder="Github">DER-2SH-KA</a>
+      <a
+        href="https://github.com/DER-2SH-KA"
+        target="_blank"
+        placeholder="Github"
+        alt="GitHub Link"
+      >
+        DER-2SH-KA
+      </a>
       with MIT License
     </p>
   </footer>
@@ -22,6 +29,7 @@ footer > p {
   font-size: 12pt;
   margin: 10px 0px 10px 0px;
 }
+
 
 a {
   color: var(--text-color-dark-theme);

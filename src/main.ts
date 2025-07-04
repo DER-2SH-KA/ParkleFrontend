@@ -17,12 +17,14 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import { ru } from 'vuetify/locale'
 import MainPage from './MainPage.vue'
 import LoginPage from './LoginPage.vue'
+import RegistrationPage from './RegistrationPage.vue'
 
 const app = createApp(App)
 
 const routes = [
   { path: '/', component: MainPage },
-  { path: '/login', component: LoginPage },
+  { path: '/auth/registration', component: RegistrationPage },
+  { path: '/auth/login', component: LoginPage },
 ]
 const router = createRouter({
   history: createWebHistory(),

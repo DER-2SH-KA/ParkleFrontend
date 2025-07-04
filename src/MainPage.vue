@@ -5,9 +5,9 @@ import HeaderComponent from './HeaderComponent.vue'
 </script>
 
 <template>
-  <HeaderComponent id="headerComponent" />
-  <GeneralPage id="mainComponent" />
-  <FooterComponent id="footerComponent" />
+  <HeaderComponent class="header-component" />
+  <GeneralPage id="main-component" />
+  <FooterComponent class="footer-component" />
 </template>
 
 <style lang="scss">
@@ -22,11 +22,11 @@ body {
   min-height: 100vh;
 }
 
-#mainComponent {
+.main-component {
   flex: 1 0 auto;
 }
 
-#footerComponent {
+.footer-component {
   flex: 0 0 auto;
 }
 </style>
