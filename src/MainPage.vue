@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import FooterComponent from './FooterComponent.vue'
 import GeneralPage from './GeneralPage.vue'
 import HeaderComponent from './HeaderComponent.vue'
 </script>
 
 <template>
   <HeaderComponent class="header-component" />
-  <GeneralPage id="main-component" />
-  <FooterComponent class="footer-component" />
+  <GeneralPage class="main-component" />
 </template>
 
 <style lang="scss">
@@ -22,11 +20,13 @@ body {
   min-height: 100vh;
 }
 
-.main-component {
-  flex: 1 0 auto;
+.header-component {
+  position: sticky;
+  top: 0;
 }
 
-.footer-component {
-  flex: 0 0 auto;
+.main-component {
+  flex: 1 0 auto;
+  margin: 20px 0px;
 }
 </style>

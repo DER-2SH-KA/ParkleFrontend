@@ -13,10 +13,10 @@ const isLogined = ref<boolean>(false)
     <div id="authButtonsContainer">
       <div v-if="!isLogined" class="authButtons">
         <button class="authButton">
-          <router-link to="/login">Sing In</router-link>
+          <router-link to="/auth/login">Sing In</router-link>
         </button>
         <button class="authButton">
-          <router-link to="/registration">Sing Up</router-link>
+          <router-link to="/auth/registration">Sing Up</router-link>
         </button>
       </div>
       <div v-else class="authButtons">
@@ -84,8 +84,12 @@ header {
   }
 
   &:hover {
-    animation: scale-to-one-dot-one ease-in-out 200ms;
-    animation-fill-mode: forwards;
+    animation: scale-to-one-dot-one ease-in-out 200ms forwards;
+
+    & > a {
+      animation: change-a-color ease-in-out 200ms forwards;
+      color: var(--background-color-dark-theme);
+    }
   }
 }
 
@@ -98,6 +102,12 @@ header {
     background-color: var(--text-color-dark-theme);
     border: 2px var(--background-color-dark-theme) solid;
     transform: scale(1.05);
+  }
+}
+
+@keyframes change-a-color {
+  to {
+    color: var(--background-color-dark-theme);
   }
 }
 </style>

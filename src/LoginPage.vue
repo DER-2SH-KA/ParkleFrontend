@@ -48,7 +48,6 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
       </VForm>
     </section>
   </main>
-  <FooterComponent class="footer-component" />
 </template>
 
 <style lang="scss">
@@ -58,9 +57,5 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 
 #registration {
   background-color: purple;
-}
-
-.footer-component {
-  flex: 0 0 auto;
 }
 </style>
