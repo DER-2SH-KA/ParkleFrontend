@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import type { Website } from '@/scripts/declaration'
+import type { WebsiteResponseDto } from '@/scripts/declaration'
 
 const props = defineProps<{
-  website: Website
+  website: WebsiteResponseDto
   isEditingModeActive: boolean
 }>()
 
 const emits = defineEmits<{
-  onDelete: [id: number]
+  onDelete: [id: string]
 }>()
 
-const fLetterColor = props.website.hex
+const fLetterColor = props.website.hexColor
 
 const onDeleteWebsite = () => {
   emits('onDelete', props.website.id)
