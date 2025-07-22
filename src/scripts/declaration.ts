@@ -1,21 +1,80 @@
 export interface IEntity {
-  id: number
+  id: string
 }
 
-export interface Role extends IEntity {
+/**
+ * DTO for role.
+ */
+export interface RoleDto extends IEntity {
   name: string
   priority: number
 }
 
-export interface User extends IEntity {
-  role_id: number
+/**
+ * DTO for authentication.
+ */
+export interface UserAuthDto {
+  login: string
+  password: string
+}
+
+/**
+ * DTO for create User.
+ */
+export interface UserCreateDto {
+  roleId: string
+  login: string
+  email: string
+  password: string
+}
+
+/**
+ * DTO for update User.
+ *  */
+export interface UserUpdateDto {
+  roleId: string
+  login: string
+  email: string
+  password: string
+}
+
+/**
+ * DTO for give user from server.
+ */
+export interface UserResponseDto extends IEntity {
+  role: RoleDto
   login: string
   email: string
 }
 
-export interface Website extends IEntity {
-  user_id: number
-  hex: string
+/**
+ * DTO for create new website.
+ */
+export interface WebsiteCreateDto {
+  userId: string
+  hexColor: string
+  title: string
+  description?: string | undefined
+  url: string
+}
+
+/**
+ * DTO for update website.
+ */
+export interface WebsiteUpdateDto {
+  userId: string
+  title: string
+  description?: string | undefined
+  hexColor: string
+  url: string
+}
+
+/**
+ * DTO for give website from server.
+ */
+export interface WebsiteResponseDto extends IEntity {
+  userId: string
+  hexColor: string
   title: string
   description?: string | undefined
   url: string
