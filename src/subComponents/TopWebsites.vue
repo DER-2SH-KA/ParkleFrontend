@@ -1,19 +1,22 @@
 <script lang="ts" setup>
 import type { WebsiteResponseDto } from '@/scripts/declaration'
 import WebsiteItem from './WebsiteItem.vue'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { sortWebsiteByName } from '../scripts/utils'
+import { getAllWebsites } from '@/scripts/api'
 
 const modelSearchBarText = defineModel<string>()
 const props = defineProps<{
   isEditingModeActive: boolean
 }>()
 
-const websites = ref<WebsiteResponseDto[]>([])
+const websites = ref<WebsiteResponseDto[] | undefined>([])
 
 const sortedWebsites = computed<WebsiteResponseDto[]>(() => {
-  const sortedList = sortWebsiteByName(websites.value)
-  return sortedList
+  if (!Array.isArray(websites.value)) {
+    return []
+  }
+  return sortWebsiteByName(websites.value)
 })
 
 const websitesToShow = computed<WebsiteResponseDto[]>(() => {
@@ -31,8 +34,20 @@ const websitesToShow = computed<WebsiteResponseDto[]>(() => {
 })
 
 const removeWebsiteById = (id: string) => {
-  websites.value = websites.value.filter((x) => x.id != id)
+  websites.value = websites.value?.filter((x) => x.id != id)
 }
+
+onMounted(async () => {
+  await getAllWebsites()
+    .then((response) => {
+      console.info('getAllWebsites() response', response)
+
+      if (response != null) websites.value = response
+    })
+    .catch((error) => {
+      console.info('Error:', error)
+    })
+})
 </script>
 
 <template>
