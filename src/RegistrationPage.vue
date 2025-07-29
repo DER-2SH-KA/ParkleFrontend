@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { SubmitEventPromise } from 'vuetify'
-import FooterComponent from './FooterComponent.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const loading = ref<boolean>(false)
 const passwordVisibleType = ref<string>('password')
 const username = ref<string>('')
@@ -29,9 +30,10 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 <template>
   <main class="main-component">
     <section id="registration">
-      <VForm validate-on="input lazy" @submit.prevent="submit">
+      <VForm class="sign-fields" validate-on="input lazy" @submit.prevent="submit">
         <VContainer>
           <VCol>
+            <VBtn @click="router.go(-1)">Back</VBtn>
             <!-- Login -->
             <VTextField v-model="username" label="Login" type="text" required />
             <!-- EMail -->
@@ -70,6 +72,15 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 }
 
 #registration {
-  background-color: purple;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--text-color-dark-theme);
+}
+
+.sign-fields {
+  min-width: 600px;
 }
 </style>
