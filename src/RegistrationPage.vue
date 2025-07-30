@@ -2,20 +2,28 @@
 import type { SubmitEventPromise } from 'vuetify'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { postCreateUser } from './scripts/api'
+import { type UserCreateDto, type UserResponseDto } from './scripts/declaration'
 
 const router = useRouter()
 const loading = ref<boolean>(false)
 const passwordVisibleType = ref<string>('password')
-const username = ref<string>('')
+const login = ref<string>('')
 const email = ref<string>('')
 const password = ref<string>('')
 const passwordRepeat = ref<string>('')
 
 async function submit(event: SubmitEventPromise) {
   loading.value = true
-  const results = await event
+  const userCreateDto: UserCreateDto = {
+    roleName: 'USER',
+    login: login.value,
+    email: email.value,
+    password: password.value,
+  }
+  const createdUserResponseDto: UserResponseDto = await postCreateUser(userCreateDto)
   loading.value = false
-  alert(JSON.stringify(results, null, 2))
+  alert(JSON.stringify(createdUserResponseDto, null, 2))
 }
 
 function changeTypeOfPasswordVisible(e: MouseEvent) {
@@ -35,7 +43,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
           <VCol>
             <VBtn @click="router.go(-1)">Back</VBtn>
             <!-- Login -->
-            <VTextField v-model="username" label="Login" type="text" required />
+            <VTextField v-model="login" label="Login" type="text" required />
             <!-- EMail -->
             <VTextField v-model="email" label="Email" type="email" required />
             <!-- Password 1 -->

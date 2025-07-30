@@ -22,7 +22,7 @@ export interface UserAuthDto {
  * DTO for create User.
  */
 export interface UserCreateDto {
-  roleId: string
+  roleName: string
   login: string
   email: string
   password: string
