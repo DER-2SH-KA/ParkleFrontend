@@ -75,7 +75,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
                 :type="passwordVisibleType"
                 required
               />
-              <button @click="changeTypeOfPasswordVisible">Show</button>
+              <v-btn @click="changeTypeOfPasswordVisible">Show</v-btn>
             </VRow>
             <!-- Password 2 -->
             <VRow>
@@ -85,7 +85,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
                 :type="passwordVisibleType"
                 required
               />
-              <button @click="changeTypeOfPasswordVisible">Show</button>
+              <v-btn @click="changeTypeOfPasswordVisible">Show</v-btn>
             </VRow>
             <VBtn :loading="loading" class="mt-2" text="Sign Up" type="submit" block />
           </VCol>

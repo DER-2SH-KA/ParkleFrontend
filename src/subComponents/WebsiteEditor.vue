@@ -1,11 +1,43 @@
 <script lang="ts" setup>
+import type { WebsiteCreateDto } from '@/scripts/declaration'
 import { ref } from 'vue'
+import { createWebsite } from '@/scripts/api'
+import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
+import { showAlert } from '@/scripts/createToasts'
+import { TYPE } from 'vue-toastification'
+
 const model = defineModel<boolean>()
+
+const currentUserStore = useCurrentUserStore()
+const websitesStore = useWebsitesStore()
 
 const title = ref<string>()
 const description = ref<string>()
 const url = ref<string>()
 const hex = ref<string>()
+
+const createWebsiteFromAddDialog = async () => {
+  const websiteCreateDto: WebsiteCreateDto = {
+    userId: currentUserStore.currentUser?.id ? currentUserStore.currentUser.id : '',
+    title: title.value ? title.value : '',
+    description: description.value,
+    url: url.value ? url.value : '',
+    hexColor: hex.value ? hex.value : '',
+  }
+
+  await createWebsite(websiteCreateDto)
+    .then((result) => {
+      if (!!result) {
+        websitesStore.websites.push(result)
+        console.info('Website was created', result)
+        showAlert('Website was added', TYPE.SUCCESS)
+      }
+    })
+    .catch((error) => {
+      console.error('crateWebsite', error)
+      showAlert("Website wasn't created", TYPE.ERROR)
+    })
+}
 </script>
 
 <template>
@@ -22,8 +54,7 @@ const hex = ref<string>()
         block
       />
       <div id="show-hex-color" :style="`background-color: ${hex};`"></div>
-      <VBtn block>SAVE</VBtn>
-      <VBtn block>CANCEL</VBtn>
+      <VBtn block @click="createWebsiteFromAddDialog()">SAVE</VBtn>
     </VCol>
   </VDialog>
 </template>
@@ -33,7 +64,7 @@ const hex = ref<string>()
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: red;
+  background-color: var(--text-color-dark-theme);
 }
 
 #website-editor-items {

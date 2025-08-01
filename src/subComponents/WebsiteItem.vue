@@ -19,7 +19,13 @@ const onDeleteWebsite = () => {
 
 <template>
   <div class="website-item">
-    <a class="link-name" :href="props.website.url" target="_blank">{{ props.website.title }}</a>
+    <a
+      class="link-name"
+      :href="props.website.url"
+      :title="website.description ? website.description : website.title"
+      target="_blank"
+      >{{ props.website.title }}</a
+    >
     <VBtn
       class="link-delete"
       @click="onDeleteWebsite"

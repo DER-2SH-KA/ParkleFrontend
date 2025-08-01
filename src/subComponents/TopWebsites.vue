@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import type { WebsiteResponseDto } from '@/scripts/declaration'
 import WebsiteItem from './WebsiteItem.vue'
-import { computed, watch, ref } from 'vue'
+import { computed, watch } from 'vue'
 import { sortWebsiteByName } from '../scripts/utils'
-import { getWebsitesByUserId } from '@/scripts/api'
-import { useCurrentUserStore } from '@/scripts/stores/piniaStore'
+import { deleteWebsite, getWebsitesByUserId } from '@/scripts/api'
+import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
+import { showAlert } from '@/scripts/createToasts'
+import { TYPE } from 'vue-toastification'
 
 const modelSearchBarText = defineModel<string>()
 const props = defineProps<{
@@ -12,14 +14,13 @@ const props = defineProps<{
 }>()
 
 const currentUserStore = useCurrentUserStore()
-
-const websites = ref<WebsiteResponseDto[] | undefined>([])
+const websitesStore = useWebsitesStore()
 
 const sortedWebsites = computed<WebsiteResponseDto[]>(() => {
-  if (!Array.isArray(websites.value)) {
+  if (!Array.isArray(websitesStore.websites)) {
     return []
   }
-  return sortWebsiteByName(websites.value)
+  return sortWebsiteByName(websitesStore.websites)
 })
 
 const websitesToShow = computed<WebsiteResponseDto[]>(() => {
@@ -36,24 +37,33 @@ const websitesToShow = computed<WebsiteResponseDto[]>(() => {
   return filteredList
 })
 
-const removeWebsiteById = (id: string) => {
-  websites.value = websites.value?.filter((x) => x.id != id)
+const removeWebsiteById = async (id: string) => {
+  await deleteWebsite(id)
+    .then(() => {
+      websitesStore.websites = websitesStore.websites?.filter((x) => x.id != id)
+      showAlert(`Website was deleted`, TYPE.SUCCESS)
+    })
+    .catch((error) => {
+      console.error('removeWebsiteById', error)
+      showAlert(`Website wasn't delete`, TYPE.ERROR)
+    })
 }
 
 watch(
-  () => currentUserStore.currentUser,
-  () => {
+  () => currentUserStore,
+  (n) => {
+    console.info(`Current user watch checked and equals: ${n}`)
     if (!!currentUserStore.currentUser) {
       const userId = currentUserStore.currentUser.id
 
       getWebsitesByUserId(userId)
         .then((result) => {
-          websites.value = result
+          websitesStore.websites = result
         })
         .catch((error) => {
           console.error(`Error get websites by userId: ${userId}`, error)
         })
-    }
+    } else websitesStore.websites = []
   },
 )
 </script>
