@@ -42,7 +42,7 @@ export const getWebsitesByUserId = async (
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const authorizeUser = async (
+export const authorize = async (
   userAuthDto: UserAuthDto,
 ): Promise<UserResponseDto | undefined> => {
   let authorizedUser: UserResponseDto | undefined = undefined
@@ -76,6 +76,7 @@ export const registration = async (
   return createdUser ?? undefined
 }
 
+// CRUD functions.
 export const doGet = async (url: string, config?: AxiosRequestConfig): Promise<any> => {
   return await axios.get(url, config)
 }

@@ -3,7 +3,7 @@ import type { SubmitEventPromise } from 'vuetify'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { type UserAuthDto, type UserResponseDto } from './scripts/declaration'
-import { authorizeUser } from './scripts/api'
+import { authorize } from './scripts/api'
 import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
@@ -24,7 +24,7 @@ async function submit(event: SubmitEventPromise) {
     login: login.value,
     password: password.value,
   }
-  const authorizedUser: UserResponseDto | undefined = await authorizeUser(userAuthDto)
+  const authorizedUser: UserResponseDto | undefined = await authorize(userAuthDto)
   loading.value = false
 
   if (authorizedUser === undefined) {
