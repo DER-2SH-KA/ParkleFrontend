@@ -11,6 +11,14 @@ export interface RoleDto extends IEntity {
 }
 
 /**
+ * DTO for user's role.
+ */
+export interface UserRoleDto {
+  name: string
+  priority: number
+}
+
+/**
  * DTO for authentication.
  */
 export interface UserAuthDto {
@@ -42,7 +50,7 @@ export interface UserUpdateDto {
  * DTO for give user from server.
  */
 export interface UserResponseDto extends IEntity {
-  role: RoleDto
+  role: UserRoleDto
   login: string
   email: string
 }
