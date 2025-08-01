@@ -31,7 +31,7 @@ const logout = () => {
       </div>
       <div v-else class="authButtons">
         <button class="authButton">
-          Profile
+          <p>Profile</p>
 
           <v-menu activator="parent">
             <p>{{ currentUserStore.currentUser?.login }}</p>
@@ -98,10 +98,19 @@ header {
     text-decoration: none;
   }
 
+  & > p {
+    color: white;
+  }
+
   &:hover {
     animation: scale-to-one-dot-one ease-in-out 200ms forwards;
 
     & > a {
+      animation: change-a-color ease-in-out 200ms forwards;
+      color: var(--background-color-dark-theme);
+    }
+
+    & > p {
       animation: change-a-color ease-in-out 200ms forwards;
       color: var(--background-color-dark-theme);
     }
