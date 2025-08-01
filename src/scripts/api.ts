@@ -1,5 +1,5 @@
-import axios from 'axios'
-import type { UserAuthDto, UserCreateDto } from './declaration'
+import axios, { type AxiosRequestConfig } from 'axios'
+import type { UserAuthDto, UserCreateDto, UserResponseDto, WebsiteResponseDto } from './declaration'
 
 const websitesApi = '/api/websites'
 
@@ -9,25 +9,77 @@ axios.defaults.timeout = 10000
 const authLoginApi = '/api/auth/login'
 const registrationApi = '/api/auth/registration'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const getAllWebsites = async (): Promise<any> => {
-  const websiteRepsponseDtos = await axios.get(websitesApi)
+export const getAllWebsites = async (): Promise<WebsiteResponseDto[] | undefined> => {
+  let websiteRepsponseDtos: WebsiteResponseDto[] | undefined = []
+
+  await doGet(websitesApi)
+    .then((result) => {
+      websiteRepsponseDtos = result.data
+    })
+    .catch((error) => {
+      console.error('getAllWebsites', error)
+    })
 
   console.info(websiteRepsponseDtos)
-  return websiteRepsponseDtos.data ?? null
+  return websiteRepsponseDtos ?? undefined
+}
+
+export const getWebsitesByUserId = async (
+  userId: string,
+): Promise<WebsiteResponseDto[] | undefined> => {
+  let websiteRepsponseDtos: WebsiteResponseDto[] | undefined = []
+
+  await doGet(websitesApi + `/user/${userId}`)
+    .then((result) => {
+      websiteRepsponseDtos = result.data
+    })
+    .catch((error) => {
+      console.error('getAllWebsites', error)
+    })
+
+  console.info(websiteRepsponseDtos)
+  return websiteRepsponseDtos ?? undefined
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const authorizeUser = async (userAuthDto: UserAuthDto): Promise<any> => {
-  const authorizedUser = await axios.post(authLoginApi, userAuthDto)
+export const authorizeUser = async (
+  userAuthDto: UserAuthDto,
+): Promise<UserResponseDto | undefined> => {
+  let authorizedUser: UserResponseDto | undefined = undefined
 
-  console.info('Authroized User Response DTO: ', authorizedUser.data)
-  return authorizedUser.data ?? null
+  await doPost(authLoginApi, userAuthDto)
+    .then((result) => {
+      authorizedUser = result.data
+    })
+    .catch((error) => {
+      console.error('authorizeUser', error)
+    })
+
+  console.info('Authroized User Response DTO: ', authorizedUser)
+  return authorizedUser ?? undefined
 }
 
-export const postCreateUser = async (userCreateDto: UserCreateDto): Promise<any> => {
-  const createdUser = await axios.post(registrationApi, userCreateDto)
+export const registration = async (
+  userCreateDto: UserCreateDto,
+): Promise<UserResponseDto | undefined> => {
+  let createdUser: UserResponseDto | undefined = undefined
 
-  console.info('Created User Response DTO:', createdUser.data)
-  return createdUser.data ?? null
+  await doPost(registrationApi, userCreateDto)
+    .then((result) => {
+      createdUser = result.data
+    })
+    .catch((error) => {
+      console.error('authorizeUser', error)
+    })
+
+  console.info('Created User Response DTO:', createdUser)
+  return createdUser ?? undefined
+}
+
+export const doGet = async (url: string, config?: AxiosRequestConfig): Promise<any> => {
+  return await axios.get(url, config)
+}
+
+export const doPost = async (url: string, object: any): Promise<any> => {
+  return await axios.post(url, object)
 }

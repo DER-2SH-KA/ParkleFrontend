@@ -21,6 +21,9 @@ import RegistrationPage from './RegistrationPage.vue'
 
 const app = createApp(App)
 
+const pinia = createPinia()
+
+// Router settings.
 const routes = [
   { path: '/', component: MainPage },
   { path: '/auth/registration', component: RegistrationPage },
@@ -31,10 +34,13 @@ const router = createRouter({
   routes: routes,
 })
 
+// Toast settings.
 const toastOptions: PluginOptions = {
   position: POSITION.BOTTOM_RIGHT,
   timeout: 4000,
 }
+
+// Vuetify settings.
 const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
@@ -54,7 +60,7 @@ const vuetify = createVuetify({
   },
 })
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 app.use(Toast, toastOptions)
 app.use(vuetify)

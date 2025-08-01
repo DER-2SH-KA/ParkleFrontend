@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 import type { WebsiteResponseDto } from '@/scripts/declaration'
 import WebsiteItem from './WebsiteItem.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, watch, ref } from 'vue'
 import { sortWebsiteByName } from '../scripts/utils'
-import { getAllWebsites } from '@/scripts/api'
+import { getWebsitesByUserId } from '@/scripts/api'
+import { useCurrentUserStore } from '@/scripts/stores/piniaStore'
 
 const modelSearchBarText = defineModel<string>()
 const props = defineProps<{
   isEditingModeActive: boolean
 }>()
+
+const currentUserStore = useCurrentUserStore()
 
 const websites = ref<WebsiteResponseDto[] | undefined>([])
 
@@ -37,17 +40,22 @@ const removeWebsiteById = (id: string) => {
   websites.value = websites.value?.filter((x) => x.id != id)
 }
 
-onMounted(async () => {
-  await getAllWebsites()
-    .then((response) => {
-      console.info('getAllWebsites() response', response)
+watch(
+  () => currentUserStore.currentUser,
+  () => {
+    if (!!currentUserStore.currentUser) {
+      const userId = currentUserStore.currentUser.id
 
-      if (response != null) websites.value = response
-    })
-    .catch((error) => {
-      console.info('Error:', error)
-    })
-})
+      getWebsitesByUserId(userId)
+        .then((result) => {
+          websites.value = result
+        })
+        .catch((error) => {
+          console.error(`Error get websites by userId: ${userId}`, error)
+        })
+    }
+  },
+)
 </script>
 
 <template>

@@ -2,10 +2,14 @@
 import type { SubmitEventPromise } from 'vuetify'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { postCreateUser } from './scripts/api'
+import { registration } from './scripts/api'
 import { type UserCreateDto, type UserResponseDto } from './scripts/declaration'
+import { showAlert } from './scripts/createToasts'
+import { TYPE } from 'vue-toastification'
+import { useCurrentUserStore } from './scripts/stores/piniaStore'
 
 const router = useRouter()
+
 const loading = ref<boolean>(false)
 const passwordVisibleType = ref<string>('password')
 const login = ref<string>('')
@@ -13,7 +17,15 @@ const email = ref<string>('')
 const password = ref<string>('')
 const passwordRepeat = ref<string>('')
 
+const currentUserStore = useCurrentUserStore()
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 async function submit(event: SubmitEventPromise) {
+  if (password.value != passwordRepeat.value) {
+    showAlert("Password and repeat password aren't same!", TYPE.ERROR)
+    return
+  }
+
   loading.value = true
   const userCreateDto: UserCreateDto = {
     roleName: 'USER',
@@ -21,9 +33,18 @@ async function submit(event: SubmitEventPromise) {
     email: email.value,
     password: password.value,
   }
-  const createdUserResponseDto: UserResponseDto = await postCreateUser(userCreateDto)
+  const createdUser: UserResponseDto | undefined = await registration(userCreateDto)
   loading.value = false
-  alert(JSON.stringify(createdUserResponseDto, null, 2))
+
+  if (createdUser === undefined) {
+    showAlert('User was not created!', TYPE.ERROR)
+  } else {
+    showAlert(`Welcome, ${createdUser.login}!`, TYPE.SUCCESS)
+    currentUserStore.currentUser = createdUser
+    router.go(-1)
+  }
+
+  // alert(JSON.stringify(createdUserResponseDto, null, 2))
 }
 
 function changeTypeOfPasswordVisible(e: MouseEvent) {

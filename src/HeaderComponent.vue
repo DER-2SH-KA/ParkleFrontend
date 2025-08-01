@@ -1,6 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-const isLogined = ref<boolean>(false)
+import { computed } from 'vue'
+import { useCurrentUserStore } from './scripts/stores/piniaStore'
+
+const currentUserStore = useCurrentUserStore()
+
+const isLogined = computed<boolean>(() => {
+  return !!currentUserStore.currentUser
+})
+
+const logout = () => {
+  currentUserStore.currentUser = undefined
+}
 </script>
 
 <template>
@@ -21,7 +31,12 @@ const isLogined = ref<boolean>(false)
       </div>
       <div v-else class="authButtons">
         <button class="authButton">
-          <router-link to="/profile">Sing In</router-link>
+          Profile
+
+          <v-menu activator="parent">
+            <p>{{ currentUserStore.currentUser?.login }}</p>
+            <v-btn @click="logout()">Logout</v-btn>
+          </v-menu>
         </button>
       </div>
     </div>
