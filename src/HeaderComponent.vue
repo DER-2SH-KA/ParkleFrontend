@@ -9,7 +9,7 @@ const isLogined = computed<boolean>(() => {
 })
 
 const logout = () => {
-  currentUserStore.currentUser = undefined
+  currentUserStore.setCurrentUser(undefined)
 }
 </script>
 

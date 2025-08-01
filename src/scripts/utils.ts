@@ -8,6 +8,8 @@ export function chooseRandomStringItemFromList(list: string[]): string {
 }
 
 export function sortWebsiteByName(websites: WebsiteResponseDto[]): WebsiteResponseDto[] {
+  console.info('sortWebsiteByName list:', websites)
+
   if (websites == undefined) {
     console.info('list is null')
     return websites

@@ -5,11 +5,15 @@ import { type WebsiteResponseDto, type UserResponseDto } from '../declaration'
 export const useCurrentUserStore = defineStore('currentUser', () => {
   const currentUser = ref<UserResponseDto | undefined>(undefined)
 
+  function setCurrentUser(user: UserResponseDto | undefined) {
+    currentUser.value = user
+  }
+
   function $reset() {
     currentUser.value = undefined
   }
 
-  return { currentUser, $reset }
+  return { currentUser, setCurrentUser, $reset }
 })
 
 export const useWebsitesStore = defineStore('websites', () => {

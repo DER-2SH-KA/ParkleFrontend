@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type { WebsiteResponseDto } from '@/scripts/declaration'
 import WebsiteItem from './WebsiteItem.vue'
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { sortWebsiteByName } from '../scripts/utils'
-import { deleteWebsite, getWebsitesByUserId } from '@/scripts/api'
-import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
+import { deleteWebsite } from '@/scripts/api'
+import { useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
@@ -13,7 +13,6 @@ const props = defineProps<{
   isEditingModeActive: boolean
 }>()
 
-const currentUserStore = useCurrentUserStore()
 const websitesStore = useWebsitesStore()
 
 const sortedWebsites = computed<WebsiteResponseDto[]>(() => {
@@ -48,24 +47,6 @@ const removeWebsiteById = async (id: string) => {
       showAlert(`Website wasn't delete`, TYPE.ERROR)
     })
 }
-
-watch(
-  () => currentUserStore,
-  (n) => {
-    console.info(`Current user watch checked and equals: ${n}`)
-    if (!!currentUserStore.currentUser) {
-      const userId = currentUserStore.currentUser.id
-
-      getWebsitesByUserId(userId)
-        .then((result) => {
-          websitesStore.websites = result
-        })
-        .catch((error) => {
-          console.error(`Error get websites by userId: ${userId}`, error)
-        })
-    } else websitesStore.websites = []
-  },
-)
 </script>
 
 <template>

@@ -57,7 +57,7 @@ export const createWebsite = async (
 
   await doPost(websitesApi + '/new', newWebsiteDto)
     .then((result) => {
-      websiteResponseDto = result
+      websiteResponseDto = result.data
     })
     .catch((error) => {
       console.error('updateWebsiteById', error)

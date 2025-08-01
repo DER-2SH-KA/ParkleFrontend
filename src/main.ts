@@ -18,6 +18,8 @@ import { ru } from 'vuetify/locale'
 import MainPage from './MainPage.vue'
 import LoginPage from './LoginPage.vue'
 import RegistrationPage from './RegistrationPage.vue'
+import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
+import { getWebsitesByUserId } from './scripts/api'
 
 const app = createApp(App)
 
@@ -60,9 +62,31 @@ const vuetify = createVuetify({
   },
 })
 
-app.use(pinia)
 app.use(router)
 app.use(Toast, toastOptions)
 app.use(vuetify)
+app.use(pinia)
+
+// For watching on user and update list of websites.
+const currentUserStore = useCurrentUserStore()
+const websitesStore = useWebsitesStore()
+
+currentUserStore.$onAction(async ({ name, args }) => {
+  if (name === 'setCurrentUser') {
+    const user = args[0] // Argument of new user.
+
+    if (!!user) {
+      console.log('Triggered `setCurrentUser` function...')
+
+      await getWebsitesByUserId(user.id)
+        .then((result) => {
+          websitesStore.websites = result
+        })
+        .catch((error) => {
+          console.error(`Error get websites by userId: ${user.id}`, error)
+        })
+    } else websitesStore.websites = []
+  }
+})
 
 app.mount('#app')

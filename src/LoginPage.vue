@@ -31,7 +31,7 @@ async function submit(event: SubmitEventPromise) {
     showAlert('User was not found!', TYPE.ERROR)
   } else {
     showAlert(`Welcome back, ${authorizedUser.login}!`, TYPE.SUCCESS)
-    currentUserStore.currentUser = authorizedUser
+    currentUserStore.setCurrentUser(authorizedUser)
     router.go(-1)
   }
 

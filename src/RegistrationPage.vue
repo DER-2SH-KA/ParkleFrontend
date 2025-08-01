@@ -40,7 +40,7 @@ async function submit(event: SubmitEventPromise) {
     showAlert('User was not created!', TYPE.ERROR)
   } else {
     showAlert(`Welcome, ${createdUser.login}!`, TYPE.SUCCESS)
-    currentUserStore.currentUser = createdUser
+    currentUserStore.setCurrentUser(createdUser)
     router.go(-1)
   }
 
