@@ -31,6 +31,7 @@ const createWebsiteFromAddDialog = async () => {
         websitesStore.websites.push(result)
         console.info('Website was created', result)
         showAlert('Website was added', TYPE.SUCCESS)
+        model.value = false
       }
     })
     .catch((error) => {
@@ -64,13 +65,14 @@ const createWebsiteFromAddDialog = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--text-color-dark-theme);
+  background-color: transparent;
+  max-width: 700px;
 }
 
 #website-editor-items {
   background-color: var(--background-second-color-dark-theme);
   border-radius: 20px;
-  margin: 20px;
+  padding: 20px;
 }
 
 #show-hex-color {
@@ -78,5 +80,11 @@ const createWebsiteFromAddDialog = async () => {
   height: 5vh;
   width: 100px;
   margin: 5px;
+}
+
+@media (max-width: 768px) {
+  #website-editor {
+    max-width: 90%;
+  }
 }
 </style>
