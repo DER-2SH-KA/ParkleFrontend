@@ -34,7 +34,6 @@ function showAddModeDialog() {
         <SearchBar v-model="searchBarText" />
         <VBtn @click="changeEditMode">{{ isEditingModeActive ? 'Save' : 'Edit' }}</VBtn>
         <VBtn class="hidden-search-bar-button" @click="showAddModeDialog">Add</VBtn>
-        <VBtn class="hidden-search-bar-button" @click="changeEditMode">Cancel</VBtn>
 
         <WebsiteEditor v-model="isAddingModeActive" />
       </section>
