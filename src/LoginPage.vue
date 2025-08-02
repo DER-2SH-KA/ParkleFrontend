@@ -17,8 +17,36 @@ const password = ref<string>('')
 
 const currentUserStore = useCurrentUserStore()
 
+const isFormValid = ref<boolean | null>(null)
+
+const loginRules = [
+  () => {
+    if (!!login.value.trim()) return true
+
+    return 'Login is required!'
+  },
+  () => {
+    if (login.value.trim().length <= 10) return true
+
+    return "Login's length must be shorter or equal 10 symbols"
+  },
+]
+
+const passwordRules = [
+  () => {
+    if (!!password.value.trim()) return true
+
+    return 'Password is required!'
+  },
+  () => {
+    if (password.value.trim().length >= 8 || password.value.trim().length <= 72) return true
+
+    return "Passwords's length must be between 8 and 72 symbols"
+  },
+]
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
-async function submit(event: SubmitEventPromise) {
+async function submitForm(event: SubmitEventPromise) {
   loading.value = true
   const userAuthDto: UserAuthDto = {
     login: login.value,
@@ -50,23 +78,37 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 <template>
   <main class="main-component">
     <section id="login-page">
-      <VForm class="sign-fields" validate-on="input lazy" @submit.prevent="submit">
+      <p>isFormValid: {{ isFormValid }}</p>
+      <VForm
+        class="sign-fields"
+        v-model="isFormValid"
+        validate-on="input"
+        @submit.prevent="submitForm"
+      >
         <VContainer>
           <VCol>
             <VBtn @click="router.go(-1)">Back</VBtn>
             <!-- Login -->
-            <VTextField v-model="login" label="Login" type="text" required />
+            <VTextField v-model="login" :rules="loginRules" label="Login" type="text" required />
             <!-- Password -->
             <VRow>
               <VTextField
                 v-model="password"
-                label="Password"
+                :rules="passwordRules"
                 :type="passwordVisibleType"
+                label="Password"
                 required
               />
               <v-btn @click="changeTypeOfPasswordVisible">Show</v-btn>
             </VRow>
-            <VBtn :loading="loading" class="mt-2" text="Sign In" type="submit" block />
+            <VBtn
+              :loading="loading"
+              :disabled="!isFormValid"
+              class="mt-2"
+              text="Sign In"
+              type="submit"
+              block
+            />
           </VCol>
         </VContainer>
       </VForm>
