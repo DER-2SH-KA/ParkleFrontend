@@ -10,7 +10,7 @@ import type {
 
 const websitesApi = '/api/websites'
 
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
 axios.defaults.timeout = 10000
 
 const authLoginApi = '/api/auth/login'
