@@ -97,7 +97,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
                 label="Password"
                 required
               />
-              <v-btn @click="changeTypeOfPasswordVisible">Show</v-btn>
+              <v-btn @click="changeTypeOfPasswordVisible" text="Show" />
             </VRow>
             <VBtn
               :loading="loading"
@@ -124,16 +124,18 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 
   flex: 1 0 auto;
 }
+
 #login-container {
   background-color: var(--text-color-dark-theme);
   border-radius: 20px;
-  max-width: 700px;
+  width: 700px;
 }
 
 #login-column {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 10px;
 }
 
 @media (max-width: 768px) {
