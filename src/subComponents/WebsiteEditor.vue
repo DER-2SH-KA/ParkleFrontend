@@ -55,7 +55,8 @@ const createWebsiteFromAddDialog = async () => {
         block
       />
       <div id="show-hex-color" :style="`background-color: ${hex};`"></div>
-      <VBtn block @click="createWebsiteFromAddDialog()">SAVE</VBtn>
+      <VBtn @click="createWebsiteFromAddDialog()" text="Save" block />
+      <VBtn @click="model = false" text="Cancel" block />
     </VCol>
   </VDialog>
 </template>
@@ -70,6 +71,9 @@ const createWebsiteFromAddDialog = async () => {
 }
 
 #website-editor-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   background-color: var(--background-second-color-dark-theme);
   border-radius: 20px;
   padding: 20px;
