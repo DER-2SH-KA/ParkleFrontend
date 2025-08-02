@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
 import type { WebsiteResponseDto } from '@/scripts/declaration'
 
 const props = defineProps<{
@@ -10,10 +11,21 @@ const emits = defineEmits<{
   onDelete: [id: string]
 }>()
 
+const isActiveDeleteDialog = ref<boolean>(false)
+
 const fLetterColor = props.website.hexColor
 
 const onDeleteWebsite = () => {
+  isActiveDeleteDialog.value = true
+}
+
+const onDeleteWebsiteAccept = () => {
+  isActiveDeleteDialog.value = false
   emits('onDelete', props.website.id)
+}
+
+const onDeleteWebsiteDenie = () => {
+  isActiveDeleteDialog.value = false
 }
 </script>
 
@@ -35,6 +47,19 @@ const onDeleteWebsite = () => {
       :style="`display: ${props.isEditingModeActive ? 'block' : 'none'}; color: red;`"
       >&otimes;</VBtn
     >
+
+    <v-dialog id="website-delete-dialog" v-model="isActiveDeleteDialog" not-padding>
+      <VCol id="website-delete-items">
+        <p>
+          Are you sure you want to delete the site with title {{ props.website.title }} and
+          description '{{ props.website.description ?? 'None' }}'?
+        </p>
+        <VRow id="website-delete-dialog-answer-buttons">
+          <VBtn @click="onDeleteWebsiteAccept()">Yes</VBtn>
+          <VBtn @click="onDeleteWebsiteDenie()">Cancel</VBtn>
+        </VRow>
+      </VCol>
+    </v-dialog>
   </div>
 </template>
 
@@ -68,5 +93,44 @@ const onDeleteWebsite = () => {
   font-size: 14pt;
   padding: 0px 3px;
   margin-left: 10px;
+}
+
+#website-delete-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  max-width: 500px;
+}
+
+#website-delete-items {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  gap: 20px;
+  background-color: var(--background-second-color-dark-theme);
+  border-radius: 20px;
+  padding: 20px;
+
+  & > p {
+    color: red;
+    font-size: 18pt;
+    text-align: center;
+  }
+}
+
+#website-delete-dialog-answer-buttons {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-flow: row wrap;
+  flex: 1 0 auto;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  #website-delete-dialog {
+    max-width: 90%;
+  }
 }
 </style>
