@@ -33,8 +33,8 @@ const logout = () => {
         <button class="authButton">
           <p>Profile</p>
 
-          <v-menu activator="parent">
-            <p>{{ currentUserStore.currentUser?.login }}</p>
+          <v-menu id="profile-menu" activator="parent">
+            <p>User: {{ currentUserStore.currentUser?.login }}</p>
             <v-btn @click="logout()">Logout</v-btn>
           </v-menu>
         </button>
@@ -115,6 +115,11 @@ header {
       color: var(--background-color-dark-theme);
     }
   }
+}
+
+#profile-menu {
+  color: white;
+  font-size: 14pt;
 }
 
 @keyframes scale-to-one-dot-one {
