@@ -20,26 +20,26 @@ const currentUserStore = useCurrentUserStore()
 const isFormValid = ref<boolean | null>(null)
 
 const loginRules = [
-  () => {
-    if (!!login.value.trim()) return true
+  (value: string) => {
+    if (!!value.trim()) return true
 
     return 'Login is required!'
   },
-  () => {
-    if (login.value.trim().length <= 10) return true
+  (value: string) => {
+    if (value.trim().length <= 10) return true
 
     return "Login's length must be shorter or equal 10 symbols"
   },
 ]
 
 const passwordRules = [
-  () => {
-    if (!!password.value.trim()) return true
+  (value: string) => {
+    if (!!value.trim()) return true
 
     return 'Password is required!'
   },
-  () => {
-    if (password.value.trim().length >= 8 || password.value.trim().length <= 72) return true
+  (value: string) => {
+    if (value.trim().length >= 8 && value.trim().length <= 72) return true
 
     return "Passwords's length must be between 8 and 72 symbols"
   },
@@ -77,17 +77,15 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 
 <template>
   <main class="main-component">
-    <section id="login-page">
-      <p>isFormValid: {{ isFormValid }}</p>
+    <section>
       <VForm
         class="sign-fields"
         v-model="isFormValid"
         validate-on="input"
         @submit.prevent="submitForm"
       >
-        <VContainer>
-          <VCol>
-            <VBtn @click="router.go(-1)">Back</VBtn>
+        <VContainer id="login-container">
+          <VCol id="login-column">
             <!-- Login -->
             <VTextField v-model="login" :rules="loginRules" label="Login" type="text" required />
             <!-- Password -->
@@ -109,6 +107,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
               type="submit"
               block
             />
+            <VBtn @click="router.go(-1)" text="Back" />
           </VCol>
         </VContainer>
       </VForm>
@@ -118,19 +117,28 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 
 <style lang="scss">
 .main-component {
-  flex: 1 0 auto;
-}
-
-#login-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+
+  flex: 1 0 auto;
+}
+#login-container {
   background-color: var(--text-color-dark-theme);
+  border-radius: 20px;
+  max-width: 700px;
 }
 
-.sign-fields {
-  min-width: 600px;
+#login-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  #login-container {
+    max-width: 80%;
+  }
 }
 </style>
