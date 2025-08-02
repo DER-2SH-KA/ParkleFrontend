@@ -92,7 +92,20 @@ async function createWebsiteFromAddDialog(event: Event) {
       showAlert("Website wasn't created", TYPE.ERROR)
     })
 
+  clearFields()
   loading.value = false
+}
+
+function cancel() {
+  model.value = false
+  clearFields()
+}
+
+function clearFields() {
+  title.value = ''
+  description.value = ''
+  url.value = ''
+  hex.value = ''
 }
 </script>
 
@@ -138,7 +151,7 @@ async function createWebsiteFromAddDialog(event: Event) {
         />
         <div id="show-hex-color" :style="`background-color: ${hex};`"></div>
         <VBtn :loading="loading" :disabled="!isFormValid" text="Save" type="submit" block />
-        <VBtn @click="model = false" text="Cancel" block />
+        <VBtn @click="cancel()" text="Cancel" block />
       </VCol>
     </VForm>
   </VDialog>
