@@ -65,7 +65,7 @@ const removeWebsiteById = async (id: string) => {
 #top-websites {
   display: flex;
   flex-flow: row wrap;
-  justify-content: start;
+  justify-content: center;
   align-items: start;
   /*background-color: red;*/
 }
