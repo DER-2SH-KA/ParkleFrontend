@@ -4,10 +4,13 @@ import SearchBar from './subComponents/SearchBar.vue'
 import TopWebsites from './subComponents/TopWebsites.vue'
 import { ref } from 'vue'
 import WebsiteEditor from './subComponents/WebsiteEditor.vue'
+import { useCurrentUserStore } from './scripts/stores/piniaStore'
 
 const searchBarText = ref<string>('')
 const isEditingModeActive = ref<boolean>(false)
 const isAddingModeActive = ref<boolean>(false)
+
+const currentUserStore = useCurrentUserStore()
 
 function changeEditMode() {
   // websites.value = websites.value
@@ -32,8 +35,10 @@ function showAddModeDialog() {
       </section>
       <section id="search-bar-section">
         <SearchBar v-model="searchBarText" />
-        <VBtn @click="changeEditMode">{{ isEditingModeActive ? 'End edit' : 'Edit' }}</VBtn>
-        <VBtn class="hidden-search-bar-button" @click="showAddModeDialog">Add</VBtn>
+        <div v-if="currentUserStore.currentUser != undefined">
+          <VBtn @click="changeEditMode">{{ isEditingModeActive ? 'End edit' : 'Edit' }}</VBtn>
+          <VBtn class="hidden-search-bar-button" @click="showAddModeDialog">Add</VBtn>
+        </div>
 
         <WebsiteEditor v-model="isAddingModeActive" />
       </section>
