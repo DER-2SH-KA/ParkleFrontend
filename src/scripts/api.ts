@@ -8,13 +8,13 @@ import type {
   WebsiteUpdateDto,
 } from './declaration'
 
-const websitesApi = '/api/websites'
+const websitesApi = '/websites'
 
 axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
 axios.defaults.timeout = 10000
 
-const authLoginApi = '/api/auth/login'
-const registrationApi = '/api/auth/registration'
+const authLoginApi = '/auth/login'
+const registrationApi = '/auth/registration'
 
 /// Website CRUD.
 // Get webstites from all users.
