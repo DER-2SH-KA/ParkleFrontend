@@ -18,14 +18,20 @@ const logout = () => {
   currentUserStore.setCurrentUser(undefined)
 }
 
-const deleteUser = async () => {
+const deleteUser = () => {
   loadingDeleteAccount.value = true
+  isShowDeleteAccountDialog.value = true
+}
 
+const deleteUserAccept = async () => {
   await deleteAccount(currentUserStore.currentUser?.id)
     .then((result) => {
       console.info('deleteUser', result)
+
       showAlert("User's account was deleted!", TYPE.SUCCESS)
       currentUserStore.setCurrentUser(undefined)
+
+      isShowDeleteAccountDialog.value = false
     })
     .catch((error) => {
       console.error('deleteUser', error)
@@ -34,6 +40,11 @@ const deleteUser = async () => {
     .finally(() => {
       loadingDeleteAccount.value = false
     })
+}
+
+const deleteUserDenied = () => {
+  loadingDeleteAccount.value = false
+  isShowDeleteAccountDialog.value = false
 }
 </script>
 
@@ -60,9 +71,7 @@ const deleteUser = async () => {
           <v-menu id="profile-menu" activator="parent">
             <p>User: {{ currentUserStore.currentUser?.login }}</p>
             <v-btn @click="logout()">Logout</v-btn>
-            <v-btn :loading="loadingDeleteAccount" @click="isShowDeleteAccountDialog = true"
-              >Delete Account</v-btn
-            >
+            <v-btn :loading="loadingDeleteAccount" @click="deleteUser">Delete Account</v-btn>
           </v-menu>
         </button>
       </div>
@@ -72,8 +81,8 @@ const deleteUser = async () => {
     <VCol id="user-delete-column">
       <p>Are you sure you want to delete account?</p>
       <VRow id="website-delete-dialog-answer-buttons">
-        <VBtn @click="deleteUser()">Yes</VBtn>
-        <VBtn @click="isShowDeleteAccountDialog = false">Cancel</VBtn>
+        <VBtn @click="deleteUserAccept">Yes</VBtn>
+        <VBtn @click="deleteUserDenied">Cancel</VBtn>
       </VRow>
     </VCol>
   </v-dialog>
