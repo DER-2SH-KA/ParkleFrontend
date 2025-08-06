@@ -51,7 +51,7 @@ const onDeleteWebsiteDenie = () => {
     <v-dialog id="website-delete-dialog" v-model="isActiveDeleteDialog" not-padding>
       <VCol id="website-delete-items">
         <p>
-          Are you sure you want to delete the site with title {{ props.website.title }} and
+          Are you sure you want to delete the site with title '{{ props.website.title }}' and
           description '{{ props.website.description ?? 'None' }}'?
         </p>
         <VRow id="website-delete-dialog-answer-buttons">
