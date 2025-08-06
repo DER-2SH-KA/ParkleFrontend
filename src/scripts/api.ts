@@ -8,13 +8,18 @@ import type {
   WebsiteUpdateDto,
 } from './declaration'
 
-const websitesApi = '/websites'
-
 axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
 axios.defaults.timeout = 10000
 
 const authLoginApi = '/auth/login'
 const registrationApi = '/auth/registration'
+const authUpdateApi = '/auth/update'
+const authDeleteApi = '/auth/delete'
+
+const websitesApi = '/websites'
+const websiteNewApi = '/websites/new'
+const websiteUpdateApi = '/websites/update'
+const websiteDeleteApi = '/websites/delete'
 
 /// Website CRUD.
 // Get webstites from all users.
@@ -55,7 +60,7 @@ export const createWebsite = async (
 ): Promise<WebsiteResponseDto | undefined> => {
   let websiteResponseDto: WebsiteResponseDto | undefined = undefined
 
-  await doPost(websitesApi + '/new', newWebsiteDto)
+  await doPost(websiteNewApi, newWebsiteDto)
     .then((result) => {
       websiteResponseDto = result.data
     })
@@ -73,7 +78,7 @@ export const updateWebsiteById = async (
 ): Promise<WebsiteResponseDto | undefined> => {
   let websiteResponseDto: WebsiteResponseDto | undefined = undefined
 
-  await doPut(websitesApi + `/${websiteId}`, newWebsiteDto)
+  await doPut(websiteUpdateApi + `/${websiteId}`, newWebsiteDto)
     .then((result) => {
       websiteResponseDto = result
     })
@@ -88,7 +93,7 @@ export const updateWebsiteById = async (
 export const deleteWebsite = async (websiteId: string): Promise<WebsiteResponseDto | undefined> => {
   let websiteResponseDto: WebsiteResponseDto | undefined = undefined
 
-  await doDelete(websitesApi + `/${websiteId}`)
+  await doDelete(websiteDeleteApi + `/${websiteId}`)
     .then((result) => {
       websiteResponseDto = result
     })
