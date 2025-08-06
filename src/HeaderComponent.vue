@@ -8,6 +8,7 @@ import { TYPE } from 'vue-toastification'
 const currentUserStore = useCurrentUserStore()
 
 const loadingDeleteAccount = ref<boolean>()
+const isShowDeleteAccountDialog = ref<boolean>()
 
 const isLogined = computed<boolean>(() => {
   return !!currentUserStore.currentUser
@@ -59,15 +60,50 @@ const deleteUser = async () => {
           <v-menu id="profile-menu" activator="parent">
             <p>User: {{ currentUserStore.currentUser?.login }}</p>
             <v-btn @click="logout()">Logout</v-btn>
-            <v-btn :loading="loadingDeleteAccount" @click="deleteUser()">Delete Account</v-btn>
+            <v-btn :loading="loadingDeleteAccount" @click="isShowDeleteAccountDialog = true"
+              >Delete Account</v-btn
+            >
           </v-menu>
         </button>
       </div>
     </div>
   </header>
+  <v-dialog id="user-delete-dialog" v-model="isShowDeleteAccountDialog" not-padding>
+    <VCol id="user-delete-column">
+      <p>Are you sure you want to delete account?</p>
+      <VRow id="website-delete-dialog-answer-buttons">
+        <VBtn @click="deleteUser()">Yes</VBtn>
+        <VBtn @click="isShowDeleteAccountDialog = false">Cancel</VBtn>
+      </VRow>
+    </VCol>
+  </v-dialog>
 </template>
 
 <style lang="scss" scoped>
+#user-delete-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  max-width: 500px;
+}
+
+#user-delete-column {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  gap: 20px;
+  background-color: var(--background-second-color-dark-theme);
+  border-radius: 20px;
+  padding: 20px;
+
+  & > p {
+    color: red;
+    font-size: 18pt;
+    text-align: center;
+  }
+}
+
 header {
   display: flex;
   flex-flow: row wrap;
