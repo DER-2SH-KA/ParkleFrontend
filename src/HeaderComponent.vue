@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
+import { deleteAccount } from './scripts/api'
+import { showAlert } from './scripts/createToasts'
+import { TYPE } from 'vue-toastification'
 
 const currentUserStore = useCurrentUserStore()
+
+const loadingDeleteAccount = ref<boolean>()
 
 const isLogined = computed<boolean>(() => {
   return !!currentUserStore.currentUser
@@ -10,6 +15,24 @@ const isLogined = computed<boolean>(() => {
 
 const logout = () => {
   currentUserStore.setCurrentUser(undefined)
+}
+
+const deleteUser = async () => {
+  loadingDeleteAccount.value = true
+
+  await deleteAccount(currentUserStore.currentUser?.id)
+    .then((result) => {
+      console.info('deleteUser', result)
+      showAlert("User's account was deleted!", TYPE.SUCCESS)
+      currentUserStore.setCurrentUser(undefined)
+    })
+    .catch((error) => {
+      console.error('deleteUser', error)
+      showAlert("User's account wasn't deleted!", TYPE.ERROR)
+    })
+    .finally(() => {
+      loadingDeleteAccount.value = false
+    })
 }
 </script>
 
@@ -36,6 +59,7 @@ const logout = () => {
           <v-menu id="profile-menu" activator="parent">
             <p>User: {{ currentUserStore.currentUser?.login }}</p>
             <v-btn @click="logout()">Logout</v-btn>
+            <v-btn :loading="loadingDeleteAccount" @click="deleteUser()">Delete Account</v-btn>
           </v-menu>
         </button>
       </div>

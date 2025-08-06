@@ -13,16 +13,19 @@ axios.defaults.timeout = 10000
 
 const authLoginApi = '/auth/login'
 const registrationApi = '/auth/registration'
-const authUpdateApi = '/auth/update'
-const authDeleteApi = '/auth/delete'
+// const userUpdateApi = '/auth/update'
+const userDeleteApi = '/auth/delete'
 
 const websitesApi = '/websites'
 const websiteNewApi = '/websites/new'
 const websiteUpdateApi = '/websites/update'
 const websiteDeleteApi = '/websites/delete'
 
+// TODO: DELETE FROM PRODUCTION VERSION. ONLY FOR TESTS!
 /// Website CRUD.
-// Get webstites from all users.
+/** Get webstites from all users.
+ * @returns {WebsiteResponseDto[]} List of Websites.
+ */
 export const getAllWebsites = async (): Promise<WebsiteResponseDto[]> => {
   let websiteRepsponseDtos: WebsiteResponseDto[] = []
 
@@ -38,7 +41,10 @@ export const getAllWebsites = async (): Promise<WebsiteResponseDto[]> => {
   return websiteRepsponseDtos ?? undefined
 }
 
-// Get websites by user ID.
+/** Get websites by user ID.
+ * @param {string} userId User ID.
+ * @returns {WebsiteResponseDto[]} List of user's Websites.
+ */
 export const getWebsitesByUserId = async (userId: string): Promise<WebsiteResponseDto[]> => {
   let websiteRepsponseDtos: WebsiteResponseDto[] = []
 
@@ -54,7 +60,10 @@ export const getWebsitesByUserId = async (userId: string): Promise<WebsiteRespon
   return websiteRepsponseDtos ?? undefined
 }
 
-// Create website.
+/** Create website.
+ * @param {WebsiteCreateDto} newWebsiteDto DTO for create new website.
+ * @returns {WebsiteResponseDto} DTO of created website.
+ */
 export const createWebsite = async (
   newWebsiteDto: WebsiteCreateDto,
 ): Promise<WebsiteResponseDto | undefined> => {
@@ -71,7 +80,11 @@ export const createWebsite = async (
   return websiteResponseDto ?? undefined
 }
 
-// Update website by DTO.
+/** Update website by DTO..
+ * @param {string} websiteId website ID which update.
+ * @param {WebsiteUpdateDto} newWebsiteDto DTO with new information for update.
+ * @returns {WebsiteResponseDto} Updated User DTO.
+ */
 export const updateWebsiteById = async (
   websiteId: string,
   newWebsiteDto: WebsiteUpdateDto,
@@ -89,7 +102,9 @@ export const updateWebsiteById = async (
   return websiteResponseDto ?? undefined
 }
 
-// Delete website.
+/** Delete website.
+ * @param {string} websiteId website ID which delete.
+ */
 export const deleteWebsite = async (websiteId: string): Promise<WebsiteResponseDto | undefined> => {
   let websiteResponseDto: WebsiteResponseDto | undefined = undefined
 
@@ -105,7 +120,10 @@ export const deleteWebsite = async (websiteId: string): Promise<WebsiteResponseD
 }
 
 /// User CRUD.
-// Sign In User.
+/** Sign In User.
+ * @param {UserAuthDto} userAuthDto user DTO for login.
+ * @returns {UserResponseDto} created User DTO.
+ */
 export const authorize = async (userAuthDto: UserAuthDto): Promise<UserResponseDto | undefined> => {
   let authorizedUser: UserResponseDto | undefined = undefined
 
@@ -121,7 +139,10 @@ export const authorize = async (userAuthDto: UserAuthDto): Promise<UserResponseD
   return authorizedUser ?? undefined
 }
 
-// Sign Up User.
+/** Sign Up User.
+ * @param {UserCreateDto} userCreateDto user DTO for registration.
+ * @returns {UserResponseDto} created User DTO.
+ */
 export const registration = async (
   userCreateDto: UserCreateDto,
 ): Promise<UserResponseDto | undefined> => {
@@ -137,6 +158,33 @@ export const registration = async (
 
   console.info('Created User Response DTO:', createdUser)
   return createdUser ?? undefined
+}
+
+/** Delete user's account.
+ * @param {string} userId user's ID.
+ * @returns {UserResponseDto} deleted User DTO.
+ */
+export const deleteAccount = async (
+  userId: string | undefined,
+): Promise<UserResponseDto | undefined> => {
+  let result: UserResponseDto | undefined = undefined
+
+  if (userId !== undefined) {
+    await doDelete(userDeleteApi + `/${userId}`)
+      .then((response) => {
+        console.info("User's account was deleted", response)
+        result = response
+      })
+      .catch((error) => {
+        console.error("User's accoune was't deleted", error)
+      })
+  } else {
+    console.info('User is not authorized')
+    return undefined
+  }
+
+  console.info('User account DTO', result)
+  return result
 }
 
 // CRUD functions.
