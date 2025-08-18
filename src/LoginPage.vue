@@ -76,7 +76,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 </script>
 
 <template>
-  <main class="main-component">
+  <main>
     <section>
       <VForm
         class="sign-fields"
@@ -116,19 +116,25 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 </template>
 
 <style lang="scss">
-.main-component {
+main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 
   flex: 1 0 auto;
+}
+
+section {
+  width: 70%;
+  max-width: 700px;
 }
 
 #login-container {
   background-color: var(--text-color-dark-theme);
   border-radius: 20px;
-  width: 700px;
+  // width: 700px;
 }
 
 #login-column {
@@ -139,8 +145,12 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 }
 
 @media (max-width: 768px) {
-  #login-container {
+  /*#login-container {
     max-width: 80%;
+  }*/
+
+  section {
+    width: 90%;
   }
 }
 </style>
