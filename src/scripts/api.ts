@@ -53,11 +53,31 @@ export const getWebsitesByUserId = async (userId: string): Promise<WebsiteRespon
       websiteRepsponseDtos = result.data
     })
     .catch((error) => {
-      console.error('getAllWebsites', error)
+      console.error('getWebsitesByUserId: ', error)
     })
 
   console.info(websiteRepsponseDtos)
   return websiteRepsponseDtos ?? undefined
+}
+
+/**
+ * Get websites by user login.
+ * @param {string} userLogin User login.
+ * @returns {WebsiteResponseDto[]} List of user's websites.
+ */
+export const getWebsitesByUserLogin = async (userLogin: string): Promise<WebsiteResponseDto[]> => {
+  let websiteResponseDtos: WebsiteResponseDto[] = []
+
+  await doGet(websitesApi + `/user/${userLogin}`)
+    .then((result) => {
+      websiteResponseDtos = result.data
+    })
+    .catch((error) => {
+      console.error('getWebsitesByUserLogin: ', error)
+    })
+
+  console.info(websiteResponseDtos)
+  return websiteResponseDtos ?? undefined
 }
 
 /** Create website.

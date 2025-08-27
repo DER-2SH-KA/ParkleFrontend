@@ -19,7 +19,7 @@ import MainPage from './MainPage.vue'
 import LoginPage from './LoginPage.vue'
 import RegistrationPage from './RegistrationPage.vue'
 import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
-import { getWebsitesByUserId } from './scripts/api'
+import { getWebsitesByUserLogin } from './scripts/api'
 
 const app = createApp(App)
 
@@ -78,7 +78,7 @@ currentUserStore.$onAction(async ({ name, args }) => {
     if (!!user) {
       console.log('Triggered `setCurrentUser` function...')
 
-      await getWebsitesByUserId(user.id)
+      await getWebsitesByUserLogin(user.login)
         .then((result) => {
           websitesStore.websites = result
         })
