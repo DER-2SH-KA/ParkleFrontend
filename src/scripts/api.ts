@@ -10,11 +10,14 @@ import type {
 
 axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
 axios.defaults.timeout = 10000
+axios.defaults.withCredentials = true
 
 const authLoginApi = '/auth/login'
 const registrationApi = '/auth/registration'
 // const userUpdateApi = '/auth/update'
 const userDeleteApi = '/auth/delete'
+
+const isAuthedApi = '/auth/isAuthed'
 
 const websitesApi = '/websites'
 const websiteNewApi = '/websites/new'
@@ -140,7 +143,23 @@ export const deleteWebsite = async (websiteId: string): Promise<WebsiteResponseD
 }
 
 /// User CRUD.
-/** Sign In User.
+
+export const isAuthedRequest = async (): Promise<UserResponseDto | undefined> => {
+  let isAuthorizedUser: UserResponseDto | undefined = undefined
+
+  await doGet(isAuthedApi)
+    .then((response) => {
+      isAuthorizedUser = response.data
+      console.info("isAuthedRequest 'then' response =>", response)
+    })
+    .catch((err) => {
+      console.error('isAuthedRequest error => ', err)
+    })
+
+  return isAuthorizedUser
+}
+
+/** Sign In User. POST.
  * @param {UserAuthDto} userAuthDto user DTO for login.
  * @returns {UserResponseDto} created User DTO.
  */
@@ -159,7 +178,7 @@ export const authorize = async (userAuthDto: UserAuthDto): Promise<UserResponseD
   return authorizedUser ?? undefined
 }
 
-/** Sign Up User.
+/** Sign Up User. POST.
  * @param {UserCreateDto} userCreateDto user DTO for registration.
  * @returns {UserResponseDto} created User DTO.
  */
@@ -180,7 +199,7 @@ export const registration = async (
   return createdUser ?? undefined
 }
 
-/** Delete user's account.
+/** Delete user's account. DELETE.
  * @param {string} userId user's ID.
  * @returns {UserResponseDto} deleted User DTO.
  */
