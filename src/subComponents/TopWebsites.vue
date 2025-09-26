@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { WebsiteResponseDto } from '@/scripts/declaration'
+import type { UserResponseDto, WebsiteResponseDto } from '@/scripts/declaration'
 import WebsiteItem from './WebsiteItem.vue'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { sortWebsiteByName } from '../scripts/utils'
-import { deleteWebsite } from '@/scripts/api'
-import { useWebsitesStore } from '@/scripts/stores/piniaStore'
+import { deleteWebsite, getWebsitesByUserLogin, isAuthedRequest } from '@/scripts/api'
+import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
@@ -13,6 +13,7 @@ const props = defineProps<{
   isEditingModeActive: boolean
 }>()
 
+const currentUserStore = useCurrentUserStore()
 const websitesStore = useWebsitesStore()
 
 const sortedWebsites = computed<WebsiteResponseDto[]>(() => {
@@ -47,6 +48,25 @@ const removeWebsiteById = async (id: string) => {
       showAlert(`Website wasn't delete`, TYPE.ERROR)
     })
 }
+
+onMounted(async () => {
+  let isAuthedUser: UserResponseDto | undefined = undefined
+
+  await isAuthedRequest()
+    .then(async (result) => {
+      isAuthedUser = result
+      console.info('onMounted TopWebsites then =>', result)
+
+      currentUserStore.currentUser = isAuthedUser
+
+      websitesStore.websites = !!currentUserStore.currentUser
+        ? await getWebsitesByUserLogin(currentUserStore.currentUser.login)
+        : []
+    })
+    .catch((err) => {
+      console.error('onMounted TopWebsites error =>', err)
+    })
+})
 </script>
 
 <template>
