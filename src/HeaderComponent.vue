@@ -50,11 +50,14 @@ const deleteUserDenied = () => {
 
 <template>
   <header>
-    <div id="logo">
-      <img src="./resources/img/png/icon.png" alt="Icon" />
-      <p>Parkle</p>
+    <div id="div-left-side-of-header">
+      <div id="logo">
+        <img src="./resources/img/png/icon.png" alt="Icon" />
+        <p>Parkle</p>
+      </div>
+      <router-link id="rl-about-website" to="/about">About</router-link>
     </div>
-    <div id="empty"></div>
+    <span></span>
     <div id="authButtonsContainer">
       <div v-if="!isLogined" class="authButtons">
         <button class="authButton">
@@ -120,6 +123,24 @@ header {
   align-items: center;
   justify-content: space-between;
   background-color: var(--background-second-color-dark-theme);
+}
+
+#div-left-side-of-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+#rl-about-website {
+  margin-left: 20px;
+
+  color: white;
+  background-color: transparent;
+
+  text-decoration: underline;
+  text-align: center;
+  font-size: 18pt;
 }
 
 #logo {

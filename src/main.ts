@@ -20,6 +20,7 @@ import LoginPage from './LoginPage.vue'
 import RegistrationPage from './RegistrationPage.vue'
 import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
 import { getWebsitesByUserLogin } from './scripts/api'
+import AboutSite from './AboutSite.vue'
 
 const app = createApp(App)
 
@@ -30,6 +31,7 @@ const routes = [
   { path: '/', component: MainPage },
   { path: '/auth/registration', component: RegistrationPage },
   { path: '/auth/login', component: LoginPage },
+  { path: '/about', component: AboutSite },
 ]
 const router = createRouter({
   history: createWebHistory(),
