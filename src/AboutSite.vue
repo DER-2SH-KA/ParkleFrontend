@@ -80,8 +80,6 @@ main {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-
-  background-color: aqua;
 }
 
 .about-section {
@@ -91,7 +89,6 @@ main {
   align-items: start;
 
   color: white;
-  background-color: red;
   margin: 50px;
 
   & > h2 {
