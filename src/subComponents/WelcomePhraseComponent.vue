@@ -3,15 +3,11 @@ import { chooseRandomStringItemFromList } from '../scripts/utils'
 import { ref, onMounted } from 'vue'
 
 const welcomePhrases = [
-  'Добро Пожаловать!',
-  'Давно Не Виделись!',
-  'Я Рад Тебя Видеть!',
-  'С Возвращением!',
+  'Long Time No See!',
+  "I'm Glad To See You!",
   'Welcome Back!',
-  'おはよう!',
-  'おかえりなさい!',
-  '大家好!',
-  '欢迎',
+  'Hello!',
+  'Hi!',
 ]
 const welcomePhrase = ref<string>('')
 
