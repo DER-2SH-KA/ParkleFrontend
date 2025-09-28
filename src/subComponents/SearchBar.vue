@@ -5,7 +5,7 @@ const model = defineModel()
 <template>
   <div class="search-bar-div">
     <v-text-field
-      label="Search"
+      label="Search by saved website..."
       placeholder="Website name or url"
       style="font-size: 18pt"
       variant="solo"
