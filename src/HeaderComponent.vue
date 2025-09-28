@@ -53,7 +53,7 @@ const deleteUserDenied = () => {
     <div id="div-left-side-of-header">
       <div id="logo">
         <img src="./resources/img/png/icon.png" alt="Icon" />
-        <p>Parkle</p>
+        <router-link id="logo-title" to="/">Parkle</router-link>
       </div>
       <router-link id="rl-about-website" to="/about">About</router-link>
     </div>
@@ -149,17 +149,18 @@ header {
   align-items: center;
   width: auto;
   margin-left: 20px;
-}
 
-#logo > img {
-  width: 30pt;
-  aspect-ratio: 1;
-}
+  & > img {
+    width: 30pt;
+    aspect-ratio: 1;
+  }
 
-#logo > p {
-  color: var(--text-color-dark-theme);
-  font-size: 28pt;
-  margin-left: 10px;
+  & > #logo-title {
+    color: var(--text-color-dark-theme);
+    text-decoration: none;
+    font-size: 28pt;
+    margin-left: 10px;
+  }
 }
 
 #authButtonsContainer {
