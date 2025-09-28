@@ -158,6 +158,9 @@ header {
   background-color: transparent;
   border: 2px var(--text-color-dark-theme) solid;
   border-radius: 5px;
+
+  font-size: 14pt;
+
   padding: 5px 10px 5px 10px;
   margin: 10px 10px 10px 0px;
 
@@ -189,6 +192,12 @@ header {
 #profile-menu {
   color: white;
   font-size: 14pt;
+}
+
+@media (max-width: 768px) {
+  .authButton {
+    font-size: 12pt;
+  }
 }
 
 @keyframes scale-to-one-dot-one {

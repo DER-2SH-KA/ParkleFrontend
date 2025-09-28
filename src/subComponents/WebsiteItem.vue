@@ -79,7 +79,7 @@ const onDeleteWebsiteDenie = () => {
   color: var(--text-color-dark-theme);
   text-align: center;
   text-decoration: none;
-  font-size: 14pt;
+  font-size: 16pt;
 
   &::first-letter {
     color: v-bind(fLetterColor);
@@ -129,6 +129,10 @@ const onDeleteWebsiteDenie = () => {
 }
 
 @media (max-width: 768px) {
+  .link-name {
+    font-size: 14pt;
+  }
+
   #website-delete-dialog {
     max-width: 90%;
   }
