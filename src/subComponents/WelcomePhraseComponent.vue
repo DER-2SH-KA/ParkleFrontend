@@ -33,10 +33,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 #welcome-phrase {
   color: var(--text-color-dark-theme);
-  text-align: center;
-  font-size: 32pt;
-  padding: 10px 20px;
   border: 3px transparent solid;
+  text-align: center;
+  font-size: 34pt;
+  padding: 10px 20px;
 
   &::first-letter {
     color: #6f00ff;
@@ -45,6 +45,12 @@ onMounted(() => {
   &:hover {
     border-radius: 20px;
     animation: outline 100ms ease-out forwards;
+  }
+}
+
+@media (max-width: 768px) {
+  #welcome-phrase {
+    font-size: 32pt;
   }
 }
 
