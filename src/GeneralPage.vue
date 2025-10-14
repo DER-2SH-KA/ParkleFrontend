@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import WelcomePhraseComponent from './subComponents/WelcomePhraseComponent.vue'
 import SearchBar from './subComponents/SearchBar.vue'
-import TopWebsites from './subComponents/TopWebsites.vue'
+import WebsitesBlock from './subComponents/WebsitesBlock.vue'
 import { ref } from 'vue'
 import WebsiteEditor from './subComponents/WebsiteEditor.vue'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
@@ -43,7 +43,7 @@ function showAddModeDialog() {
         <WebsiteEditor v-model="isAddingModeActive" />
       </section>
       <section>
-        <TopWebsites
+        <WebsitesBlock
           id="top-websites"
           v-model="searchBarText"
           :is-editing-mode-active="isEditingModeActive"
