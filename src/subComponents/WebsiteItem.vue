@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import type { WebsiteResponseDto } from '@/scripts/declaration'
+import WebsiteEditor from './WebsiteEditor.vue'
 
 const props = defineProps<{
   website: WebsiteResponseDto
@@ -11,9 +12,16 @@ const emits = defineEmits<{
   onDelete: [id: string]
 }>()
 
+const linkFetchFavicon = 'https://www.google.com/s2/favicons?domain=' + props.website.url + '&sz=32'
+
+const isEditingBegun = ref<boolean>(false)
 const isActiveDeleteDialog = ref<boolean>(false)
 
 const fLetterColor = props.website.hexColor
+
+const onEditWebsite = () => {
+  isEditingBegun.value = true
+}
 
 const onDeleteWebsite = () => {
   isActiveDeleteDialog.value = true
@@ -30,69 +38,113 @@ const onDeleteWebsiteDenie = () => {
 </script>
 
 <template>
-  <div class="website-item">
-    <a
-      class="link-name"
-      :href="props.website.url"
-      :title="website.description ? website.description : website.title"
-      target="_blank"
-      >{{ props.website.title }}</a
-    >
-    <VBtn
-      class="link-delete"
-      @click="onDeleteWebsite"
-      variant="plain"
-      size="small"
-      rounded="lg"
-      :style="`display: ${props.isEditingModeActive ? 'block' : 'none'}; color: red;`"
-      >&otimes;</VBtn
-    >
+  <div class="website-item-containter">
+    <div class="website-item">
+      <!-- Website favicon -->
+      <img :src="linkFetchFavicon" alt=">" width="24" height="24" />
 
-    <v-dialog id="website-delete-dialog" v-model="isActiveDeleteDialog" not-padding>
-      <VCol id="website-delete-items">
-        <p>
-          Are you sure you want to delete the site with title '{{ props.website.title }}' and
-          description '{{ props.website.description ?? 'None' }}'?
-        </p>
-        <VRow id="website-delete-dialog-answer-buttons">
-          <VBtn @click="onDeleteWebsiteAccept()">Yes</VBtn>
-          <VBtn @click="onDeleteWebsiteDenie()">Cancel</VBtn>
-        </VRow>
-      </VCol>
-    </v-dialog>
+      <!-- Website href -->
+      <a
+        class="link-name"
+        :href="props.website.url"
+        :title="website.description ? website.description : website.title"
+        target="_blank"
+        >{{ props.website.title }}</a
+      >
+
+      <!-- Website settings buttons -->
+      <div class="website-item-buttons" v-if="props.isEditingModeActive">
+        <!-- Edit website button -->
+        <VBtn
+          class="no-select website-item-button"
+          @click="onEditWebsite"
+          variant="plain"
+          size="small"
+          rounded="0"
+        >
+          <v-icon icon="$pencil" color="white" size="24" />
+        </VBtn>
+
+        <!-- Delete website button -->
+        <VBtn
+          class="no-select website-item-button"
+          @click="onDeleteWebsite"
+          variant="plain"
+          size="small"
+          rounded="0"
+        >
+          <v-icon icon="$delete" color="red" size="24" />
+        </VBtn>
+      </div>
+    </div>
   </div>
+
+  <!-- Website Editor Dialog -->
+  <WebsiteEditor :website="website" v-model="isEditingBegun" />
+
+  <!-- Website Delete Dialog -->
+  <v-dialog id="website-delete-dialog" v-model="isActiveDeleteDialog" not-padding>
+    <VCol id="website-delete-items">
+      <p>
+        Вы уверены, что хотите удалить сайт &quot;{{ props.website.title }}&quot; с описанием
+        &quot;{{ props.website.description ?? 'None' }}&quot;?
+      </p>
+      <VRow id="website-delete-dialog-answer-buttons">
+        <VBtn @click="onDeleteWebsiteAccept()">Да</VBtn>
+        <VBtn @click="onDeleteWebsiteDenie()">Отмена</VBtn>
+      </VRow>
+    </VCol>
+  </v-dialog>
 </template>
 
 <style lang="scss">
-.website-item {
+.website-item-containter {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  flex: 1 1 0px;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
   background-color: var(--background-item-color-dark-theme);
   border-radius: 5px;
-  padding: 5px 10px;
   margin: 5px;
+  padding: 5px;
+  height: auto;
+}
+
+.website-item {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .link-name {
+  display: block;
   color: var(--text-color-dark-theme);
   text-align: center;
   text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-size: 16pt;
+  overflow-wrap: break-word;
+  width: 100%;
 
   &::first-letter {
     color: v-bind(fLetterColor);
   }
 }
 
-.link-delete {
-  color: red;
-  text-align: end;
-  text-decoration: none;
-  font-size: 14pt;
-  padding: 0px 3px;
-  margin-left: 10px;
+.website-item-buttons {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.website-item-button {
+  min-width: 0px !important;
+  padding: 0 4px !important;
 }
 
 #website-delete-dialog {

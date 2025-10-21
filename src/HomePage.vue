@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import GeneralPage from './GeneralPage.vue'
-import HeaderComponent from './HeaderComponent.vue'
+import HomePageMain from './HomePageMain.vue'
+import HeaderComponent from './subComponents/HeaderComponent.vue'
 </script>
 
 <template>
   <HeaderComponent class="header-component" />
-  <GeneralPage class="main-component" />
+  <HomePageMain class="main-component" />
 </template>
 
 <style lang="scss">

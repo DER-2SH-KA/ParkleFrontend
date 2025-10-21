@@ -70,23 +70,23 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="top-websites">
-    <div v-for="website in websitesToShow" :key="website.id">
-      <WebsiteItem
-        :website="website"
-        :is-editing-mode-active="props.isEditingModeActive"
-        @on-delete="(id) => removeWebsiteById(id)"
-      />
-    </div>
+  <div class="website-item-from-block">
+    <WebsiteItem
+      v-for="website in websitesToShow"
+      :key="website.id"
+      :website="website"
+      :is-editing-mode-active="props.isEditingModeActive"
+      @on-delete="(id) => removeWebsiteById(id)"
+    />
   </div>
 </template>
 
 <style lang="scss">
-#top-websites {
+.website-item-from-block {
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
-  align-items: start;
-  /*background-color: red;*/
+  position: absolute;
+  top: 100%;
+  width: 100%;
 }
 </style>

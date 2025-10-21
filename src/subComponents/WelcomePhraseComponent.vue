@@ -3,11 +3,11 @@ import { chooseRandomStringItemFromList } from '../scripts/utils'
 import { ref, onMounted } from 'vue'
 
 const welcomePhrases = [
-  'Long Time No See!',
-  "I'm Glad To See You!",
-  'Welcome Back!',
-  'Hello!',
-  'Hi!',
+  'Давно не виделись!',
+  'Рад тебя видеть!',
+  'Добро пожаловать!',
+  'Привет!',
+  'Здравствуйте!',
 ]
 const welcomePhrase = ref<string>('')
 
@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <p id="welcome-phrase" @click="setRandomWelcomePhrase()">
+  <p id="welcome-phrase" class="no-select" @click="setRandomWelcomePhrase()">
     <b>{{ welcomePhrase }}</b>
   </p>
 </template>
@@ -41,22 +41,11 @@ onMounted(() => {
   &::first-letter {
     color: #6f00ff;
   }
-
-  &:hover {
-    border-radius: 20px;
-    animation: outline 100ms ease-out forwards;
-  }
 }
 
 @media (max-width: 768px) {
   #welcome-phrase {
     font-size: 32pt;
-  }
-}
-
-@keyframes outline {
-  to {
-    border: 3px var(--text-color-dark-theme) solid;
   }
 }
 </style>

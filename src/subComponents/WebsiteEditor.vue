@@ -1,12 +1,16 @@
 <script lang="ts" setup>
-import type { WebsiteCreateDto } from '@/scripts/declaration'
-import { ref } from 'vue'
-import { createWebsite } from '@/scripts/api'
+import type { WebsiteCreateDto, WebsiteResponseDto, WebsiteUpdateDto } from '@/scripts/declaration'
+import { onMounted, ref } from 'vue'
+import { createWebsite, updateWebsiteById } from '@/scripts/api'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
 const model = defineModel<boolean>()
+
+const props = defineProps<{
+  website: WebsiteResponseDto | undefined
+}>()
 
 const currentUserStore = useCurrentUserStore()
 const websitesStore = useWebsitesStore()
@@ -16,7 +20,7 @@ const loading = ref<boolean>(false)
 const title = ref<string>('')
 const description = ref<string>('')
 const url = ref<string>('')
-const hex = ref<string>('')
+const hex = ref<string>('#')
 
 const isFormValid = ref<boolean | null>(null)
 
@@ -66,33 +70,72 @@ const rules = {
 }
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-async function createWebsiteFromAddDialog(event: Event) {
-  console.log('I am called!')
+async function saveWebsiteFromAddDialog(event: Event) {
   loading.value = true
 
-  const websiteCreateDto: WebsiteCreateDto = {
-    userId: currentUserStore.currentUser?.id ? currentUserStore.currentUser.id : '',
-    title: title.value ? title.value : '',
-    description: description.value,
-    url: url.value ? url.value : '',
-    hexColor: hex.value ? hex.value : '',
+  if (props.website === undefined) {
+    console.info('Starting submiting and send create website!')
+
+    const websiteCreateDto: WebsiteCreateDto = {
+      userId: currentUserStore.currentUser?.id ? currentUserStore.currentUser.id : '',
+      title: title.value ? title.value : '',
+      description: description.value,
+      url: url.value ? url.value : '',
+      hexColor: hex.value ? hex.value : '',
+    }
+
+    await createWebsite(websiteCreateDto)
+      .then((result) => {
+        if (!!result) {
+          websitesStore.websites.push(result)
+          console.info('Website was created', result)
+          showAlert('Website was added', TYPE.SUCCESS)
+
+          clearFields()
+          model.value = false
+        }
+      })
+      .catch((error) => {
+        console.error('crateWebsite', error)
+        showAlert("Website wasn't created", TYPE.ERROR)
+      })
+  } else {
+    console.info('Starting submiting and send update website!')
+
+    const websiteUpdateDto: WebsiteUpdateDto = {
+      userId: props.website.userId,
+      title: title.value,
+      description: description.value ?? '',
+      url: url.value,
+      hexColor: hex.value,
+    }
+
+    await updateWebsiteById(props.website.id, websiteUpdateDto)
+      .then((result) => {
+        if (!!result) {
+          const websiteToUpdate: WebsiteResponseDto | undefined = websitesStore.websites.find(
+            (w) => w == props.website,
+          )
+
+          if (websiteToUpdate !== undefined) {
+            websiteToUpdate.title = title.value
+            websiteToUpdate.description = description.value ?? ''
+            websiteToUpdate.url = url.value
+            websiteToUpdate.hexColor = hex.value
+          }
+
+          console.info('Website was updated!', result)
+          showAlert('Website was updated!', TYPE.SUCCESS)
+
+          fillFields()
+          model.value = false
+        }
+      })
+      .catch((err) => {
+        console.error('crateWebsite', err)
+        showAlert("Website wasn't created", TYPE.ERROR)
+      })
   }
-
-  await createWebsite(websiteCreateDto)
-    .then((result) => {
-      if (!!result) {
-        websitesStore.websites.push(result)
-        console.info('Website was created', result)
-        showAlert('Website was added', TYPE.SUCCESS)
-        model.value = false
-      }
-    })
-    .catch((error) => {
-      console.error('crateWebsite', error)
-      showAlert("Website wasn't created", TYPE.ERROR)
-    })
-
-  clearFields()
   loading.value = false
 }
 
@@ -107,15 +150,30 @@ function clearFields() {
   url.value = ''
   hex.value = ''
 }
+
+function fillFields() {
+  if (props.website !== undefined) {
+    title.value = props.website.title
+    description.value = props.website.description ?? ''
+    url.value = props.website.url
+    hex.value = props.website.hexColor
+  } else {
+    clearFields()
+  }
+}
+
+onMounted(() => {
+  fillFields()
+})
 </script>
 
 <template>
-  <VDialog id="website-editor-dialog" v-model="model">
+  <v-dialog id="website-editor-dialog" v-model="model" not-padding>
     <VForm
       id="website-editor"
       v-model="isFormValid"
       validate-on="input"
-      @submit.prevent="createWebsiteFromAddDialog"
+      @submit.prevent="saveWebsiteFromAddDialog"
     >
       <VCol id="website-editor-items">
         <VTextField
@@ -151,10 +209,10 @@ function clearFields() {
         />
         <div id="show-hex-color" :style="`background-color: ${hex};`"></div>
         <VBtn :loading="loading" :disabled="!isFormValid" text="Save" type="submit" block />
-        <VBtn @click="cancel()" text="Cancel" block />
+        <VBtn @click="cancel" text="Cancel" block />
       </VCol>
     </VForm>
-  </VDialog>
+  </v-dialog>
 </template>
 
 <style lang="scss">

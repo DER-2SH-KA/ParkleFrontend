@@ -8,14 +8,16 @@ import { createWebHistory, createRouter } from 'vue-router'
 
 import Toast, { type PluginOptions, POSITION } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+
 import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import { createVuetify } from 'vuetify'
 import * as directives from 'vuetify/directives'
+import { mdiMagnify, mdiCog, mdiDelete, mdiPencil } from '@mdi/js'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 
 import { ru } from 'vuetify/locale'
-import MainPage from './MainPage.vue'
+import HomePage from './HomePage.vue'
 import LoginPage from './LoginPage.vue'
 import RegistrationPage from './RegistrationPage.vue'
 import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
@@ -28,7 +30,7 @@ const pinia = createPinia()
 
 // Router settings.
 const routes = [
-  { path: '/', component: MainPage },
+  { path: '/', component: HomePage },
   { path: '/auth/registration', component: RegistrationPage },
   { path: '/auth/login', component: LoginPage },
   { path: '/about', component: AboutSite },
@@ -48,7 +50,13 @@ const toastOptions: PluginOptions = {
 const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
-    aliases,
+    aliases: {
+      ...aliases,
+      magnify: mdiMagnify,
+      cog: mdiCog,
+      pencil: mdiPencil,
+      delete: mdiDelete,
+    },
     sets: {
       mdi,
     },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FooterComponent from './FooterComponent.vue'
+import FooterComponent from './subComponents/FooterComponent.vue'
 import { RouterView } from 'vue-router'
 </script>
 
@@ -13,5 +13,9 @@ import { RouterView } from 'vue-router'
   position: sticky;
   bottom: 0;
   flex: 0 0 auto;
+}
+
+.no-select {
+  user-select: none;
 }
 </style>

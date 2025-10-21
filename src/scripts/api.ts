@@ -114,7 +114,7 @@ export const updateWebsiteById = async (
 ): Promise<WebsiteResponseDto | undefined> => {
   let websiteResponseDto: WebsiteResponseDto | undefined = undefined
 
-  await doPut(websiteUpdateApi + `/${websiteId}`, newWebsiteDto)
+  await doPatch(websiteUpdateApi + `/${websiteId}`, newWebsiteDto)
     .then((result) => {
       websiteResponseDto = result
     })
@@ -240,6 +240,11 @@ export const doPost = async (url: string, object: any): Promise<any> => {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const doPut = async (url: string, object: any): Promise<any> => {
   return await axios.put(url, object)
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const doPatch = async (url: string, object: any): Promise<any> => {
+  return await axios.patch(url, object)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
