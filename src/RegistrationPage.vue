@@ -12,6 +12,7 @@ const router = useRouter()
 
 const loading = ref<boolean>(false)
 const passwordVisibleType = ref<string>('password')
+const passwordRepeatVisibleType = ref<string>('password')
 const login = ref<string>('')
 const email = ref<string>('')
 const password = ref<string>('')
@@ -119,62 +120,133 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
     passwordVisibleType.value = 'password'
   }
 }
+
+function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
+  if (passwordRepeatVisibleType.value == 'password') {
+    passwordRepeatVisibleType.value = 'text'
+  } else {
+    passwordRepeatVisibleType.value = 'password'
+  }
+}
 </script>
 
 <template>
   <main>
     <section>
-      <VForm
-        class="sign-fields"
-        v-model="isFormValid"
-        validate-on="input"
-        @submit.prevent="submitForm"
-      >
+      <VForm v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
         <VContainer id="registration-container">
-          <VCol id="registration-column">
-            <!-- Login -->
-            <VTextField v-model="login" :rules="loginRules" label="Login" type="text" required />
-            <!-- EMail -->
-            <VTextField v-model="email" :rules="emailRules" label="Email" type="email" required />
-            <!-- Password 1 -->
-            <VRow>
+          <v-row id="registration-column" class="pa-0 ma-0">
+            <v-col cols="12" class="pa-0 ma-0">
+              <!-- Login -->
               <VTextField
-                v-model="password"
-                :rules="passwordRules"
-                :type="passwordVisibleType"
-                label="Password"
+                v-model="login"
+                :rules="loginRules"
+                placeholder="Логин..."
+                variant="solo"
+                hide-details
+                type="text"
+                bg-color="#ebebeb"
                 required
               />
-              <v-btn @click="changeTypeOfPasswordVisible" text="Show" />
-            </VRow>
-            <!-- Password 2 -->
-            <VRow>
+            </v-col>
+
+            <v-col cols="12" class="pa-0 ma-0">
+              <!-- EMail -->
               <VTextField
-                v-model="passwordRepeat"
-                :rules="repeatPasswordRules"
-                :type="passwordVisibleType"
-                label="Password repeat"
+                v-model="email"
+                :rules="emailRules"
+                placeholder="Электронная@почта.ru"
+                variant="solo"
+                hide-details
+                type="email"
+                bg-color="#ebebeb"
                 required
               />
-              <v-btn @click="changeTypeOfPasswordVisible" text="Show" />
-            </VRow>
-            <VBtn
-              :loading="loading"
-              :disabled="!isFormValid"
-              class="mt-2"
-              text="Sign Up"
-              type="submit"
-              block
-            />
-            <VBtn @click="router.go(-1)" text="Back" />
-          </VCol>
+            </v-col>
+
+            <v-col cols="12" class="pa-0 ma-0">
+              <v-row cols="12" class="pa-0 ma-0">
+                <v-col cols="10" class="pa-0 ma-0">
+                  <!-- Password 1 -->
+                  <VTextField
+                    v-model="password"
+                    :rules="passwordRules"
+                    :type="passwordVisibleType"
+                    placeholder="Пароль..."
+                    variant="solo"
+                    hide-details
+                    bg-color="#ebebeb"
+                    required
+                  />
+                </v-col>
+                <v-col cols="2" class="pa-0 ma-0">
+                  <v-btn
+                    @click="changeTypeOfPasswordVisible"
+                    text="Show"
+                    variant="outlined"
+                    height="100%"
+                    rounded="lg"
+                    style="margin-left: 5px"
+                  >
+                    <v-icon icon="$eye" color="gray" size="32" />
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+
+            <v-col cols="12" class="pa-0 ma-0">
+              <v-row class="pa-0 ma-0">
+                <v-col cols="10" class="pa-0 ma-0">
+                  <!-- Password 2 -->
+                  <VTextField
+                    v-model="passwordRepeat"
+                    :rules="repeatPasswordRules"
+                    :type="passwordRepeatVisibleType"
+                    placeholder="Повтор пароля..."
+                    variant="solo"
+                    hide-details
+                    bg-color="#ebebeb"
+                    required
+                  />
+                </v-col>
+                <v-col cols="2" class="pa-0 ma-0">
+                  <v-btn
+                    @click="changeTypeOfPasswordRepeatVisible"
+                    text="Show"
+                    variant="outlined"
+                    height="100%"
+                    rounded="lg"
+                    style="margin-left: 5px"
+                  >
+                    <v-icon icon="$eye" color="gray" size="32" />
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+
+            <v-col cols="12" class="pa-0 ma-0">
+              <VBtn
+                class="text-capitalize"
+                :loading="loading"
+                :disabled="!isFormValid"
+                text="Регистрация"
+                type="submit"
+                base-color="#6f00ff"
+                block
+              />
+            </v-col>
+
+            <v-col cols="12" class="pa-0 ma-0">
+              <VBtn class="text-capitalize" @click="router.go(-1)" text="Назад" block />
+            </v-col>
+          </v-row>
         </VContainer>
       </VForm>
     </section>
   </main>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 main {
   display: flex;
   flex-direction: column;
@@ -200,6 +272,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   gap: 10px;
 }
 
