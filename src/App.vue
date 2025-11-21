@@ -1,6 +1,20 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import FooterComponent from './subComponents/FooterComponent.vue'
 import { RouterView } from 'vue-router'
+import { ping } from './scripts/api'
+import { showAlert } from './scripts/createToasts'
+import { TYPE } from 'vue-toastification'
+
+onMounted(async () => {
+  await ping()
+    .then(() => {
+      showAlert('Сервер готов к работе!', TYPE.SUCCESS)
+    })
+    .catch(() => {
+      showAlert('Сервер не готов к работе!', TYPE.WARNING)
+    })
+})
 </script>
 
 <template>

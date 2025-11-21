@@ -17,6 +17,7 @@ const registrationApi = '/auth/registration'
 // const userUpdateApi = '/auth/update'
 const userDeleteApi = '/auth/delete'
 const userLogoutApi = '/auth/logout'
+const userPingApi = '/auth/ping'
 
 const isAuthedApi = '/auth/isAuthed'
 
@@ -164,6 +165,10 @@ export const logout = async (): Promise<undefined> => {
   await doGet(userLogoutApi).catch((err) => {
     console.error('logout error => ', err)
   })
+}
+
+export const ping = async (): Promise<undefined> => {
+  return await doGet(userPingApi)
 }
 
 /** Sign In User. POST.
