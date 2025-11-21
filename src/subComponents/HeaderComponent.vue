@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useCurrentUserStore } from '../scripts/stores/piniaStore'
-import { deleteAccount } from '../scripts/api'
+import { deleteAccount, logout } from '../scripts/api'
 import { showAlert } from '../scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
@@ -14,8 +14,16 @@ const isLogined = computed<boolean>(() => {
   return !!currentUserStore.currentUser
 })
 
-const onLogout = () => {
-  currentUserStore.setCurrentUser(undefined)
+const onLogout = async () => {
+  await logout()
+    .then(() => {
+      currentUserStore.setCurrentUser(undefined)
+
+      showAlert('Вы вышли из системы!', TYPE.SUCCESS)
+    })
+    .catch(() => {
+      showAlert('Ошибка выхода из системы!', TYPE.ERROR)
+    })
 }
 
 const deleteUser = () => {
