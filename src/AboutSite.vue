@@ -6,54 +6,54 @@ import HeaderComponent from './subComponents/HeaderComponent.vue'
   <HeaderComponent class="header-component" />
   <main>
     <section class="about-section" id="section-about-website">
-      <h2>About Website</h2>
+      <h2>О проекте</h2>
       <p>
-        This site is an analog of the bookmarks system in browsers. In the modern world of
-        information technology, there are millions of Internet resources on the Internet that we
-        would like to always have quick access to. However, the various ways of storing these links
-        in fast access in modern browsers have their drawbacks.
+        Этот сайт является аналогом системы закладок в браузерах. В современном мире информационных
+        технологий в Интернете существуют миллионы интернет-ресурсов, к которым мы хотели бы всегда
+        иметь быстрый доступ. Однако различные способы сохранения этих ссылок в быстром доступе в
+        современных браузерах имеют свои недостатки.
       </p>
       <p>
-        Bookmarks take up quite a lot of space in the upper or side panel of the browser without the
-        ability to quickly find the desired site, which spoils the user experience.
+        Закладки занимают довольно много места в верхней или боковой панели браузера без возможности
+        быстрого поиска нужного сайта, что портит работу пользователя.
       </p>
       <p>
-        Then browsers came up with "groups" and "folders" of sites that simply hid a group of
-        bookmarks under a single folder icon. This solves the problem of the fullness of the upper
-        browser panel, but it makes it much more difficult to find the desired saved site f the
-        purpose of the site is ambiguous or the user has built a bad hierarchy and the name of
-        folders and sites in them.
+        Затем браузеры придумали "группы" и "папки" сайтов, которые просто скрывали группу закладок
+        под значком одной папки. Это решает проблему переполненности верхней панели браузера, но
+        значительно затрудняет поиск нужного сохраненного сайта, если назначение сайта неоднозначно
+        или пользователь неправильно выстроил иерархию и названия папок и сайтов в них.
       </p>
       <p>
-        An important problem is the lack of synchronization of saved tabs between different
-        browsers. For some, this is an advantage, because in this way it is possible to logically
-        delineate the area of use of a particular browser without distracting from a specific task.
-        However, there are many resources that are equally often needed, regardless of the range of
-        tasks for which the user uses different browsers. In addition, this task is solved by the
-        very folders that hide a lot of unnecessary sites at the moment.
+        Важной проблемой является отсутствие синхронизации сохраненных вкладок между разными
+        браузерами. Для некоторых это является преимуществом, поскольку таким образом можно
+        логически разграничить область использования конкретного браузера, не отвлекаясь от
+        конкретной задачи. Однако существует множество ресурсов, которые одинаково часто требуются,
+        независимо от круга задач, для которых пользователь использует разные браузеры. Кроме того,
+        эту задачу решают те самые папки, которые скрывают множество ненужных на данный момент
+        сайтов.
       </p>
       <p>
-        Finally, there are cases when due to errors in the user's system or due to errors by the
-        user himself, all information about the assigned sites and groups of sites is lost. Modern
-        browsers have their own mechanisms to restore user data, for example, the "history" and the
-        recommendation of account registration in the system. However, these operations require
-        additional actions and are often linked to a specific browser, and sometimes to the user's
-        technique.
+        Наконец, бывают случаи, когда из-за ошибок в системе пользователя или из-за ошибок,
+        допущенных самим пользователем, теряется вся информация о назначенных сайтах и группах
+        сайтов. Современные браузеры имеют собственные механизмы восстановления пользовательских
+        данных, например, "историю" и рекомендацию по регистрации аккаунта в системе. Однако эти
+        операции требуют дополнительных действий и часто привязаны к конкретному браузеру, а иногда
+        и к технике пользователя.
       </p>
       <p>
-        The site you are currently on is designed to solve the above problems that the site
-        developer himself faced in real life. You can save a huge number of links to Internet
-        resources on it and have quick access to them regardless of the browser without the chance
-        of losing data due to an emergency power outage in your building.
+        Сайт, на котором вы сейчас находитесь, предназначен для решения вышеперечисленных проблем, с
+        которыми сам разработчик сайта сталкивался в реальной жизни. Вы можете сохранить на нем
+        огромное количество ссылок на интернет-ресурсы и иметь быстрый доступ к ним независимо от
+        браузера без риска потери данных из-за аварийного отключения электроэнергии в вашем здании.
       </p>
       <p>
-        <span style="font-weight: bold; text-decoration: underline"
-          >Please note that this site is a home project of a developer with the nickname DER-2SH-KA
-          on GitHub under an MIT license. This means that the developer is not responsible for any
-          damage caused by the use of the product and data loss. However, the developer will try to
-          avoid any unpleasant impressions about the service related to the technical component of
-          the project.</span
-        >
+        <span style="font-weight: bold; text-decoration: underline">
+          Пожалуйста, обратите внимание, что этот сайт является домашним проектом разработчика с
+          ником DER-2SH-KA на GitHub под лицензией MIT. Это означает, что разработчик не несет
+          ответственности за любой ущерб, причиненный использованием продукта и потерей данных.
+          Однако разработчик постарается избежать любых неприятных впечатлений о сервисе, связанных
+          с технической составляющей проекта.
+        </span>
       </p>
     </section>
   </main>
