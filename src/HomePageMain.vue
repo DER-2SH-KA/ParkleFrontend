@@ -23,6 +23,13 @@ function changeEditMode() {
   isAddingModeActive.value = false
 }
 
+function openSearchWindow() {
+  const encodedRequestText = encodeURIComponent(searchBarEngineText.value)
+
+  window.open(`https://ya.ru/search/?text=${encodedRequestText}`, '_blank')
+  window.open(`https://www.google.com/search?q=${encodedRequestText}`, '_blank')
+}
+
 function showAddModeDialog() {
   isAddingModeActive.value = true
 }
@@ -44,7 +51,17 @@ function showAddModeDialog() {
         <!-- Search Engine -->
         <v-row class="ma-0">
           <v-col class="pa-1" cols="10">
-            <SearchBar placeholder="Найти в интернете..." v-model="searchBarEngineText" />
+            <v-row class="pa-0 ma-0 mr-1 w-100" justify="space-between">
+              <v-col class="pa-0 mr-1 mx-0">
+                <SearchBar placeholder="Найти в интернете..." v-model="searchBarEngineText" />
+              </v-col>
+
+              <v-col class="pa-0 d-flex justify-end" width="auto" cols="auto">
+                <v-btn class="ma-0 h-100" @click="openSearchWindow" elevation="0">
+                  <v-icon icon="$magnify" color="gray" size="32" />
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-col>
 
           <v-col class="pa-1" cols="2">
