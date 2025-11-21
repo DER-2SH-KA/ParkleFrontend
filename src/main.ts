@@ -13,7 +13,7 @@ import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import { createVuetify } from 'vuetify'
 import * as directives from 'vuetify/directives'
-import { mdiMagnify, mdiCog, mdiDelete, mdiPencil } from '@mdi/js'
+import { mdiMagnify, mdiCog, mdiDelete, mdiPencil, mdiEye } from '@mdi/js'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 
 import { ru } from 'vuetify/locale'
@@ -56,6 +56,7 @@ const vuetify = createVuetify({
       cog: mdiCog,
       pencil: mdiPencil,
       delete: mdiDelete,
+      eye: mdiEye,
     },
     sets: {
       mdi,
