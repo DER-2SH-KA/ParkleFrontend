@@ -41,7 +41,7 @@ const onDeleteWebsiteDenie = () => {
   <div class="website-item-containter">
     <div class="website-item">
       <!-- Website favicon -->
-      <img :src="linkFetchFavicon" alt=">" width="24" height="24" />
+      <img :src="linkFetchFavicon" alt=">" width="24" height="24" style="margin-right: 5px" />
 
       <!-- Website href -->
       <a
