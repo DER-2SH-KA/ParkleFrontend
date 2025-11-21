@@ -16,6 +16,7 @@ const authLoginApi = '/auth/login'
 const registrationApi = '/auth/registration'
 // const userUpdateApi = '/auth/update'
 const userDeleteApi = '/auth/delete'
+const userLogoutApi = '/auth/logout'
 
 const isAuthedApi = '/auth/isAuthed'
 
@@ -157,6 +158,12 @@ export const isAuthedRequest = async (): Promise<UserResponseDto | undefined> =>
     })
 
   return isAuthorizedUser
+}
+
+export const logout = async (): Promise<undefined> => {
+  await doGet(userLogoutApi).catch((err) => {
+    console.error('logout error => ', err)
+  })
 }
 
 /** Sign In User. POST.
