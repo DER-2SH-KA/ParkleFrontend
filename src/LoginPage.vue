@@ -33,7 +33,7 @@ async function submitForm(event: SubmitEventPromise) {
   if (authorizedUser === undefined) {
     showAlert('Пользователь не найден или ошибка!', TYPE.ERROR)
   } else {
-    showAlert(`Привет , ${authorizedUser.login}!`, TYPE.SUCCESS)
+    showAlert(`Привет, ${authorizedUser.login}!`, TYPE.SUCCESS)
     currentUserStore.setCurrentUser(authorizedUser)
     router.go(-1)
   }
