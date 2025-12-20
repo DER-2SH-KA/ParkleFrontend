@@ -87,3 +87,11 @@ export interface WebsiteResponseDto extends IEntity {
   description?: string | undefined
   url: string
 }
+
+/**
+ * DTO for errors.
+ */
+export interface ErrorResponseDto {
+  messageForClient: string
+  messageForDev: string
+}
