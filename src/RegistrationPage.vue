@@ -7,7 +7,7 @@ import { type UserCreateDto, type UserResponseDto } from './scripts/declaration'
 import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
-import { loginRules, passwordRules } from './scripts/validationRules'
+import { loginRules, passwordRules, emailRules } from './scripts/validationRules'
 
 const router = useRouter()
 
