@@ -168,68 +168,113 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-dialog id="website-editor-dialog" v-model="model" not-padding>
+  <v-dialog id="website-editor-dialog" v-model="model">
     <VForm
-      id="website-editor"
+      class="pa-0 ma-0"
       v-model="isFormValid"
       validate-on="input"
       @submit.prevent="saveWebsiteFromAddDialog"
     >
-      <VCol id="website-editor-items">
-        <VTextField
-          v-model="title"
-          :rules="rules.title"
-          :single-line="true"
-          label="Title"
-          style="color: white"
-          block
-        />
-        <VTextField
-          v-model="description"
-          :rules="rules.description"
-          label="Description"
-          style="color: white"
-          block
-        />
-        <VTextField
-          v-model="url"
-          :rules="rules.url"
-          :single-line="true"
-          label="URL"
-          style="color: white"
-          block
-        />
-        <VTextField
-          v-model="hex"
-          :rules="rules.hex"
-          :single-line="true"
-          label="HEX color of first title letter (with #):"
-          style="color: white"
-          block
-        />
-        <div id="show-hex-color" :style="`background-color: ${hex};`"></div>
-        <VBtn :loading="loading" :disabled="!isFormValid" text="Save" type="submit" block />
-        <VBtn @click="cancel" text="Cancel" block />
-      </VCol>
+      <v-container id="website-editor">
+        <v-row id="website-editor-items" class="pa-0 ma-0">
+          <v-col class="pb-0 ma-0" cols="12">
+            <!-- Dialog title -->
+            <p style="color: white; text-align: center; font-size: 16pt"><strong>Сайт</strong></p>
+          </v-col>
+
+          <v-col class="py-0 ma-0" cols="12">
+            <!-- Website title -->
+            <VTextField
+              v-model="title"
+              :rules="rules.title"
+              placeholder="Название..."
+              type="text"
+              variant="solo"
+              bg-color="#23232A"
+              style="color: white"
+              rounded="lg"
+              required
+            />
+          </v-col>
+
+          <v-col class="py-0 ma-0" cols="12">
+            <!-- Description -->
+            <VTextField
+              v-model="description"
+              :rules="rules.description"
+              placeholder="Описание..."
+              type="text"
+              variant="solo"
+              bg-color="#23232A"
+              style="color: white"
+              rounded="lg"
+            />
+          </v-col>
+
+          <v-col class="py-0 ma-0" cols="12">
+            <!-- URL -->
+            <VTextField
+              v-model="url"
+              :rules="rules.url"
+              placeholder="URL..."
+              type="text"
+              variant="solo"
+              bg-color="#23232A"
+              style="color: white"
+              rounded="lg"
+              required
+            />
+          </v-col>
+
+          <v-col class="py-0 ma-0" cols="12">
+            <!-- HEX first letter color -->
+            <VTextField
+              v-model="hex"
+              :rules="rules.hex"
+              placeholder="Цвет первой буквы (пример: #000)..."
+              type="text"
+              variant="solo"
+              bg-color="#23232A"
+              style="color: white"
+              rounded="lg"
+              required
+            />
+          </v-col>
+
+          <v-col class="py-0 ma-0" cols="12">
+            <p style="color: white">Цвет (поле ниже):</p>
+            <div id="show-hex-color" :style="`background-color: ${hex};`"></div>
+          </v-col>
+
+          <v-col class="py-0 ma-0" cols="12">
+            <VBtn
+              :loading="loading"
+              :disabled="!isFormValid"
+              text="Сохранить"
+              type="submit"
+              base-color="#6f00ff"
+              block
+            />
+          </v-col>
+
+          <v-col class="pt-0" cols="12">
+            <VBtn @click="cancel" text="Отмена" block />
+          </v-col>
+        </v-row>
+      </v-container>
     </VForm>
   </v-dialog>
 </template>
 
 <style lang="scss">
 #website-editor-dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  max-width: 700px;
+  background-color: #00000077;
 }
 
 #website-editor {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: transparent;
   max-width: 700px;
+  width: 100%;
 }
 
 #website-editor-items {
@@ -239,6 +284,7 @@ onMounted(() => {
   background-color: var(--background-second-color-dark-theme);
   border-radius: 20px;
   padding: 20px;
+  width: 100%;
 }
 
 #show-hex-color {
