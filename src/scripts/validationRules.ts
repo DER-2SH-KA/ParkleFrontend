@@ -72,7 +72,7 @@ export const websiteRules = {
     (v: string) => {
       if (!!v.trim()) return true
 
-      return 'Название обязательно!'
+      return 'Название обязателен!'
     },
     (v: string) => {
       if (v.trim().length <= 40) return true
@@ -93,7 +93,7 @@ export const websiteRules = {
     (v: string) => {
       if (!!v.trim()) return true
 
-      return 'URL обязательно!'
+      return 'URL обязателен!'
     },
   ],
 
@@ -101,7 +101,7 @@ export const websiteRules = {
     (v: string) => {
       if (!!v.trim()) return true
 
-      return 'HEX обязательно!'
+      return 'HEX обязателен!'
     },
     (v: string) => {
       const regexpUrl: RegExp = new RegExp('^#([a-zA-Z0-9]{3}|[a-zA-Z0-9]{6})$')
