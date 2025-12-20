@@ -104,8 +104,10 @@ currentUserStore.$onAction(async ({ name, args }) => {
   if (name === 'setCurrentUser') {
     const user = args[0] // Argument of new user.
 
+    console.log('Triggered `setCurrentUser` function...')
+
     if (!!user) {
-      console.log('Triggered `setCurrentUser` function...')
+      console.log('Set new user as value for currentUserStore...')
 
       await getWebsitesByUserLogin(user.login)
         .then((result) => {
