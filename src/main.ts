@@ -22,6 +22,9 @@ import {
   mdiAccount,
   mdiAt,
   mdiBrush,
+  mdiText,
+  mdiTextLong,
+  mdiWeb,
 } from '@mdi/js'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 
@@ -69,6 +72,9 @@ const vuetify = createVuetify({
       eye: mdiEye,
       magnify: mdiMagnify,
       pencil: mdiPencil,
+      text: mdiText,
+      text_long: mdiTextLong,
+      web: mdiWeb,
     },
     sets: {
       mdi,
