@@ -136,6 +136,11 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
       <VForm v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
         <VContainer id="registration-container">
           <v-row id="registration-column" class="pa-0 ma-0">
+            <v-col cols="12" class="pa-0">
+              <!-- Title -->
+              <p style="text-align: center; font-size: 18pt"><strong>Регистрация</strong></p>
+            </v-col>
+
             <v-col cols="12" class="pa-0 ma-0">
               <!-- Login -->
               <VTextField
