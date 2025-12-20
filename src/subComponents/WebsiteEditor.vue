@@ -6,6 +6,8 @@ import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaSto
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
+import { websiteRules } from '../scripts/validationRules'
+
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
 
@@ -26,51 +28,6 @@ const hex = ref<string>('#')
 const colorPickerModel = ref<string>()
 
 const isFormValid = ref<boolean | null>(null)
-
-const regexpUrl: RegExp = new RegExp('^#([a-zA-Z0-9]{3}|[a-zA-Z0-9]{6})$')
-const rules = {
-  title: [
-    (v: string) => {
-      if (!!v.trim()) return true
-
-      return 'Title is required'
-    },
-    (v: string) => {
-      if (v.trim().length <= 100) return true
-
-      return "Title's length must be lower than 100 symbols"
-    },
-  ],
-
-  description: [
-    (v: string) => {
-      if (v.trim().length <= 255) return true
-
-      return "Description's length must be lower than 255 symbols"
-    },
-  ],
-
-  url: [
-    (v: string) => {
-      if (!!v.trim()) return true
-
-      return 'URL is required'
-    },
-  ],
-
-  hex: [
-    (v: string) => {
-      if (!!v.trim()) return true
-
-      return 'HEX value is required'
-    },
-    (v: string) => {
-      if (regexpUrl.test(v.trim())) return true
-
-      return "HEX value must be as '#fff' or '#ffffff' fromat"
-    },
-  ],
-}
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 async function saveWebsiteFromAddDialog(event: Event) {
@@ -211,7 +168,8 @@ onMounted(() => {
             <!-- Website title -->
             <VTextField
               v-model="title"
-              :rules="rules.title"
+              :rules="websiteRules.title"
+              label="Название"
               placeholder="Название..."
               append-inner-icon="$text"
               type="text"
@@ -227,7 +185,8 @@ onMounted(() => {
             <!-- Description -->
             <VTextField
               v-model="description"
-              :rules="rules.description"
+              :rules="websiteRules.description"
+              label="Описание"
               placeholder="Описание..."
               append-inner-icon="$text_long"
               type="text"
@@ -242,7 +201,8 @@ onMounted(() => {
             <!-- URL -->
             <VTextField
               v-model="url"
-              :rules="rules.url"
+              :rules="websiteRules.url"
+              label="URL"
               placeholder="URL..."
               append-inner-icon="$web"
               type="text"
@@ -258,7 +218,8 @@ onMounted(() => {
             <!-- HEX first letter color -->
             <VTextField
               v-model="hex"
-              :rules="rules.hex"
+              :rules="websiteRules.hex"
+              label="HEX (цвет)"
               placeholder="Цвет первой буквы (пример: #000)..."
               append-inner-icon="$brush"
               type="text"
