@@ -34,7 +34,7 @@ const repeatPasswordRules = passwordRules.concat([
 /* eslint-disable @typescript-eslint/no-unused-vars */
 async function submitForm(event: SubmitEventPromise) {
   if (password.value != passwordRepeat.value) {
-    showAlert("Password and repeat password aren't same!", TYPE.ERROR)
+    showAlert('Пароль и повторный пароль должны быть идентичны!', TYPE.ERROR)
     return
   }
 
@@ -49,9 +49,9 @@ async function submitForm(event: SubmitEventPromise) {
   loading.value = false
 
   if (createdUser === undefined) {
-    showAlert('User was not created!', TYPE.ERROR)
+    showAlert('Пользователь не был создан!', TYPE.ERROR)
   } else {
-    showAlert(`Welcome, ${createdUser.login}!`, TYPE.SUCCESS)
+    showAlert(`Привет, ${createdUser.login}!`, TYPE.SUCCESS)
     currentUserStore.setCurrentUser(createdUser)
     router.go(-1)
   }

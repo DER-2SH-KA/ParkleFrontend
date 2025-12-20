@@ -41,11 +41,11 @@ const removeWebsiteById = async (id: string) => {
   await deleteWebsite(id)
     .then(() => {
       websitesStore.websites = websitesStore.websites?.filter((x) => x.id != id)
-      showAlert(`Website was deleted`, TYPE.SUCCESS)
+      showAlert(`Сайт удалён успешно!`, TYPE.SUCCESS)
     })
     .catch((error) => {
       console.error('removeWebsiteById', error)
-      showAlert(`Website wasn't delete`, TYPE.ERROR)
+      showAlert(`Ошибка удаления сайта!`, TYPE.ERROR)
     })
 }
 

@@ -31,9 +31,9 @@ async function submitForm(event: SubmitEventPromise) {
   loading.value = false
 
   if (authorizedUser === undefined) {
-    showAlert('User was not found!', TYPE.ERROR)
+    showAlert('Пользователь не найден или ошибка!', TYPE.ERROR)
   } else {
-    showAlert(`Welcome back, ${authorizedUser.login}!`, TYPE.SUCCESS)
+    showAlert(`Привет , ${authorizedUser.login}!`, TYPE.SUCCESS)
     currentUserStore.setCurrentUser(authorizedUser)
     router.go(-1)
   }
@@ -144,7 +144,6 @@ section {
 #login-container {
   background-color: var(--text-color-dark-theme);
   border-radius: 20px;
-  // width: 700px;
 }
 
 #login-column {

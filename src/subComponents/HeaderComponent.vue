@@ -36,14 +36,14 @@ const onDeleteUserAccept = async () => {
     .then((result) => {
       console.info('deleteUser', result)
 
-      showAlert("User's account was deleted!", TYPE.SUCCESS)
+      showAlert('Пользователь удалён успешно!', TYPE.SUCCESS)
       currentUserStore.setCurrentUser(undefined)
 
       isShowDeleteAccountDialog.value = false
     })
     .catch((error) => {
       console.error('deleteUser', error)
-      showAlert("User's account wasn't deleted!", TYPE.ERROR)
+      showAlert('Ошибка удаления пользователя!', TYPE.ERROR)
     })
     .finally(() => {
       loadingDeleteAccount.value = false

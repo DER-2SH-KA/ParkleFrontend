@@ -49,7 +49,7 @@ async function saveWebsiteFromAddDialog(event: Event) {
         if (!!result) {
           websitesStore.websites.push(result)
           console.info('Website was created', result)
-          showAlert('Website was added', TYPE.SUCCESS)
+          showAlert('Сайт создан успешно!', TYPE.SUCCESS)
 
           clearFields()
           model.value = false
@@ -57,7 +57,7 @@ async function saveWebsiteFromAddDialog(event: Event) {
       })
       .catch((error) => {
         console.error('crateWebsite', error)
-        showAlert("Website wasn't created", TYPE.ERROR)
+        showAlert('Ошибка создания сайта!', TYPE.ERROR)
       })
   } else {
     console.info('Starting submiting and send update website!')
@@ -85,7 +85,7 @@ async function saveWebsiteFromAddDialog(event: Event) {
           }
 
           console.info('Website was updated!', result)
-          showAlert('Website was updated!', TYPE.SUCCESS)
+          showAlert('Сайт обновлён успешно!', TYPE.SUCCESS)
 
           fillFields()
           model.value = false
@@ -93,7 +93,7 @@ async function saveWebsiteFromAddDialog(event: Event) {
       })
       .catch((err) => {
         console.error('crateWebsite', err)
-        showAlert("Website wasn't created", TYPE.ERROR)
+        showAlert('Ошибка обновления сайта', TYPE.ERROR)
       })
   }
   loading.value = false
