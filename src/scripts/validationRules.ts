@@ -1,4 +1,6 @@
-export const loginRules = [
+export type ValidationRule = (value: string) => true | string
+
+export const loginRules: ValidationRule[] = [
   (value: string) => {
     if (!!value.trim()) return true
 
@@ -21,7 +23,7 @@ export const loginRules = [
   },
 ]
 
-export const passwordRules = [
+export const passwordRules: ValidationRule[] = [
   (value: string) => {
     if (!!value.trim()) return true
 
@@ -44,7 +46,7 @@ export const passwordRules = [
   },
 ]
 
-export const emailRules = [
+export const emailRules: ValidationRule[] = [
   (value: string) => {
     if (!!value.trim()) return true
 
