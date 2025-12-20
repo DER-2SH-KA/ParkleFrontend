@@ -7,6 +7,7 @@ import { authorize } from './scripts/api'
 import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
+import { loginRules, passwordRules } from './scripts/validationRules'
 
 const router = useRouter()
 
@@ -18,52 +19,6 @@ const password = ref<string>('')
 const currentUserStore = useCurrentUserStore()
 
 const isFormValid = ref<boolean | null>(null)
-
-const loginRules = [
-  (value: string) => {
-    if (!!value.trim()) return true
-
-    return 'Логин не должен быть пустым!'
-  },
-  (value: string) => {
-    const len = value.trim().length
-
-    if (len > 2 && len < 51) return true
-
-    return 'Длина логина от 3 до 50 символов!'
-  },
-  (value: string) => {
-    const regexLogin: RegExp = new RegExp('^[a-zA-Z0-9_-]{3,50}$')
-    const login = value.trim()
-
-    if (regexLogin.test(login)) return true
-
-    return 'Логин может содержать только латинские символы, _, - и цифры!'
-  },
-]
-
-const passwordRules = [
-  (value: string) => {
-    if (!!value.trim()) return true
-
-    return 'Пароль не должен быть пустым!'
-  },
-  (value: string) => {
-    const len = value.trim().length
-
-    if (len > 7 && len < 73) return true
-
-    return 'Длина пароля от 8 до 72 символов!'
-  },
-  (value: string) => {
-    const regexPassword1: RegExp = new RegExp('^[a-zA-Z0-9`=!@#$%^&*()_+№;:?\\-\\\\/|]{8,72}$')
-    const password2 = value.trim()
-
-    if (regexPassword1.test(password2)) return true
-
-    return 'Разрешены только: a-z, A-Z, 0-9, `=!@#$%^&*()_+№;:?\-\\/|!'
-  },
-]
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 async function submitForm(event: SubmitEventPromise) {
@@ -82,8 +37,6 @@ async function submitForm(event: SubmitEventPromise) {
     currentUserStore.setCurrentUser(authorizedUser)
     router.go(-1)
   }
-
-  // alert(JSON.stringify(authorizedUser, null, 2))
 }
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -201,10 +154,6 @@ section {
 }
 
 @media (max-width: 768px) {
-  /*#login-container {
-    max-width: 80%;
-  }*/
-
   section {
     width: 90%;
   }
