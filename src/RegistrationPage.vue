@@ -159,12 +159,19 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
                 text="Регистрация"
                 type="submit"
                 base-color="#6f00ff"
+                style="font-size: 12pt"
                 block
               />
             </v-col>
 
             <v-col cols="12" class="pa-0 ma-0">
-              <VBtn class="text-capitalize" @click="router.go(-1)" text="Назад" block />
+              <VBtn
+                class="text-capitalize"
+                @click="router.go(-1)"
+                text="Назад"
+                style="font-size: 12pt"
+                block
+              />
             </v-col>
           </v-row>
         </VContainer>
