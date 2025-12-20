@@ -23,11 +23,13 @@ const currentUserStore = useCurrentUserStore()
 
 const isFormValid = ref<boolean | null>(null)
 
-const repeatPasswordRules = passwordRules.concat((value: string) => {
-  if (password.value.trim() == value.trim()) return true
+const repeatPasswordRules = passwordRules.concat([
+  (value: string) => {
+    if (password.value.trim() == value.trim()) return true
 
-  return 'Пароли должны совпадать!'
-})
+    return 'Пароли должны совпадать!'
+  },
+])
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 async function submitForm(event: SubmitEventPromise) {
