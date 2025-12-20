@@ -66,3 +66,49 @@ export const emailRules: ValidationRule[] = [
     return 'Почта должна быть до 320 символов!'
   },
 ]
+
+export const websiteRules = {
+  title: [
+    (v: string) => {
+      if (!!v.trim()) return true
+
+      return 'Название обязательно!'
+    },
+    (v: string) => {
+      if (v.trim().length <= 40) return true
+
+      return 'Название не должно быть длиннее 40 символов!'
+    },
+  ],
+
+  description: [
+    (v: string) => {
+      if (v.trim().length <= 255) return true
+
+      return 'Описание не должно быть длиннее 255 символов!'
+    },
+  ],
+
+  url: [
+    (v: string) => {
+      if (!!v.trim()) return true
+
+      return 'URL обязательно!'
+    },
+  ],
+
+  hex: [
+    (v: string) => {
+      if (!!v.trim()) return true
+
+      return 'HEX обязательно!'
+    },
+    (v: string) => {
+      const regexpUrl: RegExp = new RegExp('^#([a-zA-Z0-9]{3}|[a-zA-Z0-9]{6})$')
+
+      if (regexpUrl.test(v.trim())) return true
+
+      return "HEX должен быть формата '#fff' или '#ffffff'"
+    },
+  ],
+}
