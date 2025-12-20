@@ -23,12 +23,22 @@ const loginRules = [
   (value: string) => {
     if (!!value.trim()) return true
 
-    return 'Login is required!'
+    return 'Логин не должен быть пустым!'
   },
   (value: string) => {
-    if (value.trim().length <= 10) return true
+    const len = value.trim().length
 
-    return "Login's length must be shorter or equal 10 symbols"
+    if (len > 2 && len < 51) return true
+
+    return 'Длина логина от 3 до 50 символов!'
+  },
+  (value: string) => {
+    const regexLogin: RegExp = new RegExp('^[a-zA-Z0-9_-]{3,50}$')
+    const login = value.trim()
+
+    if (regexLogin.test(login)) return true
+
+    return 'Логин может содержать только латинские символы, _, - и цифры!'
   },
 ]
 
@@ -36,12 +46,22 @@ const passwordRules = [
   (value: string) => {
     if (!!value.trim()) return true
 
-    return 'Password is required!'
+    return 'Пароль не должен быть пустым!'
   },
   (value: string) => {
-    if (value.trim().length >= 8 && value.trim().length <= 72) return true
+    const len = value.trim().length
 
-    return "Passwords's length must be between 8 and 72 symbols"
+    if (len > 7 && len < 73) return true
+
+    return 'Длина пароля от 8 до 72 символов!'
+  },
+  (value: string) => {
+    const regexPassword1: RegExp = new RegExp('^[a-zA-Z0-9`=!@#$%^&*()_+№;:?\\-\\\\/|]{8,72}$')
+    const password2 = value.trim()
+
+    if (regexPassword1.test(password2)) return true
+
+    return 'Разрешены только: a-z, A-Z, 0-9, `=!@#$%^&*()_+№;:?\-\\/|!'
   },
 ]
 
@@ -66,6 +86,7 @@ async function submitForm(event: SubmitEventPromise) {
   // alert(JSON.stringify(authorizedUser, null, 2))
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 function changeTypeOfPasswordVisible(e: MouseEvent) {
   if (passwordVisibleType.value == 'password') {
     passwordVisibleType.value = 'text'
@@ -81,6 +102,11 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
       <VForm v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
         <VContainer id="login-container">
           <v-row id="login-column" class="pa-0 ma-0">
+            <v-col cols="12" class="pa-0">
+              <!-- Title -->
+              <p style="text-align: center; font-size: 18pt"><strong>Вход</strong></p>
+            </v-col>
+
             <v-col cols="12" class="pa-0 ma-0">
               <!-- Login -->
               <VTextField
@@ -89,45 +115,33 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
                 placeholder="Логин..."
                 type="text"
                 variant="solo"
-                hide-details
                 rounded="lg"
                 bg-color="#ebebeb"
                 required
               />
             </v-col>
 
-            <v-col cols="12" class="pa-0 ma-0">
-              <v-row cols="12" class="pa-0 ma-0">
+            <v-col cols="12" class="ma-0">
+              <v-row cols="12" class="pa-0">
                 <!-- Password -->
-                <v-col cols="10" class="pa-0 ma-0">
+                <v-col cols="12" class="pa-0 ma-0">
                   <VTextField
                     v-model="password"
                     :rules="passwordRules"
                     :type="passwordVisibleType"
                     placeholder="Пароль..."
+                    append-inner-icon="$eye"
                     variant="solo"
-                    hide-details
                     rounded="lg"
                     bg-color="#ebebeb"
                     required
+                    @click:append-inner="changeTypeOfPasswordVisible"
                   />
-                </v-col>
-                <v-col cols="2" class="pa-0 ma-0">
-                  <v-btn
-                    @click="changeTypeOfPasswordVisible"
-                    text="Show"
-                    variant="outlined"
-                    height="100%"
-                    rounded="lg"
-                    style="margin-left: 5px"
-                  >
-                    <v-icon icon="$eye" color="gray" size="32" />
-                  </v-btn>
                 </v-col>
               </v-row>
             </v-col>
 
-            <v-col cols="12" class="pa-0 ma-0">
+            <v-col cols="12" class="pa-0">
               <VBtn
                 class="mt-0 text-capitalize"
                 :loading="loading"
@@ -141,7 +155,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
               />
             </v-col>
 
-            <v-col cols="12" class="pa-0 ma-0">
+            <v-col cols="12" class="pa-0">
               <VBtn
                 class="text-capitalize"
                 @click="router.go(-1)"
