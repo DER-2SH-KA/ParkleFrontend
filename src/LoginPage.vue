@@ -66,6 +66,7 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
                 v-model="login"
                 :rules="loginRules"
                 placeholder="Логин..."
+                append-inner-icon="$account"
                 type="text"
                 variant="solo"
                 rounded="lg"
