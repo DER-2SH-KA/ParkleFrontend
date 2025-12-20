@@ -7,6 +7,7 @@ import { type UserCreateDto, type UserResponseDto } from './scripts/declaration'
 import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
+import { loginRules, passwordRules } from './scripts/validationRules'
 
 const router = useRouter()
 
@@ -22,68 +23,11 @@ const currentUserStore = useCurrentUserStore()
 
 const isFormValid = ref<boolean | null>(null)
 
-const loginRules = [
-  (value: string) => {
-    if (!!value.trim()) return true
+const repeatPasswordRules = passwordRules.concat((value: string) => {
+  if (password.value.trim() == value.trim()) return true
 
-    return 'Login is required!'
-  },
-  (value: string) => {
-    if (value.trim().length <= 10) return true
-
-    return "Login's length must be shorter or equal 10 symbols"
-  },
-]
-
-const passwordRules = [
-  (value: string) => {
-    if (!!value.trim()) return true
-
-    return 'Password is required!'
-  },
-  (value: string) => {
-    if (value.trim().length >= 8 && value.trim().length <= 72) return true
-
-    return "Passwords's length must be between 8 and 72 symbols"
-  },
-]
-
-const repeatPasswordRules = [
-  (value: string) => {
-    if (!!value.trim()) return true
-
-    return 'Repeat password is required!'
-  },
-  (value: string) => {
-    if (value.trim().length >= 8 && value.trim().length <= 72) return true
-
-    return "Repeat passwords's length must be between 8 and 72 symbols"
-  },
-  (value: string) => {
-    if (password.value.trim() == value.trim()) return true
-
-    return 'Repeat password and password must be equal'
-  },
-]
-
-const regex: RegExp = new RegExp('^(\\S+@\\S+\\.\\S+)$')
-const emailRules = [
-  (value: string) => {
-    if (!!value.trim()) return true
-
-    return 'Email is required!'
-  },
-  (value: string) => {
-    if (regex.test(value.trim())) return true
-
-    return 'Email is not valid'
-  },
-  (value: string) => {
-    if (value.trim().length <= 320) return true
-
-    return "Email's length must be shorter or equal 320 symbols"
-  },
-]
+  return 'Пароли должны совпадать!'
+})
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 async function submitForm(event: SubmitEventPromise) {
@@ -148,7 +92,6 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
                 :rules="loginRules"
                 placeholder="Логин..."
                 variant="solo"
-                hide-details
                 type="text"
                 bg-color="#ebebeb"
                 required
@@ -162,7 +105,6 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
                 :rules="emailRules"
                 placeholder="Электронная@почта.ru"
                 variant="solo"
-                hide-details
                 type="email"
                 bg-color="#ebebeb"
                 required
@@ -180,7 +122,6 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
                     placeholder="Пароль..."
                     append-inner-icon="$eye"
                     variant="solo"
-                    hide-details
                     bg-color="#ebebeb"
                     required
                     @click:append-inner="changeTypeOfPasswordVisible"
@@ -200,7 +141,6 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
                     placeholder="Повтор пароля..."
                     append-inner-icon="$eye"
                     variant="solo"
-                    hide-details
                     bg-color="#ebebeb"
                     required
                     @click:append-inner="changeTypeOfPasswordRepeatVisible"

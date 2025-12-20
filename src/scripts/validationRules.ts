@@ -43,3 +43,24 @@ export const passwordRules = [
     return 'Разрешены только: a-z, A-Z, 0-9, `=!@#$%^&*()_+№;:?\-\\/|!'
   },
 ]
+
+export const emailRules = [
+  (value: string) => {
+    if (!!value.trim()) return true
+
+    return 'Адрес эл. почты обязателен!'
+  },
+  (value: string) => {
+    const regexEmail: RegExp = new RegExp('^(\\S+@\\S+\\.\\S+)$')
+    const emailInputValue = value.trim()
+
+    if (regexEmail.test(emailInputValue)) return true
+
+    return 'Неверный формат электронной почты!'
+  },
+  (value: string) => {
+    if (value.trim().length <= 320) return true
+
+    return 'Почта должна быть до 320 символов!'
+  },
+]
