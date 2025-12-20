@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { WebsiteCreateDto, WebsiteResponseDto, WebsiteUpdateDto } from '@/scripts/declaration'
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { createWebsite, updateWebsiteById } from '@/scripts/api'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
@@ -113,10 +113,10 @@ function clearFields() {
 
 function fillFields() {
   if (props.website !== undefined) {
-    title.value = props.website.title
-    description.value = props.website.description ?? ''
-    url.value = props.website.url
-    hex.value = props.website.hexColor
+    title.value = props.website.title.toString()
+    description.value = props.website.description?.toString() ?? ''
+    url.value = props.website.url.toString()
+    hex.value = props.website.hexColor.toString()
   } else {
     clearFields()
   }
@@ -144,7 +144,7 @@ function setColorPickerModelValueToHEX() {
   colorPickerDialogModel.value = false
 }
 
-onMounted(() => {
+watch(model, (newX) => {
   fillFields()
 })
 </script>
