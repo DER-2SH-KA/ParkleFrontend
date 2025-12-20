@@ -7,6 +7,7 @@ import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
 const model = defineModel<boolean>()
+const colorPickerDialogModel = ref<boolean>(false)
 
 const props = defineProps<{
   website: WebsiteResponseDto | undefined
@@ -21,6 +22,8 @@ const title = ref<string>('')
 const description = ref<string>('')
 const url = ref<string>('')
 const hex = ref<string>('#')
+
+const colorPickerModel = ref<string>()
 
 const isFormValid = ref<boolean | null>(null)
 
@@ -162,13 +165,35 @@ function fillFields() {
   }
 }
 
+function showColorPickerDialog() {
+  console.log(colorPickerModel.value)
+
+  if (!!hex.value && hex.value != '') {
+    colorPickerModel.value = hex.value
+  } else {
+    colorPickerModel.value = undefined
+  }
+
+  colorPickerDialogModel.value = true
+}
+
+function setColorPickerModelValueToHEX() {
+  console.log(colorPickerModel.value)
+
+  if (!!colorPickerModel.value) {
+    hex.value = colorPickerModel.value
+  }
+
+  colorPickerDialogModel.value = false
+}
+
 onMounted(() => {
   fillFields()
 })
 </script>
 
 <template>
-  <v-dialog id="website-editor-dialog" v-model="model">
+  <v-dialog class="dialog-design" v-model="model">
     <VForm
       class="pa-0 ma-0"
       v-model="isFormValid"
@@ -232,12 +257,14 @@ onMounted(() => {
               v-model="hex"
               :rules="rules.hex"
               placeholder="Цвет первой буквы (пример: #000)..."
+              append-inner-icon="$brush"
               type="text"
               variant="solo"
               bg-color="#23232A"
               style="color: white"
               rounded="lg"
               required
+              @click:append-inner="showColorPickerDialog()"
             />
           </v-col>
 
@@ -263,11 +290,35 @@ onMounted(() => {
         </v-row>
       </v-container>
     </VForm>
+
+    <v-dialog class="dialog-design" v-model="colorPickerDialogModel">
+      <v-container id="color-picker-container">
+        <v-row class="pa-0 ma-0">
+          <v-col class="pa-0 ma-0" cols="12">
+            <!-- Color Picker -->
+            <v-color-picker class="w-100" v-model="colorPickerModel" mode="hex" />
+          </v-col>
+
+          <v-col class="pa-0 my-2" cols="12">
+            <v-btn
+              text="Выбрать"
+              base-color="#6f00ff"
+              block
+              @click="setColorPickerModelValueToHEX()"
+            />
+          </v-col>
+
+          <v-col class="pa-0 ma-0" cols="12">
+            <v-btn text="Закрыть" block @click="colorPickerDialogModel = false" />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-dialog>
   </v-dialog>
 </template>
 
 <style lang="scss">
-#website-editor-dialog {
+.dialog-design {
   background-color: #00000077;
 }
 
@@ -294,9 +345,29 @@ onMounted(() => {
   margin: 5px;
 }
 
+#color-picker-dialog {
+  background-color: #00000077;
+}
+
+#color-picker-container {
+  padding: 10px;
+  background-color: var(--background-second-color-dark-theme);
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   #website-editor {
     max-width: 90%;
+  }
+
+  #color-picker-container {
+    padding: 10px;
+    background-color: var(--background-second-color-dark-theme);
+    border-radius: 10px;
+    max-width: 80vw;
+    width: 100%;
   }
 }
 </style>
