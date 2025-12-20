@@ -171,60 +171,40 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
 
             <v-col cols="12" class="pa-0 ma-0">
               <v-row cols="12" class="pa-0 ma-0">
-                <v-col cols="10" class="pa-0 ma-0">
+                <v-col cols="12" class="pa-0 ma-0">
                   <!-- Password 1 -->
                   <VTextField
                     v-model="password"
                     :rules="passwordRules"
                     :type="passwordVisibleType"
                     placeholder="Пароль..."
+                    append-inner-icon="$eye"
                     variant="solo"
                     hide-details
                     bg-color="#ebebeb"
                     required
+                    @click:append-inner="changeTypeOfPasswordVisible"
                   />
-                </v-col>
-                <v-col cols="2" class="pa-0 ma-0">
-                  <v-btn
-                    @click="changeTypeOfPasswordVisible"
-                    text="Show"
-                    variant="outlined"
-                    height="100%"
-                    rounded="lg"
-                    style="margin-left: 5px"
-                  >
-                    <v-icon icon="$eye" color="gray" size="32" />
-                  </v-btn>
                 </v-col>
               </v-row>
             </v-col>
 
             <v-col cols="12" class="pa-0 ma-0">
               <v-row class="pa-0 ma-0">
-                <v-col cols="10" class="pa-0 ma-0">
+                <v-col cols="12" class="pa-0 ma-0">
                   <!-- Password 2 -->
                   <VTextField
                     v-model="passwordRepeat"
                     :rules="repeatPasswordRules"
                     :type="passwordRepeatVisibleType"
                     placeholder="Повтор пароля..."
+                    append-inner-icon="$eye"
                     variant="solo"
                     hide-details
                     bg-color="#ebebeb"
                     required
+                    @click:append-inner="changeTypeOfPasswordRepeatVisible"
                   />
-                </v-col>
-                <v-col cols="2" class="pa-0 ma-0">
-                  <v-btn
-                    @click="changeTypeOfPasswordRepeatVisible"
-                    text="Show"
-                    variant="outlined"
-                    height="100%"
-                    rounded="lg"
-                    style="margin-left: 5px"
-                  >
-                    <v-icon icon="$eye" color="gray" size="32" />
-                  </v-btn>
                 </v-col>
               </v-row>
             </v-col>
