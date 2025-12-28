@@ -32,7 +32,7 @@ const deleteUser = () => {
 }
 
 const onDeleteUserAccept = async () => {
-  await deleteAccount(currentUserStore.currentUser?.id)
+  await deleteAccount(currentUserStore.currentUser?.login)
     .then((result) => {
       console.info('deleteUser', result)
 

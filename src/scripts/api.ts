@@ -216,12 +216,12 @@ export const registration = async (
  * @returns {UserResponseDto} deleted User DTO.
  */
 export const deleteAccount = async (
-  userId: string | undefined,
+  login: string | undefined,
 ): Promise<UserResponseDto | undefined> => {
   let result: UserResponseDto | undefined = undefined
 
-  if (userId !== undefined) {
-    await doDelete(userDeleteApi + `/${userId}`)
+  if (login !== undefined) {
+    await doDelete(userDeleteApi + `/${login}`)
       .then((response) => {
         console.info("User's account was deleted", response)
         result = response
