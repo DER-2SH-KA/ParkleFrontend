@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useCurrentUserStore } from '../scripts/stores/piniaStore'
-import { deleteAccount, logout } from '../scripts/api'
+import { deleteAccount, logout } from '../scripts/api/userApi'
 import { showAlert } from '../scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
@@ -33,8 +33,8 @@ const deleteUser = () => {
 
 const onDeleteUserAccept = async () => {
   await deleteAccount(currentUserStore.currentUser?.login)
-    .then((result) => {
-      console.info('deleteUser', result)
+    .then((dto) => {
+      console.info('deleteUser', dto)
 
       showAlert('Пользователь удалён успешно!', TYPE.SUCCESS)
       currentUserStore.setCurrentUser(undefined)

@@ -2,12 +2,17 @@
 import type { SubmitEventPromise } from 'vuetify'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { type UserAuthDto, type UserResponseDto } from './scripts/declaration'
-import { authorize } from './scripts/api'
+import {
+  type ErrorResponseDto,
+  type UserAuthDto,
+  type UserResponseDto,
+} from './scripts/declaration'
+import { authorize } from './scripts/api/userApi'
 import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
 import { loginRules, passwordRules } from './scripts/validationRules'
+import { isUserResponseDto } from './scripts/checkObjectsByStructure'
 
 const router = useRouter()
 
@@ -23,19 +28,21 @@ const isFormValid = ref<boolean | null>(null)
 /* eslint-disable @typescript-eslint/no-unused-vars */
 async function submitForm(event: SubmitEventPromise) {
   loading.value = true
+
   const userAuthDto: UserAuthDto = {
     login: login.value,
     password: password.value,
   }
-  const authorizedUser: UserResponseDto | undefined = await authorize(userAuthDto)
+  const responseDto: UserResponseDto | ErrorResponseDto = await authorize(userAuthDto)
+
   loading.value = false
 
-  if (authorizedUser === undefined) {
-    showAlert('Пользователь не найден или ошибка!', TYPE.ERROR)
-  } else {
-    showAlert(`Привет, ${authorizedUser.login}!`, TYPE.SUCCESS)
-    currentUserStore.setCurrentUser(authorizedUser)
+  if (isUserResponseDto(responseDto)) {
+    currentUserStore.setCurrentUser(responseDto)
+    showAlert(`Привет, ${responseDto.login}!`, TYPE.SUCCESS)
     router.go(-1)
+  } else {
+    showAlert(responseDto.messageForClient, TYPE.ERROR)
   }
 }
 

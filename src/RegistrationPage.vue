@@ -2,12 +2,17 @@
 import type { SubmitEventPromise } from 'vuetify'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { registration } from './scripts/api'
-import { type UserCreateDto, type UserResponseDto } from './scripts/declaration'
+import { registration } from './scripts/api/userApi'
+import {
+  type ErrorResponseDto,
+  type UserCreateDto,
+  type UserResponseDto,
+} from './scripts/declaration'
 import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
 import { loginRules, passwordRules, emailRules } from './scripts/validationRules'
+import { isUserResponseDto } from './scripts/checkObjectsByStructure'
 
 const router = useRouter()
 
@@ -45,18 +50,16 @@ async function submitForm(event: SubmitEventPromise) {
     email: email.value,
     password: password.value,
   }
-  const createdUser: UserResponseDto | undefined = await registration(userCreateDto)
+  const responseDto: UserResponseDto | ErrorResponseDto = await registration(userCreateDto)
   loading.value = false
 
-  if (createdUser === undefined) {
-    showAlert('Пользователь не был создан!', TYPE.ERROR)
-  } else {
-    showAlert(`Привет, ${createdUser.login}!`, TYPE.SUCCESS)
-    currentUserStore.setCurrentUser(createdUser)
+  if (isUserResponseDto(responseDto)) {
+    showAlert(`Привет, ${responseDto.login}!`, TYPE.SUCCESS)
+    currentUserStore.setCurrentUser(responseDto)
     router.go(-1)
+  } else {
+    showAlert(responseDto.messageForClient, TYPE.ERROR)
   }
-
-  // alert(JSON.stringify(createdUserResponseDto, null, 2))
 }
 
 function changeTypeOfPasswordVisible(e: MouseEvent) {

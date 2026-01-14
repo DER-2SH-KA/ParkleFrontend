@@ -33,8 +33,10 @@ import HomePage from './HomePage.vue'
 import LoginPage from './LoginPage.vue'
 import RegistrationPage from './RegistrationPage.vue'
 import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
-import { getWebsitesByUserLogin } from './scripts/api'
+import { getWebsitesByUserLogin } from './scripts/api/api'
 import AboutSite from './AboutSite.vue'
+
+import axios from 'axios'
 
 const app = createApp(App)
 
@@ -91,6 +93,7 @@ const vuetify = createVuetify({
   },
 })
 
+// Mount of teches in app.
 app.use(router)
 app.use(Toast, toastOptions)
 app.use(vuetify)
@@ -100,6 +103,7 @@ app.use(pinia)
 const currentUserStore = useCurrentUserStore()
 const websitesStore = useWebsitesStore()
 
+// Trigger on current user was changed.
 currentUserStore.$onAction(async ({ name, args }) => {
   if (name === 'setCurrentUser') {
     const user = args[0] // Argument of new user.
@@ -119,5 +123,10 @@ currentUserStore.$onAction(async ({ name, args }) => {
     } else websitesStore.websites = []
   }
 })
+
+// Axios settings.
+axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
+axios.defaults.timeout = 10000
+axios.defaults.withCredentials = true
 
 app.mount('#app')

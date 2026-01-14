@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { WebsiteCreateDto, WebsiteResponseDto, WebsiteUpdateDto } from '@/scripts/declaration'
 import { ref, watch } from 'vue'
-import { createWebsite, updateWebsiteById } from '@/scripts/api'
+import { createWebsite, updateWebsiteById } from '@/scripts/api/api'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'

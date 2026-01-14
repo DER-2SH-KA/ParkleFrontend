@@ -1,25 +1,11 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 import type {
-  UserAuthDto,
-  UserCreateDto,
-  UserResponseDto,
+  ErrorResponseDto,
   WebsiteCreateDto,
   WebsiteResponseDto,
   WebsiteUpdateDto,
-} from './declaration'
-
-axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
-axios.defaults.timeout = 10000
-axios.defaults.withCredentials = true
-
-const authLoginApi = '/auth/login'
-const registrationApi = '/auth/registration'
-// const userUpdateApi = '/auth/update'
-const userDeleteApi = '/auth/delete'
-const userLogoutApi = '/auth/logout'
-const userPingApi = '/auth/ping'
-
-const isAuthedApi = '/auth/isAuthed'
+} from '../declaration'
+import { isErrorResponseDto } from '../checkObjectsByStructure'
 
 const websitesApi = '/websites'
 const websiteNewApi = '/websites/new'
@@ -144,100 +130,6 @@ export const deleteWebsite = async (websiteId: string): Promise<WebsiteResponseD
   return websiteResponseDto ?? undefined
 }
 
-/// User CRUD.
-
-export const isAuthedRequest = async (): Promise<UserResponseDto | undefined> => {
-  let isAuthorizedUser: UserResponseDto | undefined = undefined
-
-  await doGet(isAuthedApi)
-    .then((response) => {
-      isAuthorizedUser = response.data
-      console.info("isAuthedRequest 'then' response =>", response)
-    })
-    .catch((err) => {
-      console.error('isAuthedRequest error => ', err)
-    })
-
-  return isAuthorizedUser
-}
-
-export const logout = async (): Promise<undefined> => {
-  await doGet(userLogoutApi).catch((err) => {
-    console.error('logout error => ', err)
-  })
-}
-
-export const ping = async (): Promise<undefined> => {
-  return await doGet(userPingApi)
-}
-
-/** Sign In User. POST.
- * @param {UserAuthDto} userAuthDto user DTO for login.
- * @returns {UserResponseDto} created User DTO.
- */
-export const authorize = async (userAuthDto: UserAuthDto): Promise<UserResponseDto | undefined> => {
-  let authorizedUser: UserResponseDto | undefined = undefined
-
-  await doPost(authLoginApi, userAuthDto)
-    .then((result) => {
-      authorizedUser = result.data
-    })
-    .catch((error) => {
-      console.error('authorizeUser', error)
-    })
-
-  console.info('Authroized User Response DTO: ', authorizedUser)
-  return authorizedUser ?? undefined
-}
-
-/** Sign Up User. POST.
- * @param {UserCreateDto} userCreateDto user DTO for registration.
- * @returns {UserResponseDto} created User DTO.
- */
-export const registration = async (
-  userCreateDto: UserCreateDto,
-): Promise<UserResponseDto | undefined> => {
-  let createdUser: UserResponseDto | undefined = undefined
-
-  await doPost(registrationApi, userCreateDto)
-    .then((result) => {
-      createdUser = result.data
-    })
-    .catch((error) => {
-      console.error('authorizeUser', error)
-    })
-
-  console.info('Created User Response DTO:', createdUser)
-  return createdUser ?? undefined
-}
-
-/** Delete user's account. DELETE.
- * @param {string} userId user's ID.
- * @returns {UserResponseDto} deleted User DTO.
- */
-export const deleteAccount = async (
-  login: string | undefined,
-): Promise<UserResponseDto | undefined> => {
-  let result: UserResponseDto | undefined = undefined
-
-  if (login !== undefined) {
-    await doDelete(userDeleteApi + `/${login}`)
-      .then((response) => {
-        console.info("User's account was deleted", response)
-        result = response
-      })
-      .catch((error) => {
-        console.error("User's accoune was't deleted", error)
-      })
-  } else {
-    console.info('User is not authorized')
-    return undefined
-  }
-
-  console.info('User account DTO', result)
-  return result
-}
-
 // CRUD functions.
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const doGet = async (url: string, config?: AxiosRequestConfig): Promise<any> => {
@@ -262,4 +154,33 @@ export const doPatch = async (url: string, object: any): Promise<any> => {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const doDelete = async (url: string): Promise<any> => {
   return await axios.delete(url)
+}
+
+export function proccessError(err: any): ErrorResponseDto {
+  const errResponseDto: ErrorResponseDto = {
+    messageForClient: 'Неизвестная ошибка',
+    messageForDev: 'Undefined error',
+  }
+
+  if (axios.isAxiosError(err)) {
+    const request = err.request
+    const response = err.response
+
+    // Have response.
+    if (!!response) {
+      if (isErrorResponseDto(response.data)) {
+        errResponseDto.messageForClient =
+          response.data.messageForClient ?? 'Тело ошибки от сервера пустое'
+        errResponseDto.messageForDev =
+          response.data.messageForDev ?? 'Body of error from server is empty'
+      }
+    }
+    // Haven't response but have request.
+    else if (!!request) {
+      errResponseDto.messageForClient = 'Сервер не отвечает...'
+      errResponseDto.messageForDev = "Request is sended, but server don't give response"
+    }
+  }
+
+  return errResponseDto
 }

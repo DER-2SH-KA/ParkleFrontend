@@ -5,15 +5,7 @@ export interface IEntity {
 /**
  * DTO for role.
  */
-export interface RoleDto extends IEntity {
-  name: string
-  priority: number
-}
-
-/**
- * DTO for user's role.
- */
-export interface UserRoleDto {
+export interface RoleResponseDto {
   name: string
   priority: number
 }
@@ -39,8 +31,8 @@ export interface UserCreateDto {
 /**
  * DTO for update User.
  *  */
-export interface UserUpdateDto {
-  roleId: string
+export interface UserUpdateDto extends IEntity {
+  roleName: string
   login: string
   email: string
   password: string
@@ -50,7 +42,8 @@ export interface UserUpdateDto {
  * DTO for give user from server.
  */
 export interface UserResponseDto extends IEntity {
-  role: UserRoleDto
+  roleName: string
+  rolePriority: number
   login: string
   email: string
 }
@@ -59,7 +52,7 @@ export interface UserResponseDto extends IEntity {
  * DTO for create new website.
  */
 export interface WebsiteCreateDto {
-  userId: string
+  userLogin: string
   hexColor: string
   title: string
   description?: string | undefined
@@ -69,8 +62,8 @@ export interface WebsiteCreateDto {
 /**
  * DTO for update website.
  */
-export interface WebsiteUpdateDto {
-  userId: string
+export interface WebsiteUpdateDto extends IEntity {
+  userLogin: string
   title: string
   description?: string | undefined
   hexColor: string
@@ -81,7 +74,7 @@ export interface WebsiteUpdateDto {
  * DTO for give website from server.
  */
 export interface WebsiteResponseDto extends IEntity {
-  userId: string
+  userLogin: string
   hexColor: string
   title: string
   description?: string | undefined

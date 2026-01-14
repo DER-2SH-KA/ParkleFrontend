@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-import type { UserResponseDto, WebsiteResponseDto } from '@/scripts/declaration'
+import type { ErrorResponseDto, UserResponseDto, WebsiteResponseDto } from '@/scripts/declaration'
 import WebsiteItem from './WebsiteItem.vue'
 import { computed, onMounted } from 'vue'
 import { sortWebsiteByName } from '../scripts/utils'
-import { deleteWebsite, getWebsitesByUserLogin, isAuthedRequest } from '@/scripts/api'
+import { deleteWebsite, getWebsitesByUserLogin } from '@/scripts/api/api'
+import { isAuthed } from '@/scripts/api/userApi'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
+import { isUserResponseDto } from '@/scripts/checkObjectsByStructure'
 
 const modelSearchBarText = defineModel<string>()
 const props = defineProps<{
@@ -50,18 +52,27 @@ const removeWebsiteById = async (id: string) => {
 }
 
 onMounted(async () => {
-  let isAuthedUser: UserResponseDto | undefined = undefined
+  let responseDto: UserResponseDto | ErrorResponseDto = {
+    messageForClient: 'а',
+    messageForDev: 'a',
+  }
 
-  await isAuthedRequest()
+  await isAuthed()
     .then(async (result) => {
-      isAuthedUser = result
+      responseDto = result
       console.info('onMounted TopWebsites then =>', result)
 
-      currentUserStore.currentUser = isAuthedUser
+      if (isUserResponseDto(responseDto)) {
+        currentUserStore.currentUser = responseDto ?? undefined
 
-      websitesStore.websites = !!currentUserStore.currentUser
-        ? await getWebsitesByUserLogin(currentUserStore.currentUser.login)
-        : []
+        websitesStore.websites = !!currentUserStore.currentUser
+          ? await getWebsitesByUserLogin(currentUserStore.currentUser.login)
+          : []
+      } /*else {
+        if (responseDto.messageForClient != "")
+
+        showAlert(responseDto.messageForClient, TYPE.ERROR)
+      }*/
     })
     .catch((err) => {
       console.error('onMounted TopWebsites error =>', err)
