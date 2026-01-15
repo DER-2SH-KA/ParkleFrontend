@@ -28,12 +28,12 @@ export const isAuthed = async (): Promise<UserResponseDto | ErrorResponseDto> =>
     .then((response) => {
       responseData = getUserDtoOrErrorDto(response)
 
-      console.info('isAuthed dto body', responseData)
+      console.info('isAuthed dto: ', responseData)
     })
     .catch((err) => {
       responseData = proccessError(err)
 
-      console.info('isAuthed error', err)
+      console.info('isAuthed error: ', err)
     })
 
   return responseData
@@ -71,12 +71,12 @@ export const authorize = async (
     .then((response) => {
       responseData = getUserDtoOrErrorDto(response)
 
-      console.info('Authorized dto body', responseData)
+      console.info('Authorized user dto: ', responseData)
     })
     .catch((err) => {
       responseData = proccessError(err)
 
-      console.error('Authorization error', err)
+      console.error('Authorization error: ', err)
     })
 
   return responseData
@@ -98,12 +98,12 @@ export const registration = async (
     .then((response) => {
       responseData = getUserDtoOrErrorDto(response)
 
-      console.info('Registration dto body', responseData)
+      console.info('Registration dto: ', responseData)
     })
     .catch((err) => {
       responseData = proccessError(err)
 
-      console.error('Registration error', err)
+      console.error('Registration error: ', err)
     })
 
   return responseData
@@ -126,12 +126,12 @@ export const deleteAccount = async (
       .then((response) => {
         responseData = getUserDtoOrErrorDto(response)
 
-        console.info('DeleteAccount dto body', responseData)
+        console.info('DeleteAccount dto: ', responseData)
       })
       .catch((err) => {
         responseData = proccessError(err)
 
-        console.error('DeleteAccount error', err)
+        console.error('DeleteAccount error: ', err)
       })
   } else {
     responseData = {
