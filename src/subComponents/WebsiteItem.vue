@@ -17,8 +17,6 @@ const linkFetchFavicon = 'https://www.google.com/s2/favicons?domain=' + props.we
 const isEditingBegun = ref<boolean>(false)
 const isActiveDeleteDialog = ref<boolean>(false)
 
-const fLetterColor = props.website.hexColor
-
 const onEditWebsite = () => {
   isEditingBegun.value = true
 }
@@ -49,7 +47,8 @@ const onDeleteWebsiteDenie = () => {
         :href="props.website.url"
         :title="website.description ? website.description : website.title"
         target="_blank"
-        >{{ props.website.title }}</a
+        ><span :style="`color: ${props.website.hexColor}`">{{ props.website.title.charAt(0) }}</span
+        >{{ props.website.title.slice(1) }}</a
       >
 
       <!-- Website settings buttons -->
@@ -129,10 +128,6 @@ const onDeleteWebsiteDenie = () => {
   font-size: 16pt;
   overflow-wrap: break-word;
   width: 100%;
-
-  &::first-letter {
-    color: v-bind(fLetterColor);
-  }
 }
 
 .website-item-buttons {
