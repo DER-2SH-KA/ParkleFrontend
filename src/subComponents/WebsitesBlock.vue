@@ -32,6 +32,9 @@ const websitesToShow = computed<WebsiteResponseDto[]>(() => {
     } else {
       return (
         x.title.toLowerCase().includes(modelSearchBarText.value!.toLowerCase()) ||
+        (!!x.description
+          ? x.description?.toLocaleLowerCase().includes(modelSearchBarText.value!.toLowerCase())
+          : false) ||
         x.url.toLowerCase().includes(modelSearchBarText.value!.toLowerCase())
       )
     }
