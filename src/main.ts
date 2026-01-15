@@ -33,10 +33,11 @@ import HomePage from './HomePage.vue'
 import LoginPage from './LoginPage.vue'
 import RegistrationPage from './RegistrationPage.vue'
 import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
-import { getWebsitesByUserLogin } from './scripts/api/api'
+import { getWebsitesByUserLogin } from './scripts/api/websiteApi'
 import AboutSite from './AboutSite.vue'
 
 import axios from 'axios'
+import { isErrorResponseDto } from './scripts/typeGuards'
 
 const app = createApp(App)
 
@@ -115,12 +116,15 @@ currentUserStore.$onAction(async ({ name, args }) => {
 
       await getWebsitesByUserLogin(user.login)
         .then((result) => {
-          websitesStore.websites = result
+          if (!isErrorResponseDto(result)) websitesStore.websites = result
+          else websitesStore.websites = []
         })
         .catch((error) => {
-          console.error(`Error get websites by userId: ${user.id}`, error)
+          console.error(`Error get websites by userLogin: ${user.login}`, error)
         })
-    } else websitesStore.websites = []
+    } else {
+      websitesStore.websites = []
+    }
   }
 })
 

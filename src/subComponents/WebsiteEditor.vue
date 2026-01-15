@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { WebsiteCreateDto, WebsiteResponseDto, WebsiteUpdateDto } from '@/scripts/declaration'
 import { ref, watch } from 'vue'
-import { createWebsite, updateWebsiteById } from '@/scripts/api/api'
+import { createWebsite, updateWebsiteById } from '@/scripts/api/websiteApi'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
 import { websiteRules } from '../scripts/validationRules'
+import { isErrorResponseDto, isWebsiteResponseDto } from '@/scripts/typeGuards'
 
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
@@ -37,7 +38,7 @@ async function saveWebsiteFromAddDialog(event: Event) {
     console.info('Starting submiting and send create website!')
 
     const websiteCreateDto: WebsiteCreateDto = {
-      userId: currentUserStore.currentUser?.id ? currentUserStore.currentUser.id : '',
+      userLogin: currentUserStore.currentUser?.login ?? '',
       title: title.value ? title.value : '',
       description: description.value,
       url: url.value ? url.value : '',
@@ -46,24 +47,29 @@ async function saveWebsiteFromAddDialog(event: Event) {
 
     await createWebsite(websiteCreateDto)
       .then((result) => {
-        if (!!result) {
+        if (isWebsiteResponseDto(result)) {
           websitesStore.websites.push(result)
           console.info('Website was created', result)
           showAlert('Сайт создан успешно!', TYPE.SUCCESS)
 
           clearFields()
           model.value = false
+        } else {
+          showAlert(result.messageForClient, TYPE.ERROR)
         }
       })
-      .catch((error) => {
-        console.error('crateWebsite', error)
-        showAlert('Ошибка создания сайта!', TYPE.ERROR)
+      .catch((err) => {
+        if (isErrorResponseDto(err)) {
+          console.error('Error to create new website from WebsiteEditor: ' + err.messageForDev, err)
+          showAlert(err.messageForClient, TYPE.ERROR)
+        }
       })
   } else {
     console.info('Starting submiting and send update website!')
 
     const websiteUpdateDto: WebsiteUpdateDto = {
-      userId: props.website.userId,
+      id: props.website.id,
+      userLogin: props.website.userLogin,
       title: title.value,
       description: description.value ?? '',
       url: url.value,
@@ -72,12 +78,12 @@ async function saveWebsiteFromAddDialog(event: Event) {
 
     await updateWebsiteById(props.website.id, websiteUpdateDto)
       .then((result) => {
-        if (!!result) {
+        if (isWebsiteResponseDto(result)) {
           const websiteToUpdate: WebsiteResponseDto | undefined = websitesStore.websites.find(
             (w) => w == props.website,
           )
 
-          if (websiteToUpdate !== undefined) {
+          if (!!websiteToUpdate) {
             websiteToUpdate.title = title.value
             websiteToUpdate.description = description.value ?? ''
             websiteToUpdate.url = url.value
@@ -92,8 +98,10 @@ async function saveWebsiteFromAddDialog(event: Event) {
         }
       })
       .catch((err) => {
-        console.error('crateWebsite', err)
-        showAlert('Ошибка обновления сайта', TYPE.ERROR)
+        if (isErrorResponseDto(err)) {
+          console.error('Update website by id error: ' + err.messageForDev, err)
+          showAlert(err.messageForClient, TYPE.ERROR)
+        }
       })
   }
   loading.value = false

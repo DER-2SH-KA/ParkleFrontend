@@ -3,12 +3,12 @@ import type { ErrorResponseDto, UserResponseDto, WebsiteResponseDto } from '@/sc
 import WebsiteItem from './WebsiteItem.vue'
 import { computed, onMounted } from 'vue'
 import { sortWebsiteByName } from '../scripts/utils'
-import { deleteWebsite, getWebsitesByUserLogin } from '@/scripts/api/api'
+import { deleteWebsite, getWebsitesByUserLogin } from '@/scripts/api/websiteApi'
 import { isAuthed } from '@/scripts/api/userApi'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
-import { isUserResponseDto } from '@/scripts/typeGuards'
+import { isErrorResponseDto, isUserResponseDto } from '@/scripts/typeGuards'
 
 const modelSearchBarText = defineModel<string>()
 const props = defineProps<{
@@ -65,14 +65,14 @@ onMounted(async () => {
       if (isUserResponseDto(responseDto)) {
         currentUserStore.currentUser = responseDto ?? undefined
 
-        websitesStore.websites = !!currentUserStore.currentUser
-          ? await getWebsitesByUserLogin(currentUserStore.currentUser.login)
-          : []
-      } /*else {
-        if (responseDto.messageForClient != "")
+        const result: WebsiteResponseDto[] | ErrorResponseDto = await getWebsitesByUserLogin(
+          currentUserStore.currentUser.login,
+        )
 
-        showAlert(responseDto.messageForClient, TYPE.ERROR)
-      }*/
+        if (!isErrorResponseDto(result)) {
+          websitesStore.websites = !!currentUserStore.currentUser ? result : []
+        }
+      }
     })
     .catch((err) => {
       console.error('onMounted TopWebsites error =>', err)

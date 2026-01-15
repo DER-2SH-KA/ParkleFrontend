@@ -8,9 +8,9 @@ import type {
 import { isWebsiteResponseDto } from '@/scripts/typeGuards'
 
 const websitesApi = '/websites'
-const websiteNewApi = '/websites/new'
-const websiteUpdateApi = '/websites/update'
-const websiteDeleteApi = '/websites/delete'
+const websiteNewApi = websitesApi + '/new'
+const websiteUpdateApi = websitesApi + '/update'
+const websiteDeleteApi = websitesApi + '/delete'
 
 /// Website CRUD.
 
@@ -24,11 +24,11 @@ export const getWebsitesByUserLogin = async (
 ): Promise<WebsiteResponseDto[] | ErrorResponseDto> => {
   let responseData: WebsiteResponseDto[] | ErrorResponseDto = []
 
-  await doGet(websitesApi + `/user/${userLogin}`)
+  await doGet(websitesApi + `/me`)
     .then((result) => {
       responseData = result.data
 
-      console.error('Get website by login dtoes: ', responseData)
+      console.info(`Get website by ${userLogin} dtoes: `, responseData)
     })
     .catch((err) => {
       responseData = proccessError(err)
@@ -52,10 +52,14 @@ export const createWebsite = async (
   }
 
   await doPost(websiteNewApi, newWebsiteDto)
-    .then((result) => {
-      responseData = getWebsiteDtoOrErrorDto(result.data)
+    .then((response) => {
+      responseData = getWebsiteDtoOrErrorDto(response)
 
-      console.info('Create website dto: ', responseData)
+      if (isWebsiteResponseDto(responseData)) {
+        console.info('Create website by Id dto: ', responseData)
+      } else {
+        console.error('Create website by Id error dto: ', response)
+      }
     })
     .catch((err) => {
       responseData = proccessError(err)
@@ -82,9 +86,13 @@ export const updateWebsiteById = async (
 
   await doPatch(websiteUpdateApi + `/${websiteId}`, newWebsiteDto)
     .then((response) => {
-      responseData = getWebsiteDtoOrErrorDto(response.data)
+      responseData = getWebsiteDtoOrErrorDto(response)
 
-      console.info('Update website by Id dto: ', responseData)
+      if (isWebsiteResponseDto(responseData)) {
+        console.info('Update website by Id dto: ', responseData)
+      } else {
+        console.error('Update website by Id error dto: ', response)
+      }
     })
     .catch((err) => {
       responseData = proccessError(err)
@@ -108,7 +116,7 @@ export const deleteWebsite = async (
 
   await doDelete(websiteDeleteApi + `/${websiteId}`)
     .then((response) => {
-      responseData = getWebsiteDtoOrErrorDto(response.data)
+      responseData = getWebsiteDtoOrErrorDto(response)
 
       console.info('Delete website by Id dto: ', responseData)
     })
