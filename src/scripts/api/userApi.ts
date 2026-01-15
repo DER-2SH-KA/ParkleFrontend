@@ -5,7 +5,7 @@ import {
   type UserResponseDto,
   type ErrorResponseDto,
 } from '@/scripts/declaration'
-import { isUserResponseDto } from '@/scripts/checkObjectsByStructure'
+import { isUserResponseDto } from '@/scripts/typeGuards'
 
 const authLoginApi = '/auth/login'
 const registrationApi = '/auth/registration'

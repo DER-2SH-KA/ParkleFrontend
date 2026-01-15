@@ -12,7 +12,7 @@ import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
 import { loginRules, passwordRules, emailRules } from './scripts/validationRules'
-import { isUserResponseDto } from './scripts/checkObjectsByStructure'
+import { isUserResponseDto } from './scripts/typeGuards'
 
 const router = useRouter()
 

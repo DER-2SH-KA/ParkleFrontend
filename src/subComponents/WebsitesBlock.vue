@@ -8,7 +8,7 @@ import { isAuthed } from '@/scripts/api/userApi'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
-import { isUserResponseDto } from '@/scripts/checkObjectsByStructure'
+import { isUserResponseDto } from '@/scripts/typeGuards'
 
 const modelSearchBarText = defineModel<string>()
 const props = defineProps<{

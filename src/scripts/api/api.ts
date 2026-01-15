@@ -5,7 +5,7 @@ import type {
   WebsiteResponseDto,
   WebsiteUpdateDto,
 } from '../declaration'
-import { isErrorResponseDto } from '../checkObjectsByStructure'
+import { isErrorResponseDto } from '../typeGuards'
 
 const websitesApi = '/websites'
 const websiteNewApi = '/websites/new'
