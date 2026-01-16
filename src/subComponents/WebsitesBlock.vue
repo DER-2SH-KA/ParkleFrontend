@@ -31,11 +31,13 @@ const websitesToShow = computed<WebsiteResponseDto[]>(() => {
       return true
     } else {
       return (
-        x.title.toLowerCase().includes(modelSearchBarText.value!.toLowerCase()) ||
+        x.title.toLowerCase().includes(modelSearchBarText.value!.toLowerCase().trim()) ||
         (!!x.description
-          ? x.description?.toLocaleLowerCase().includes(modelSearchBarText.value!.toLowerCase())
+          ? x.description
+              ?.toLocaleLowerCase()
+              .includes(modelSearchBarText.value!.toLowerCase().trim())
           : false) ||
-        x.url.toLowerCase().includes(modelSearchBarText.value!.toLowerCase())
+        x.url.toLowerCase().includes(modelSearchBarText.value!.toLowerCase().trim())
       )
     }
   })
