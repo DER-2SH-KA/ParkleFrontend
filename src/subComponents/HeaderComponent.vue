@@ -82,24 +82,72 @@ const onDeleteUserDenied = () => {
         <button class="authButton no-select">
           <p>Профиль</p>
 
-          <v-menu id="profile-menu" activator="parent">
-            <p>Пользователь: {{ currentUserStore.currentUser?.login }}</p>
-            <v-btn @click="onLogout">Выйти</v-btn>
-            <v-btn :loading="loadingDeleteAccount" @click="deleteUser">Удалить аккаунт</v-btn>
+          <v-menu activator="parent">
+            <v-card
+              class="mx-auto profile-menu-container"
+              color="white"
+              variant="outlined"
+              min-width="200px"
+              max-width="300px"
+            >
+              <v-card-title>
+                <p style="text-align: center; font-weight: bold; font-size: 18pt">Меню</p>
+              </v-card-title>
+              <v-card-text>
+                <p style="text-align: center; font-size: 14pt">Пользователь</p>
+                <p
+                  style="
+                    color: white;
+                    border-radius: 3px;
+                    text-align: center;
+                    font-size: 14pt;
+                    padding: 3px 0px 3px 0px;
+                  "
+                >
+                  &lbrack; {{ currentUserStore.currentUser?.login }} &rbrack;
+                </p>
+              </v-card-text>
+              <v-card-actions>
+                <v-container fluid class="pa-0">
+                  <v-row no-gutters>
+                    <v-col class="pa-1 ma-0" cols="12">
+                      <v-btn
+                        @click="deleteUser"
+                        :loading="loadingDeleteAccount"
+                        variant="flat"
+                        block
+                        >Удалить аккаунт</v-btn
+                      >
+                    </v-col>
+                    <v-col class="pa-1" cols="12">
+                      <v-btn @click="onLogout" variant="flat" block>Выйти</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-actions>
+            </v-card>
           </v-menu>
         </button>
       </div>
     </div>
   </header>
 
-  <v-dialog id="user-delete-dialog" v-model="isShowDeleteAccountDialog" not-padding>
-    <VCol id="user-delete-column">
-      <p>Вы точно хотите безвозвратно удалить аккаунт {{ currentUserStore.currentUser?.login }}?</p>
-      <VRow id="website-delete-dialog-answer-buttons">
-        <VBtn @click="onDeleteUserAccept">Да</VBtn>
-        <VBtn @click="onDeleteUserDenied">Отмена</VBtn>
-      </VRow>
-    </VCol>
+  <v-dialog id="user-delete-dialog" v-model="isShowDeleteAccountDialog" not-padding persistent>
+    <v-card class="user-delete-card pa-1">
+      <v-card-title>Удаление пользователя</v-card-title>
+      <v-card-subtitle>Действие необратимо</v-card-subtitle>
+
+      <v-card-text>
+        <p style="color: red; font-size: 12pt">
+          Вы точно хотите безвозвратно удалить аккаунт {{ currentUserStore.currentUser?.login }}?
+        </p>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-btn @click="onDeleteUserAccept" variant="outlined">Да</v-btn>
+        <v-btn @click="onDeleteUserDenied" variant="flat">Отмена</v-btn>
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 
@@ -211,28 +259,23 @@ header {
   font-size: 14pt;
 }
 
+.profile-menu-container {
+  border-radius: 5px;
+  border: 2px white solid;
+  background-color: var(--background-item-color-dark-theme) !important;
+  padding: 10px;
+  max-width: 400px;
+  min-width: 200px;
+}
+
 #user-delete-dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: transparent;
   max-width: 500px;
 }
 
-#user-delete-column {
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  gap: 20px;
-  background-color: var(--background-second-color-dark-theme);
-  border-radius: 20px;
-  padding: 20px;
-
-  & > p {
-    color: red;
-    font-size: 18pt;
-    text-align: center;
-  }
+.user-delete-card {
+  background-color: var(--background-item-color-dark-theme);
+  color: white;
 }
 
 @media (max-width: 768px) {
