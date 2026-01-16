@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 const model = defineModel()
 const props = defineProps(['placeholder'])
+const emits = defineEmits(['whenEnter'])
 </script>
 
 <template>
   <v-row class="ma-0">
     <v-col class="pa-0">
       <v-text-field
+        @keyup.enter="emits('whenEnter')"
         :placeholder="props.placeholder ?? 'Что-то...'"
         type="text"
         variant="solo"

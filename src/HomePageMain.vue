@@ -23,7 +23,7 @@ function changeEditMode() {
   isAddingModeActive.value = false
 }
 
-function openSearchWindow() {
+function showResultBySearchRequest() {
   const encodedRequestText = encodeURIComponent(searchBarEngineText.value)
 
   window.open(`https://ya.ru/search/?text=${encodedRequestText}`, '_blank')
@@ -53,11 +53,15 @@ function showAddModeDialog() {
           <v-col class="pa-1" cols="10">
             <v-row class="pa-0 ma-0 mr-1 w-100" justify="space-between">
               <v-col class="pa-0 mr-1 mx-0">
-                <SearchBar placeholder="Найти в интернете..." v-model="searchBarEngineText" />
+                <SearchBar
+                  v-model="searchBarEngineText"
+                  v-on:when-enter="showResultBySearchRequest"
+                  placeholder="Найти в интернете..."
+                />
               </v-col>
 
               <v-col class="pa-0 d-flex justify-end" width="auto" cols="auto">
-                <v-btn class="ma-0 h-100" @click="openSearchWindow" elevation="0">
+                <v-btn class="ma-0 h-100" @click="showResultBySearchRequest" elevation="0">
                   <v-icon icon="$magnify" color="gray" size="32" />
                 </v-btn>
               </v-col>
