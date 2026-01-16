@@ -85,13 +85,13 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
       <VForm v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
         <VContainer id="registration-container">
           <v-row id="registration-column" class="pa-0 ma-0">
+            <!-- Title -->
             <v-col cols="12" class="pa-0">
-              <!-- Title -->
               <p style="text-align: center; font-size: 18pt"><strong>Регистрация</strong></p>
             </v-col>
 
+            <!-- Login -->
             <v-col cols="12" class="pa-0 ma-0">
-              <!-- Login -->
               <VTextField
                 v-model="login"
                 :rules="loginRules"
@@ -104,8 +104,8 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
               />
             </v-col>
 
+            <!-- EMail -->
             <v-col cols="12" class="pa-0 ma-0">
-              <!-- EMail -->
               <VTextField
                 v-model="email"
                 :rules="emailRules"
@@ -118,16 +118,16 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
               />
             </v-col>
 
+            <!-- Password -->
             <v-col cols="12" class="pa-0 ma-0">
               <v-row cols="12" class="pa-0 ma-0">
                 <v-col cols="12" class="pa-0 ma-0">
-                  <!-- Password 1 -->
                   <VTextField
                     v-model="password"
                     :rules="passwordRules"
                     :type="passwordVisibleType"
                     placeholder="Пароль..."
-                    append-inner-icon="$eye"
+                    :append-inner-icon="passwordVisibleType == 'password' ? '$eye' : '$eye_closed'"
                     variant="solo"
                     bg-color="#ebebeb"
                     required
@@ -137,16 +137,18 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
               </v-row>
             </v-col>
 
+            <!-- Password Repeat -->
             <v-col cols="12" class="pa-0 ma-0">
               <v-row class="pa-0 ma-0">
                 <v-col cols="12" class="pa-0 ma-0">
-                  <!-- Password 2 -->
                   <VTextField
                     v-model="passwordRepeat"
                     :rules="repeatPasswordRules"
                     :type="passwordRepeatVisibleType"
                     placeholder="Повтор пароля..."
-                    append-inner-icon="$eye"
+                    :append-inner-icon="
+                      passwordRepeatVisibleType == 'password' ? '$eye' : '$eye_closed'
+                    "
                     variant="solo"
                     bg-color="#ebebeb"
                     required
@@ -156,6 +158,7 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
               </v-row>
             </v-col>
 
+            <!-- Registration button -->
             <v-col cols="12" class="pa-0 ma-0">
               <VBtn
                 class="text-capitalize"
@@ -169,6 +172,7 @@ function changeTypeOfPasswordRepeatVisible(e: MouseEvent) {
               />
             </v-col>
 
+            <!-- Back button -->
             <v-col cols="12" class="pa-0 ma-0">
               <VBtn
                 class="text-capitalize"

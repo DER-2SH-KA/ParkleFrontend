@@ -14,14 +14,15 @@ import * as components from 'vuetify/components'
 import { createVuetify } from 'vuetify'
 import * as directives from 'vuetify/directives'
 import {
-  mdiMagnify,
-  mdiCog,
-  mdiDelete,
-  mdiPencil,
-  mdiEye,
   mdiAccount,
   mdiAt,
   mdiBrush,
+  mdiCog,
+  mdiDelete,
+  mdiEye,
+  mdiEyeOff,
+  mdiMagnify,
+  mdiPencil,
   mdiText,
   mdiTextLong,
   mdiWeb,
@@ -73,6 +74,7 @@ const vuetify = createVuetify({
       delete: mdiDelete,
       email_at: mdiAt,
       eye: mdiEye,
+      eye_closed: mdiEyeOff,
       magnify: mdiMagnify,
       pencil: mdiPencil,
       text: mdiText,

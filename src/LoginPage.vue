@@ -62,13 +62,13 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
       <VForm v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
         <VContainer id="login-container">
           <v-row id="login-column" class="pa-0 ma-0">
+            <!-- Title -->
             <v-col cols="12" class="pa-0">
-              <!-- Title -->
               <p style="text-align: center; font-size: 18pt"><strong>Вход</strong></p>
             </v-col>
 
+            <!-- Login -->
             <v-col cols="12" class="pa-0 ma-0">
-              <!-- Login -->
               <VTextField
                 v-model="login"
                 :rules="loginRules"
@@ -82,16 +82,16 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
               />
             </v-col>
 
+            <!-- Password -->
             <v-col cols="12" class="ma-0">
               <v-row cols="12" class="pa-0">
-                <!-- Password -->
                 <v-col cols="12" class="pa-0 ma-0">
                   <VTextField
                     v-model="password"
                     :rules="passwordRules"
                     :type="passwordVisibleType"
                     placeholder="Пароль..."
-                    append-inner-icon="$eye"
+                    :append-inner-icon="passwordVisibleType == 'password' ? '$eye' : '$eye_closed'"
                     variant="solo"
                     rounded="lg"
                     bg-color="#ebebeb"
