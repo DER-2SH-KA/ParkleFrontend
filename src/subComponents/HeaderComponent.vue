@@ -26,6 +26,10 @@ const onLogout = async () => {
     })
 }
 
+function settings() {
+  alert('Настройки на стадии разработки')
+}
+
 const deleteUser = () => {
   loadingDeleteAccount.value = true
   isShowDeleteAccountDialog.value = true
@@ -110,6 +114,11 @@ const onDeleteUserDenied = () => {
               <v-card-actions>
                 <v-container fluid class="pa-0">
                   <v-row no-gutters>
+                    <v-col class="pa-1 ma-0" cols="12">
+                      <v-btn @click="settings" :loading="loadingDeleteAccount" variant="flat" block
+                        >Настройки</v-btn
+                      >
+                    </v-col>
                     <v-col class="pa-1 ma-0" cols="12">
                       <v-btn
                         @click="deleteUser"
