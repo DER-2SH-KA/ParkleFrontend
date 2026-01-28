@@ -73,9 +73,12 @@ const onDeleteUserDenied = () => {
     <div id="div-right-side-of-header">
       <!-- Unauthorized -->
       <div v-if="!isLogined" class="authButtons">
+        <!-- Sign in -->
         <button class="authButton no-select">
           <router-link to="/auth/login">Войти</router-link>
         </button>
+
+        <!-- Sign up -->
         <button class="authButton no-select">
           <router-link to="/auth/registration">Регистрация</router-link>
         </button>
@@ -114,11 +117,14 @@ const onDeleteUserDenied = () => {
               <v-card-actions>
                 <v-container fluid class="pa-0">
                   <v-row no-gutters>
-                    <v-col class="pa-1 ma-0" cols="12">
+                    <!-- Settings profile -->
+                    <!--<v-col class="pa-1 ma-0" cols="12">
                       <v-btn @click="settings" :loading="loadingDeleteAccount" variant="flat" block
                         >Настройки</v-btn
                       >
-                    </v-col>
+                    </v-col>-->
+
+                    <!-- Delete profile -->
                     <v-col class="pa-1 ma-0" cols="12">
                       <v-btn
                         @click="deleteUser"
@@ -128,6 +134,7 @@ const onDeleteUserDenied = () => {
                         >Удалить аккаунт</v-btn
                       >
                     </v-col>
+                    <!-- Logout -->
                     <v-col class="pa-1" cols="12">
                       <v-btn @click="onLogout" variant="flat" block>Выйти</v-btn>
                     </v-col>
