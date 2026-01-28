@@ -76,6 +76,10 @@ async function saveWebsiteFromAddDialog(event: Event) {
       hexColor: hex.value,
     }
 
+    console.info('Current user data:', useCurrentUserStore().currentUser?.login)
+    console.info('props website data:', props.website)
+    console.info('Update website dto data:', websiteUpdateDto)
+
     await updateWebsiteById(props.website.id, websiteUpdateDto)
       .then((result) => {
         if (isWebsiteResponseDto(result)) {
@@ -95,6 +99,8 @@ async function saveWebsiteFromAddDialog(event: Event) {
 
           fillFields()
           model.value = false
+        } else {
+          showAlert(result.messageForClient, TYPE.ERROR)
         }
       })
       .catch((err) => {
