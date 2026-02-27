@@ -1,30 +1,30 @@
-import axios, { type AxiosRequestConfig } from 'axios'
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import type { ErrorResponseDto } from '../declaration'
 import { isErrorResponseDto } from '../typeGuards'
 
 // CRUD functions.
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const doGet = async (url: string, config?: AxiosRequestConfig): Promise<any> => {
+
+export const doGet = async (url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> => {
   return await axios.get(url, config)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const doPost = async (url: string, object: any): Promise<any> => {
+export const doPost = async (url: string, object: any): Promise<AxiosResponse> => {
   return await axios.post(url, object)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const doPut = async (url: string, object: any): Promise<any> => {
+export const doPut = async (url: string, object: any): Promise<AxiosResponse> => {
   return await axios.put(url, object)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const doPatch = async (url: string, object: any): Promise<any> => {
+export const doPatch = async (url: string, object: any): Promise<AxiosResponse> => {
   return await axios.patch(url, object)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const doDelete = async (url: string): Promise<any> => {
+export const doDelete = async (url: string): Promise<AxiosResponse> => {
   return await axios.delete(url)
 }
 

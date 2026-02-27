@@ -1,13 +1,17 @@
 <script lang="ts" setup>
 import type { WebsiteCreateDto, WebsiteResponseDto, WebsiteUpdateDto } from '@/scripts/declaration'
 import { ref, watch } from 'vue'
-import { createWebsite, updateWebsiteById } from '@/scripts/api/websiteApi'
+import { createWebsite, updateWebsiteById, getMetaContentByUrl } from '@/scripts/api/websiteApi'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
 import { websiteRules } from '../scripts/validationRules'
-import { isErrorResponseDto, isWebsiteResponseDto } from '@/scripts/typeGuards'
+import {
+  isErrorResponseDto,
+  isWebsiteDataResponseDto,
+  isWebsiteResponseDto,
+} from '@/scripts/typeGuards'
 
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
@@ -154,8 +158,25 @@ function setColorPickerModelValueToHEX() {
   if (!!colorPickerModel.value) {
     hex.value = colorPickerModel.value
   }
-
   colorPickerDialogModel.value = false
+}
+
+function getWebsiteTitleAndDescriptionByUrl() {
+  if (title.value == '' && description.value == '') {
+    getMetaContentByUrl(url.value)
+      .then((dto) => {
+        if (isWebsiteDataResponseDto(dto)) {
+          title.value = dto.title.substring(0, 39)
+          description.value = dto.description ? dto.description.substring(0, 254) : ''
+        } else {
+          showAlert(dto.messageForClient, TYPE.ERROR)
+          console.error('Error fetching meta-data by url: ', dto.messageForDev)
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching meta-data by url: ', err)
+      })
+  }
 }
 
 watch(model, (newX) => {
@@ -211,21 +232,37 @@ watch(model, (newX) => {
             />
           </v-col>
 
-          <v-col class="py-0 ma-0" cols="12">
+          <v-col class="pa-0 ma-0" cols="12">
             <!-- URL -->
-            <VTextField
-              v-model="url"
-              :rules="websiteRules.url"
-              label="URL"
-              placeholder="URL..."
-              append-inner-icon="$web"
-              type="text"
-              variant="solo"
-              bg-color="#23232A"
-              style="color: white"
-              rounded="lg"
-              required
-            />
+            <v-container class="pa-0">
+              <v-row class="ma-0">
+                <v-col class="ma-0 py-0" cols="max">
+                  <VTextField
+                    v-model="url"
+                    :rules="websiteRules.url"
+                    label="URL"
+                    placeholder="URL..."
+                    append-inner-icon="$web"
+                    type="text"
+                    variant="solo"
+                    bg-color="#23232A"
+                    style="color: white"
+                    rounded="lg"
+                    required
+                  />
+                </v-col>
+                <v-col class="ma-0 py-0" cols="auto">
+                  <v-btn base-color="#23232A" rounded="lg" height="73%" block>
+                    <v-icon
+                      icon="$magnify"
+                      color="#A7A7AA"
+                      size="28"
+                      @click="getWebsiteTitleAndDescriptionByUrl()"
+                    />
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-col>
 
           <v-col class="py-0 ma-0" cols="12">

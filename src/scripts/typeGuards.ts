@@ -3,6 +3,7 @@ import type {
   RoleResponseDto,
   UserResponseDto,
   WebsiteResponseDto,
+  WebsiteDataResponseDto,
 } from './declaration'
 
 export function isErrorResponseDto(obj: unknown): obj is ErrorResponseDto {
@@ -62,6 +63,18 @@ export function isWebsiteResponseDto(obj: unknown): obj is WebsiteResponseDto {
     typeof obj.title === 'string' &&
     typeof obj.description === 'string' &&
     typeof obj.url === 'string'
+
+  return result
+}
+
+export function isWebsiteDataResponseDto(obj: unknown): obj is WebsiteDataResponseDto {
+  const result =
+    !!obj &&
+    typeof obj === 'object' &&
+    'title' in obj &&
+    'description' in obj &&
+    typeof obj.title === 'string' &&
+    typeof obj.description === 'string'
 
   return result
 }

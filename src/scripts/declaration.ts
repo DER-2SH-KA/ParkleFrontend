@@ -88,3 +88,8 @@ export interface ErrorResponseDto {
   messageForClient: string
   messageForDev: string
 }
+
+export interface WebsiteDataResponseDto {
+  title: string
+  description?: string
+}

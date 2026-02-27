@@ -51,7 +51,7 @@ export const logout = async (): Promise<undefined> => {
 /**
  * Check is server can accept requests.
  */
-export const ping = async (): Promise<undefined> => {
+export const ping = async (): Promise<any> => {
   return await doGet(userPingApi)
 }
 

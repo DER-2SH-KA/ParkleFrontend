@@ -4,13 +4,19 @@ import type {
   WebsiteResponseDto,
   WebsiteUpdateDto,
   ErrorResponseDto,
+  WebsiteDataResponseDto,
 } from '../declaration'
-import { isWebsiteResponseDto } from '@/scripts/typeGuards'
+import {
+  isWebsiteResponseDto,
+  isWebsiteDataResponseDto,
+  isErrorResponseDto,
+} from '@/scripts/typeGuards'
 
 const websitesApi = '/websites'
 const websiteNewApi = websitesApi + '/new'
 const websiteUpdateApi = websitesApi + '/update'
 const websiteDeleteApi = websitesApi + '/delete'
+const websiteFetchData = websitesApi + '/fetch/data'
 
 /// Website CRUD.
 
@@ -37,6 +43,35 @@ export const getWebsitesByUserLogin = async (
     })
 
   return responseData
+}
+
+export async function getMetaContentByUrl(
+  url: string,
+): Promise<WebsiteDataResponseDto | ErrorResponseDto> {
+  let content: WebsiteDataResponseDto | ErrorResponseDto = {
+    messageForClient: 'Я тело пустышки из getMetaContentByUrl',
+    messageForDev: 'I am an empty object of getMetaContentByUrl function',
+  }
+
+  await doGet(websiteFetchData + '?url=' + url)
+    .then((response) => {
+      const responseData = getWebsiteDataResponseDtoOrErrorDto(response)
+
+      if (isWebsiteDataResponseDto(responseData)) {
+        console.info('Website data by URL: ', responseData)
+      } else {
+        console.error(responseData.messageForDev)
+      }
+
+      content = responseData
+    })
+    .catch((err) => {
+      content = proccessError(err)
+
+      console.error(`Error to fetch content url '${url}':`, err)
+    })
+
+  return content
 }
 
 /** Create website.
@@ -138,10 +173,26 @@ function getWebsiteDtoOrErrorDto(response: any): WebsiteResponseDto | ErrorRespo
       'Request success, has response, it has body, but is not requested body interface',
   }
 
-  if (isWebsiteResponseDto(response.data)) {
+  if (isWebsiteResponseDto(response.data) || isErrorResponseDto(response.data)) {
     responseData = response.data
+  }
 
-    console.info('isAuthed dto body', response.data)
+  return responseData
+}
+
+// Disable eslint for any.
+
+function getWebsiteDataResponseDtoOrErrorDto(
+  response: any,
+): WebsiteDataResponseDto | ErrorResponseDto {
+  let responseData: WebsiteDataResponseDto | ErrorResponseDto = {
+    messageForClient: 'Сервер успешно обработал запрос, но ответ в неверном формате',
+    messageForDev:
+      'Request success, has response, it has body, but is not requested body interface',
+  }
+
+  if (isWebsiteDataResponseDto(response.data) || isErrorResponseDto(response.data)) {
+    responseData = response.data
   }
 
   return responseData
