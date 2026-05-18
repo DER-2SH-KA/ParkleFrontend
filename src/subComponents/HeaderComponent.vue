@@ -77,11 +77,6 @@ const onDeleteUserDenied = () => {
         <button class="authButton no-select">
           <router-link to="/auth/login">Войти</router-link>
         </button>
-
-        <!-- Sign up -->
-        <button class="authButton no-select">
-          <router-link to="/auth/registration">Регистрация</router-link>
-        </button>
       </div>
 
       <!-- Authorized -->

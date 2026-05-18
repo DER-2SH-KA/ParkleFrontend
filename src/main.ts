@@ -32,7 +32,6 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import { ru } from 'vuetify/locale'
 import HomePage from './HomePage.vue'
 import LoginPage from './LoginPage.vue'
-import RegistrationPage from './RegistrationPage.vue'
 import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
 import { getWebsitesByUserLogin } from './scripts/api/websiteApi'
 import AboutSite from './AboutSite.vue'
@@ -47,7 +46,6 @@ const pinia = createPinia()
 // Router settings.
 const routes = [
   { path: '/', component: HomePage },
-  { path: '/auth/registration', component: RegistrationPage },
   { path: '/auth/login', component: LoginPage },
   { path: '/about', component: AboutSite },
 ]

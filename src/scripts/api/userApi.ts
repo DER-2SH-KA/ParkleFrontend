@@ -1,14 +1,12 @@
 import { doGet, doPost, doDelete, proccessError } from './api'
 import {
   type UserAuthDto,
-  type UserCreateDto,
   type UserResponseDto,
   type ErrorResponseDto,
 } from '@/scripts/declaration'
 import { isUserResponseDto } from '@/scripts/typeGuards'
 
 const authLoginApi = '/auth/login'
-const registrationApi = '/auth/registration'
 // const userUpdateApi = '/auth/update'
 const userDeleteApi = '/auth/delete'
 const userLogoutApi = '/auth/logout'
@@ -51,8 +49,8 @@ export const logout = async (): Promise<undefined> => {
 /**
  * Check is server can accept requests.
  */
-export const ping = async (): Promise<any> => {
-  return await doGet(userPingApi)
+export const ping = async (): Promise<undefined> => {
+  await doGet(userPingApi)
 }
 
 /** Sign In User.
@@ -77,33 +75,6 @@ export const authorize = async (
       responseData = proccessError(err)
 
       console.error('Authorization error: ', err)
-    })
-
-  return responseData
-}
-
-/** Sign Up User.
- * @param {UserCreateDto} userCreateDto user DTO for registration.
- * @returns {UserResponseDto} created User DTO.
- */
-export const registration = async (
-  userCreateDto: UserCreateDto,
-): Promise<UserResponseDto | ErrorResponseDto> => {
-  let responseData: UserResponseDto | ErrorResponseDto = {
-    messageForClient: 'Я тело пустышки из метода регистрации',
-    messageForDev: 'I am an empty object of registration function',
-  }
-
-  await doPost(registrationApi, userCreateDto)
-    .then((response) => {
-      responseData = getUserDtoOrErrorDto(response)
-
-      console.info('Registration dto: ', responseData)
-    })
-    .catch((err) => {
-      responseData = proccessError(err)
-
-      console.error('Registration error: ', err)
     })
 
   return responseData
