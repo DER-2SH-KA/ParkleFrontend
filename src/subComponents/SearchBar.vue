@@ -8,6 +8,7 @@ const emits = defineEmits(['whenEnter'])
   <v-row class="ma-0">
     <v-col class="pa-0">
       <v-text-field
+        class="search-bar__text-field"
         @keyup.enter="emits('whenEnter')"
         :placeholder="props.placeholder ?? 'Что-то...'"
         type="text"
