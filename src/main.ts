@@ -1,136 +1,19 @@
-// import './assets/main.css'
-
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
 import App from './App.vue'
-import { createWebHistory, createRouter } from 'vue-router'
-
-import Toast, { type PluginOptions, POSITION } from 'vue-toastification'
-import 'vue-toastification/dist/index.css'
-
-import 'vuetify/styles'
-import * as components from 'vuetify/components'
-import { createVuetify } from 'vuetify'
-import * as directives from 'vuetify/directives'
-import {
-  mdiAccount,
-  mdiAt,
-  mdiBrush,
-  mdiCog,
-  mdiDelete,
-  mdiEye,
-  mdiEyeOff,
-  mdiMagnify,
-  mdiPencil,
-  mdiText,
-  mdiTextLong,
-  mdiWeb,
-} from '@mdi/js'
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-
-import { ru } from 'vuetify/locale'
-import HomePage from './HomePage.vue'
-import LoginPage from './LoginPage.vue'
-import { useCurrentUserStore, useWebsitesStore } from './scripts/stores/piniaStore'
-import { getWebsitesByUserLogin } from './scripts/api/websiteApi'
-import AboutSite from './AboutSite.vue'
-
-import axios from 'axios'
-import { isErrorResponseDto } from './scripts/typeGuards'
+import { configuredVuetify } from './scripts/setup/vuetify.setup.ts'
+import { routerConfigured } from './scripts/setup/vue-router.setup.ts'
+import { toast, toastOptions } from './scripts/setup/toast.setup.ts'
+import { pinia, piniaSetupCurrentUserStoreTrigger } from './scripts/setup/pinia.setup.ts'
+import { axiosSetup } from './scripts/setup/axios.setup.ts'
 
 const app = createApp(App)
 
-const pinia = createPinia()
-
-// Router settings.
-const routes = [
-  { path: '/', component: HomePage },
-  { path: '/auth/login', component: LoginPage },
-  { path: '/about', component: AboutSite },
-]
-const router = createRouter({
-  history: createWebHistory(),
-  routes: routes,
-})
-
-// Toast settings.
-const toastOptions: PluginOptions = {
-  position: POSITION.BOTTOM_RIGHT,
-  timeout: 4000,
-}
-
-// Vuetify settings.
-const vuetify = createVuetify({
-  icons: {
-    defaultSet: 'mdi',
-    aliases: {
-      ...aliases,
-      account: mdiAccount,
-      brush: mdiBrush,
-      cog: mdiCog,
-      delete: mdiDelete,
-      email_at: mdiAt,
-      eye: mdiEye,
-      eye_closed: mdiEyeOff,
-      magnify: mdiMagnify,
-      pencil: mdiPencil,
-      text: mdiText,
-      text_long: mdiTextLong,
-      web: mdiWeb,
-    },
-    sets: {
-      mdi,
-    },
-  },
-  components,
-  directives,
-  locale: {
-    locale: 'ru',
-    fallback: 'en',
-    messages: {
-      ru,
-    },
-  },
-})
-
-// Mount of teches in app.
-app.use(router)
-app.use(Toast, toastOptions)
-app.use(vuetify)
+app.use(routerConfigured)
+app.use(toast, toastOptions)
+app.use(configuredVuetify)
 app.use(pinia)
 
-// For watching on user and update list of websites.
-const currentUserStore = useCurrentUserStore()
-const websitesStore = useWebsitesStore()
-
-// Trigger on current user was changed.
-currentUserStore.$onAction(async ({ name, args }) => {
-  if (name === 'setCurrentUser') {
-    const user = args[0] // Argument of new user.
-
-    console.log('Triggered `setCurrentUser` function...')
-
-    if (!!user) {
-      console.log('Set new user as value for currentUserStore...')
-
-      await getWebsitesByUserLogin(user.login)
-        .then((result) => {
-          if (!isErrorResponseDto(result)) websitesStore.websites = result
-          else websitesStore.websites = []
-        })
-        .catch((error) => {
-          console.error(`Error get websites by userLogin: ${user.login}`, error)
-        })
-    } else {
-      websitesStore.websites = []
-    }
-  }
-})
-
-// Axios settings.
-axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
-axios.defaults.timeout = 10000
-axios.defaults.withCredentials = true
+axiosSetup()
+piniaSetupCurrentUserStoreTrigger()
 
 app.mount('#app')
