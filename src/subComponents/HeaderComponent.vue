@@ -62,31 +62,38 @@ const onDeleteUserDenied = () => {
 
 <template>
   <header>
-    <div id="div-left-side-of-header">
-      <router-link id="rl-logo" to="/">
-        <img id="rl-logo-img" class="no-select" src=".././resources/img/png/icon.png" alt="Icon" />
-        <p id="rl-logo-title" class="no-select">Parkle</p>
+    <div id="header-left-side__content">
+      <router-link id="header-left-side__relative-link-logo" to="/">
+        <img
+          id="header-left-side__logo-img"
+          class="no-select"
+          src=".././resources/img/png/icon.png"
+          alt="Icon"
+        />
+        <p id="header-left-side__logo-title" class="no-select">Паркл</p>
       </router-link>
-      <router-link id="rl-about-website" class="no-select" to="/about">Справка</router-link>
+      <router-link id="header-left-side__relative-link-about" class="no-select" to="/about"
+        >Справка</router-link
+      >
     </div>
 
-    <div id="div-right-side-of-header">
+    <div id="header-right-side__content">
       <!-- Unauthorized -->
-      <div v-if="!isLogined" class="authButtons">
+      <div v-if="!isLogined" class="header-right-side__authentication-buttons">
         <!-- Sign in -->
-        <button class="authButton no-select">
+        <button class="header-right-side__authentication-button no-select">
           <router-link to="/auth/login">Войти</router-link>
         </button>
       </div>
 
       <!-- Authorized -->
-      <div v-else class="authButtons">
-        <button class="authButton no-select">
+      <div v-else class="header-right-side__authentication-buttons">
+        <button class="header-right-side__authentication-button no-select">
           <p>Профиль</p>
 
           <v-menu activator="parent">
             <v-card
-              class="mx-auto profile-menu-container"
+              class="mx-auto header-right-side__profile-menu-container"
               color="white"
               variant="outlined"
               min-width="200px"
@@ -113,11 +120,11 @@ const onDeleteUserDenied = () => {
                 <v-container fluid class="pa-0">
                   <v-row no-gutters>
                     <!-- Settings profile -->
-                    <!--<v-col class="pa-1 ma-0" cols="12">
+                    <v-col class="pa-1 ma-0" cols="12">
                       <v-btn @click="settings" :loading="loadingDeleteAccount" variant="flat" block
                         >Настройки</v-btn
                       >
-                    </v-col>-->
+                    </v-col>
 
                     <!-- Delete profile -->
                     <v-col class="pa-1 ma-0" cols="12">
@@ -143,13 +150,18 @@ const onDeleteUserDenied = () => {
     </div>
   </header>
 
-  <v-dialog id="user-delete-dialog" v-model="isShowDeleteAccountDialog" not-padding persistent>
-    <v-card class="user-delete-card pa-1">
+  <v-dialog
+    id="profile-menu__delete-account-dialog"
+    v-model="isShowDeleteAccountDialog"
+    not-padding
+    persistent
+  >
+    <v-card class="delete-account-dialog__user-delete-card pa-1">
       <v-card-title>Удаление пользователя</v-card-title>
       <v-card-subtitle>Действие необратимо</v-card-subtitle>
 
       <v-card-text>
-        <p style="color: red; font-size: 12pt">
+        <p style="color: red; font-size: 14pt">
           Вы точно хотите безвозвратно удалить аккаунт {{ currentUserStore.currentUser?.login }}?
         </p>
       </v-card-text>
@@ -170,16 +182,19 @@ header {
   align-items: center;
   justify-content: space-between;
   background-color: var(--background-second-color-dark-theme);
+
+  outline: none;
+  box-shadow: 0 0 30px rgba(125, 125, 125, 0.3);
 }
 
-#div-left-side-of-header {
+#header-left-side__content {
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: center;
 }
 
-#rl-logo {
+#header-left-side__relative-link-logo {
   display: flex;
   justify-content: start;
   flex-flow: row nowrap;
@@ -191,35 +206,30 @@ header {
   margin-left: 20px;
 }
 
-#rl-logo-img {
+#header-left-side__logo-img {
   width: 30pt;
   aspect-ratio: 1;
 }
 
-#rl-logo-title {
+#header-left-side__logo-title {
   color: var(--text-color-dark-theme);
   text-decoration: none;
   font-size: 28pt;
   margin-left: 10px;
 }
 
-#rl-about-website {
-  margin-left: 20px;
+#header-left-side__relative-link-about {
+  margin-left: 16px;
 
   color: white;
   background-color: transparent;
 
   text-decoration: underline;
   text-align: center;
-  font-size: 24pt;
+  font-size: 19pt;
 }
 
-#authButtonsContainer {
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.authButtons {
+.header-right-side__authentication-buttons {
   display: flex;
   flex-flow: row wrap;
   justify-content: end;
@@ -227,13 +237,13 @@ header {
   margin-right: 5px;
 }
 
-.authButton {
+.header-right-side__authentication-button {
   display: inline-block;
   background-color: transparent;
   border: 2px var(--text-color-dark-theme) solid;
-  border-radius: 5px;
+  border-radius: 20px;
 
-  font-size: 14pt;
+  font-size: 12pt;
 
   padding: 5px 10px 5px 10px;
   margin: 10px 10px 10px 0px;
@@ -265,27 +275,32 @@ header {
   will-change: contents;
 }
 
-#profile-menu {
-  color: white;
-  font-size: 14pt;
-}
-
-.profile-menu-container {
-  border-radius: 5px;
-  border: 2px white solid;
-  background-color: var(--background-item-color-dark-theme) !important;
+.header-right-side__profile-menu-container {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
   padding: 10px;
   max-width: 400px;
   min-width: 200px;
+
+  &:hover {
+    outline: none;
+    box-shadow: 0 0 40px rgba(100, 100, 100, 0.3);
+    transition: all 0.3s ease;
+  }
 }
 
-#user-delete-dialog {
+#profile-menu__delete-account-dialog {
   background-color: transparent;
   max-width: 500px;
 }
 
-.user-delete-card {
-  background-color: var(--background-item-color-dark-theme);
+.delete-account-dialog__user-delete-card {
+  background: rgba(10, 10, 10, 0.75) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
   color: white;
 }
 
@@ -299,7 +314,7 @@ header {
     margin-left: 10px;
   }
 
-  .authButton {
+  .header-right-side__authentication-button {
     font-size: 12pt;
   }
 }

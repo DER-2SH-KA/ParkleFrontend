@@ -28,6 +28,9 @@
   position: sticky;
   bottom: 0;
   flex: 0 0 auto;
+
+  outline: none;
+  box-shadow: 0 0 30px rgba(125, 125, 125, 0.3);
 }
 
 .no-select {
@@ -37,4 +40,9 @@
 ::selection {
   color: white;
   background-color: var(--primary-color);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -0.02em;
 }
