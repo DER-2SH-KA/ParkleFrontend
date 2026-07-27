@@ -24,6 +24,16 @@
   background-color: var(--background-color-dark-theme);
 }
 
+.footer__footer-component {
+  position: sticky;
+  bottom: 0;
+  flex: 0 0 auto;
+}
+
+.no-select {
+  user-select: none;
+}
+
 ::selection {
   color: white;
   background-color: var(--primary-color);

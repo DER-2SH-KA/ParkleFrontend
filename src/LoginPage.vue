@@ -13,6 +13,7 @@ import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
 import { loginRules, passwordRules } from './scripts/validationRules'
 import { isUserResponseDto } from './scripts/typeGuards'
+import FooterComponent from './subComponents/FooterComponent.vue'
 
 const router = useRouter()
 
@@ -130,6 +131,8 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
       </VForm>
     </section>
   </main>
+
+  <FooterComponent class="footer__footer-component" />
 </template>
 
 <style lang="scss" scoped>

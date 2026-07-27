@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HeaderComponent from './subComponents/HeaderComponent.vue'
+import FooterComponent from './subComponents/FooterComponent.vue'
 </script>
 
 <template>
@@ -57,6 +58,8 @@ import HeaderComponent from './subComponents/HeaderComponent.vue'
       </p>
     </section>
   </main>
+
+  <FooterComponent class="footer__footer-component" />
 </template>
 
 <style lang="scss">

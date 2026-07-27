@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import HomePageMain from './HomePageMain.vue'
 import HeaderComponent from './subComponents/HeaderComponent.vue'
+import FooterComponent from './subComponents/FooterComponent.vue'
 </script>
 
 <template>
   <HeaderComponent class="header-component" />
   <HomePageMain class="main-component" />
+  <FooterComponent class="footer__footer-component" />
 </template>
 
 <style lang="scss">

@@ -10,7 +10,7 @@ const authLoginApi = '/auth/login'
 // const userUpdateApi = '/auth/update'
 const userDeleteApi = '/auth/delete'
 const userLogoutApi = '/auth/logout'
-const userPingApi = '/auth/ping'
+const userPingApi = '/ping'
 
 const isAuthedApi = '/auth/isAuthed'
 
