@@ -13,6 +13,7 @@ const emits = defineEmits(['whenEnter'])
         :placeholder="props.placeholder ?? 'Что-то...'"
         type="text"
         variant="solo"
+        rounded="xl"
         clearable
         hide-details
         v-model="model"
