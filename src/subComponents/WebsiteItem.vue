@@ -145,6 +145,7 @@ const onDeleteWebsiteDenie = () => {
   font-size: 16pt;
   overflow-wrap: break-word;
   width: 100%;
+  max-width: 200px;
 
   &::first-letter {
     font-weight: 500;
