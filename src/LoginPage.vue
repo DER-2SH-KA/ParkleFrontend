@@ -60,8 +60,8 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 <template>
   <main>
     <section>
-      <VForm v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
-        <VContainer id="login-container">
+      <v-form v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
+        <v-container id="login-form__container">
           <v-row id="login-column" class="pa-0 ma-0">
             <!-- Title -->
             <v-col cols="12" class="pa-0">
@@ -70,14 +70,14 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 
             <!-- Login -->
             <v-col cols="12" class="pa-0 ma-0">
-              <VTextField
+              <v-text-field
                 v-model="login"
                 :rules="loginRules"
                 placeholder="Логин..."
                 append-inner-icon="$account"
                 type="text"
                 variant="solo"
-                rounded="lg"
+                rounded="xl"
                 bg-color="#ebebeb"
                 required
               />
@@ -87,14 +87,14 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
             <v-col cols="12" class="ma-0">
               <v-row cols="12" class="pa-0">
                 <v-col cols="12" class="pa-0 ma-0">
-                  <VTextField
+                  <v-text-field
                     v-model="password"
                     :rules="passwordRules"
                     :type="passwordVisibleType"
                     placeholder="Пароль..."
                     :append-inner-icon="passwordVisibleType == 'password' ? '$eye' : '$eye_closed'"
                     variant="solo"
-                    rounded="lg"
+                    rounded="xl"
                     bg-color="#ebebeb"
                     required
                     @click:append-inner="changeTypeOfPasswordVisible"
@@ -104,13 +104,13 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
             </v-col>
 
             <v-col cols="12" class="pa-0">
-              <VBtn
+              <v-btn
                 class="mt-0 text-capitalize"
                 :loading="loading"
                 :disabled="!isFormValid"
                 text="Войти"
                 type="submit"
-                rounded="10px"
+                rounded="xl"
                 base-color="#6f00ff"
                 style="font-size: 12pt"
                 block
@@ -118,17 +118,18 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
             </v-col>
 
             <v-col cols="12" class="pa-0">
-              <VBtn
+              <v-btn
                 class="text-capitalize"
                 @click="router.go(-1)"
                 text="Назад"
+                rounded="xl"
                 style="font-size: 12pt"
                 block
               />
             </v-col>
           </v-row>
-        </VContainer>
-      </VForm>
+        </v-container>
+      </v-form>
     </section>
   </main>
 
@@ -151,8 +152,10 @@ section {
   max-width: 700px;
 }
 
-#login-container {
-  background-color: var(--text-color-dark-theme);
+#login-form__container {
+  background: white;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
 }
 
