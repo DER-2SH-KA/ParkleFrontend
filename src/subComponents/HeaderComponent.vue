@@ -161,11 +161,15 @@ const onDeleteUserDenied = () => {
   >
     <v-card class="delete-account-dialog__user-delete-card pa-1">
       <v-card-title>Удаление пользователя</v-card-title>
-      <v-card-subtitle>Действие необратимо</v-card-subtitle>
+      <v-card-subtitle
+        ><span class="card__subtitle-cacution">Действие необратимо</span></v-card-subtitle
+      >
 
       <v-card-text>
-        <p style="color: red; font-size: 14pt">
-          Вы точно хотите безвозвратно удалить аккаунт {{ currentUserStore.currentUser?.login }}?
+        <p style="font-size: 14pt">
+          Вы точно хотите безвозвратно
+          <span style="color: red; font-size: 14pt; text-decoration: underline">УДАЛИТЬ</span>
+          аккаунт {{ currentUserStore.currentUser?.login }}?
         </p>
       </v-card-text>
 
