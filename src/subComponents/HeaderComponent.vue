@@ -72,8 +72,11 @@ const onDeleteUserDenied = () => {
         />
         <p id="header-left-side__logo-title" class="no-select">Паркл</p>
       </router-link>
-      <router-link id="header-left-side__relative-link-about" class="no-select" to="/about"
+      <router-link id="header-left-side__relative-link-menu" class="no-select" to="/about"
         >Справка</router-link
+      >
+      <router-link id="header-left-side__relative-link-menu" class="no-select" to="/faq"
+        >FAQ</router-link
       >
     </div>
 
@@ -223,7 +226,7 @@ header {
   }
 }
 
-#header-left-side__relative-link-about {
+#header-left-side__relative-link-menu {
   margin-left: 16px;
 
   color: white;
