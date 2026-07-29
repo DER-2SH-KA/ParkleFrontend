@@ -48,25 +48,26 @@ function showAddModeDialog() {
           </v-col>
         </v-row>
 
-        <!-- Search Engine -->
-        <v-container class="searchBars ma-0 pa-0">
-          <v-row class="ma-0">
+        <v-container class="home-page__search-bars ma-0 pa-0">
+          <!-- Search Engine -->
+          <v-row class="home-page__search-bars ma-0 pa-0">
             <v-col class="pa-1">
-              <v-row class="pa-0 ma-0 mr-1 w-100" justify="space-between">
-                <v-col class="pa-0 mr-1 mx-0">
-                  <SearchBar
-                    v-model="searchBarEngineText"
-                    v-on:when-enter="showResultBySearchRequest"
-                    placeholder="Найти в интернете..."
-                  />
-                </v-col>
+              <SearchBar
+                v-model="searchBarEngineText"
+                v-on:when-enter="showResultBySearchRequest"
+                placeholder="Найти в интернете..."
+              />
+            </v-col>
 
-                <v-col class="pa-0 d-flex justify-end" width="auto" cols="auto">
-                  <v-btn class="ma-0 h-100" @click="showResultBySearchRequest" elevation="0">
-                    <v-icon icon="$magnify" color="gray" size="32" />
-                  </v-btn>
-                </v-col>
-              </v-row>
+            <v-col class="pa-1" cols="auto">
+              <v-btn
+                class="ma-0 h-100"
+                @click="showResultBySearchRequest"
+                elevation="0"
+                rounded="xl"
+              >
+                <v-icon icon="$magnify" color="gray" size="32" />
+              </v-btn>
             </v-col>
 
             <!--
@@ -93,18 +94,23 @@ function showAddModeDialog() {
                 class="h-100"
                 @click="isShowSearchWebsiteSettings = !isShowSearchWebsiteSettings"
                 elevation="0"
+                rounded="xl"
                 style="position: relative"
               >
                 <v-icon icon="$cog" color="gray" size="32" />
 
-                <div id="websites-search-bar-settings-menu" v-if="isShowSearchWebsiteSettings">
+                <v-card
+                  id="websites-search-bar-settings-menu"
+                  v-if="isShowSearchWebsiteSettings"
+                  rounded="xl"
+                >
                   <v-btn class="rounded-b-0" @click="showAddModeDialog" elevation="0"
                     >Добавить</v-btn
                   >
                   <v-btn class="rounded-t-0" @click="changeEditMode" elevation="0">{{
                     !isEditingModeActive ? 'Редактировать' : 'Закончить'
                   }}</v-btn>
-                </div>
+                </v-card>
               </v-btn>
             </v-col>
           </v-row>
@@ -158,7 +164,7 @@ section {
   position: relative;
 }
 
-.searchBars {
+.home-page__search-bars {
   max-width: 800px;
 }
 
