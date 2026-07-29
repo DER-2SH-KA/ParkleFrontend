@@ -216,6 +216,11 @@ header {
   text-decoration: none;
   font-size: 28pt;
   margin-left: 10px;
+
+  &::first-letter {
+    font-weight: 500;
+    color: #6f00ff;
+  }
 }
 
 #header-left-side__relative-link-about {
