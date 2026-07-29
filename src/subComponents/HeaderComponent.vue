@@ -241,7 +241,7 @@ header {
   display: inline-block;
   background-color: transparent;
   border: 2px var(--text-color-dark-theme) solid;
-  border-radius: 20px;
+  border-radius: 18px;
 
   font-size: 12pt;
 
@@ -270,6 +270,8 @@ header {
     & > p {
       color: var(--background-color-dark-theme);
     }
+
+    transition: background-color 0.3s ease;
   }
 
   will-change: contents;
