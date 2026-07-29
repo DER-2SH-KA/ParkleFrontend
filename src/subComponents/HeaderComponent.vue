@@ -75,9 +75,6 @@ const onDeleteUserDenied = () => {
       <router-link id="header-left-side__relative-link-menu" class="no-select" to="/about"
         >Справка</router-link
       >
-      <router-link id="header-left-side__relative-link-menu" class="no-select" to="/faq"
-        >FAQ</router-link
-      >
     </div>
 
     <div id="header-right-side__content">
@@ -124,7 +121,12 @@ const onDeleteUserDenied = () => {
                   <v-row no-gutters>
                     <!-- Settings profile -->
                     <v-col class="pa-1 ma-0" cols="12">
-                      <v-btn @click="settings" :loading="loadingDeleteAccount" variant="flat" block
+                      <v-btn
+                        @click="settings"
+                        :loading="loadingDeleteAccount"
+                        variant="flat"
+                        rounded="xl"
+                        block
                         >Настройки</v-btn
                       >
                     </v-col>
@@ -135,13 +137,16 @@ const onDeleteUserDenied = () => {
                         @click="deleteUser"
                         :loading="loadingDeleteAccount"
                         variant="flat"
+                        rounded="xl"
                         block
                         >Удалить аккаунт</v-btn
                       >
                     </v-col>
                     <!-- Logout -->
                     <v-col class="pa-1" cols="12">
-                      <v-btn @click="onLogout" variant="flat" block>Выйти</v-btn>
+                      <v-btn @click="onLogout" variant="flat" rounded="xl" color="red" block
+                        >Выйти</v-btn
+                      >
                     </v-col>
                   </v-row>
                 </v-container>
