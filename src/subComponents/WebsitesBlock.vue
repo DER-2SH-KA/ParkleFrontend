@@ -104,5 +104,9 @@ onMounted(async () => {
   position: absolute;
   top: 100%;
   width: 100%;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
 }
 </style>
