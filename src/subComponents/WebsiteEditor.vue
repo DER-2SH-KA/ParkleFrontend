@@ -334,11 +334,10 @@ watch(model, (newX) => {
 
 <style lang="scss">
 .dialog-design {
-  background-color: #00000077;
+  background-color: #00000055;
 }
 
 #website-editor {
-  background-color: transparent;
   max-width: 700px;
   width: 100%;
 }
@@ -347,10 +346,15 @@ watch(model, (newX) => {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: var(--background-second-color-dark-theme);
   border-radius: 20px;
   padding: 20px;
   width: 100%;
+
+  background: rgba(10, 10, 10, 0.75) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  color: white;
 }
 
 #show-hex-color {
