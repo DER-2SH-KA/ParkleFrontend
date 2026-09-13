@@ -22,15 +22,11 @@ export function isUserResponseDto(obj: unknown): obj is UserResponseDto {
     !!obj &&
     typeof obj === 'object' &&
     'id' in obj &&
-    'roleName' in obj &&
-    'rolePriority' in obj &&
     'login' in obj &&
-    'email' in obj &&
+    'roles' in obj &&
     typeof obj.id === 'string' &&
-    typeof obj.roleName === 'string' &&
-    typeof obj.rolePriority === 'number' &&
     typeof obj.login === 'string' &&
-    typeof obj.email === 'string'
+    typeof obj.roles === 'object'
 
   return result
 }
@@ -39,10 +35,10 @@ export function isRoleResponseDto(obj: unknown): obj is RoleResponseDto {
   const result =
     !!obj &&
     typeof obj === 'object' &&
+    'id' in obj &&
     'name' in obj &&
-    'priority' in obj &&
-    typeof obj.name === 'string' &&
-    typeof obj.priority === 'number'
+    typeof obj.id === 'string' &&
+    typeof obj.name === 'string'
 
   return result
 }
@@ -52,17 +48,17 @@ export function isWebsiteResponseDto(obj: unknown): obj is WebsiteResponseDto {
     !!obj &&
     typeof obj === 'object' &&
     'id' in obj &&
-    'userLogin' in obj &&
-    'hexColor' in obj &&
     'title' in obj &&
     'description' in obj &&
     'url' in obj &&
+    'hexColor' in obj &&
+    'tags' in obj &&
     typeof obj.id === 'string' &&
-    typeof obj.userLogin === 'string' &&
-    typeof obj.hexColor === 'string' &&
     typeof obj.title === 'string' &&
     typeof obj.description === 'string' &&
-    typeof obj.url === 'string'
+    typeof obj.url === 'string' &&
+    typeof obj.hexColor === 'string' &&
+    typeof obj.tags === 'object'
 
   return result
 }
