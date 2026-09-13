@@ -119,7 +119,7 @@ export const updateWebsiteById = async (
     messageForDev: 'I am an empty object of updateWebsiteById function',
   }
 
-  await doPatch(websiteUpdateApi + `/${websiteId}`, newWebsiteDto)
+  await doPatch(websiteUpdateApi, newWebsiteDto)
     .then((response) => {
       responseData = getWebsiteDtoOrErrorDto(response)
 

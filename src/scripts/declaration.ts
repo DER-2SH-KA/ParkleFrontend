@@ -2,83 +2,97 @@ export interface IEntity {
   id: string
 }
 
-/**
- * DTO for role.
- */
+// Role.
 export interface RoleResponseDto {
+  id: string
   name: string
-  priority: number
 }
 
-/**
- * DTO for authentication.
- */
+export interface RoleCreateDto {
+  name: string
+}
+
+export interface RoleUpdateDto {
+  id: string
+  name: string
+}
+
+// User.
+export interface UserResponseDto extends IEntity {
+  id: string
+  login: string
+  roles: Set<RoleResponseDto>
+}
+
 export interface UserAuthDto {
   login: string
   password: string
 }
 
-/**
- * DTO for create User.
- */
 export interface UserCreateDto {
-  roleName: string
   login: string
-  email: string
   password: string
+  roles: Set<RoleResponseDto>
 }
 
-/**
- * DTO for update User.
- *  */
 export interface UserUpdateDto extends IEntity {
-  roleName: string
-  login: string
-  email: string
+  id: string
+  login: string // Don't update in database and system. It's normal.
   password: string
+  roles: Set<RoleResponseDto>
 }
 
-/**
- * DTO for give user from server.
- */
-export interface UserResponseDto extends IEntity {
-  roleName: string
-  rolePriority: number
-  login: string
-  email: string
+// Website.
+export interface WebsiteResponseDto extends IEntity {
+  id: string
+  title: string
+  description?: string | undefined
+  url: string
+  hexColor: string
+  tags: Set<WebsiteTagResponseDto>
 }
 
-/**
- * DTO for create new website.
- */
 export interface WebsiteCreateDto {
   userLogin: string
-  hexColor: string
   title: string
   description?: string | undefined
   url: string
+  hexColor: string
+  tags: Set<WebsiteTagResponseDto>
 }
 
-/**
- * DTO for update website.
- */
 export interface WebsiteUpdateDto extends IEntity {
-  userLogin: string
+  id: string
   title: string
   description?: string | undefined
   hexColor: string
   url: string
+  tags: Set<WebsiteTagResponseDto>
 }
 
-/**
- * DTO for give website from server.
- */
-export interface WebsiteResponseDto extends IEntity {
-  userLogin: string
-  hexColor: string
+// Website Tag.
+export interface WebsiteTagResponseDto {
+  id: string
   title: string
-  description?: string | undefined
-  url: string
+  hex: string
+}
+
+export interface WebsiteTagCreateDto {
+  userId: string
+  title: string
+  hex: string
+}
+
+export interface WebsiteTagUpdateDto {
+  id: string
+  title: string
+  hex: string
+}
+
+// Website Data.
+export interface WebsiteDataResponseDto {
+  title: string
+  description?: string
 }
 
 /**
@@ -87,9 +101,4 @@ export interface WebsiteResponseDto extends IEntity {
 export interface ErrorResponseDto {
   messageForClient: string
   messageForDev: string
-}
-
-export interface WebsiteDataResponseDto {
-  title: string
-  description?: string
 }
