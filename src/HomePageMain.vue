@@ -5,6 +5,7 @@ import WebsitesBlock from './subComponents/WebsitesBlock.vue'
 import { ref } from 'vue'
 import WebsiteEditor from './subComponents/WebsiteEditor.vue'
 import { useCurrentUserStore } from './scripts/stores/piniaStore'
+import WebsiteTagBlockCompose from './subComponents/WebsiteTagBlockCompose.vue'
 
 const searchBarEngineText = ref<string>('')
 const searchBarWebsiteText = ref<string>('')
@@ -13,6 +14,7 @@ const isShowSearchEngineSettings = ref<boolean>(false)
 const isShowSearchWebsiteSettings = ref<boolean>(false)
 
 const isEditingModeActive = ref<boolean>(false)
+const isWebsiteTagBlockDialogActive = ref<boolean>(false)
 const isAddingModeActive = ref<boolean>(false)
 
 const currentUserStore = useCurrentUserStore()
@@ -30,7 +32,11 @@ function showResultBySearchRequest() {
   window.open(`https://www.google.com/search?q=${encodedRequestText}`, '_blank')
 }
 
-function showAddModeDialog() {
+function showWebsiteTagBlockDialog() {
+  isWebsiteTagBlockDialogActive.value = true
+}
+
+function showAddingModeDialog() {
   isAddingModeActive.value = true
 }
 </script>
@@ -104,9 +110,14 @@ function showAddModeDialog() {
                   v-if="isShowSearchWebsiteSettings"
                   rounded="xl"
                 >
-                  <v-btn class="rounded-b-0" @click="showAddModeDialog" elevation="0"
+                  <v-btn class="rounded-b-0" @click="showAddingModeDialog" elevation="0"
                     >Добавить</v-btn
                   >
+
+                  <v-btn class="rounded-0" @click="showWebsiteTagBlockDialog" elevation="0"
+                    >Теги</v-btn
+                  >
+
                   <v-btn class="rounded-t-0" @click="changeEditMode" elevation="0">{{
                     !isEditingModeActive ? 'Редактировать' : 'Закончить'
                   }}</v-btn>
@@ -120,6 +131,12 @@ function showAddModeDialog() {
         <v-row class="ma-0">
           <v-col class="pa-0" cols="12">
             <WebsiteEditor :website="undefined" v-model="isAddingModeActive" />
+          </v-col>
+        </v-row>
+
+        <v-row class="ma-0">
+          <v-col class="pa-0" cols="12">
+            <WebsiteTagBlockCompose v-model="isWebsiteTagBlockDialogActive" />
           </v-col>
         </v-row>
 

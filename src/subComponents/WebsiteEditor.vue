@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-import type { WebsiteCreateDto, WebsiteResponseDto, WebsiteUpdateDto } from '@/scripts/declaration'
+import type {
+  WebsiteCreateDto,
+  WebsiteResponseDto,
+  WebsiteUpdateDto,
+  WebsiteTagResponseDto,
+} from '@/scripts/declaration'
 import { ref, watch } from 'vue'
 import { createWebsite, updateWebsiteById, getMetaContentByUrl } from '@/scripts/api/websiteApi'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'
@@ -12,6 +17,7 @@ import {
   isWebsiteDataResponseDto,
   isWebsiteResponseDto,
 } from '@/scripts/typeGuards'
+import WebsiteTagComponent from './WebsiteTagComponent.vue'
 
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
@@ -29,6 +35,7 @@ const title = ref<string>('')
 const description = ref<string>('')
 const url = ref<string>('')
 const hex = ref<string>('#')
+const tags = ref<Set<WebsiteTagResponseDto>>(new Set())
 
 const colorPickerModel = ref<string>()
 
@@ -47,6 +54,7 @@ async function saveWebsiteFromAddDialog(event: Event) {
       description: description.value,
       url: url.value ? url.value : '',
       hexColor: hex.value ? hex.value : '',
+      tags: tags.value,
     }
 
     await createWebsite(websiteCreateDto)
@@ -73,11 +81,11 @@ async function saveWebsiteFromAddDialog(event: Event) {
 
     const websiteUpdateDto: WebsiteUpdateDto = {
       id: props.website.id,
-      userLogin: props.website.userLogin,
       title: title.value,
       description: description.value ?? '',
       url: url.value,
       hexColor: hex.value,
+      tags: tags.value,
     }
 
     console.info('Current user data:', useCurrentUserStore().currentUser?.login)
@@ -135,6 +143,7 @@ function fillFields() {
     description.value = props.website.description?.toString() ?? ''
     url.value = props.website.url.toString()
     hex.value = props.website.hexColor.toString()
+    tags.value = props.website.tags
   } else {
     clearFields()
   }
@@ -289,6 +298,20 @@ watch(model, (newX) => {
           </v-col>
 
           <v-col class="py-0 ma-0" cols="12">
+            <v-row class="pa-0 ma-0 align-center">
+              <v-col class="pa-0 ma-0" cols="auto">
+                <p>Теги:</p>
+              </v-col>
+
+              <v-col class="pa-0 ma-0 website__website_tags_block" cols="max">
+                <WebsiteTagComponent v-for="item in tags" :key="item.id" :website-tag="item" />
+
+                <v-btn>+</v-btn>
+              </v-col>
+            </v-row>
+          </v-col>
+
+          <v-col class="py-0 ma-0" cols="12">
             <VBtn
               :loading="loading"
               :disabled="!isFormValid"
@@ -355,6 +378,12 @@ watch(model, (newX) => {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 12px !important;
   color: white;
+}
+
+.website__website_tags_block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #show-hex-color {
