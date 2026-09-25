@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chooseRandomStringItemFromList } from '../scripts/utils'
+import { chooseRandomStringItemFromList } from '../../scripts/utils'
 import { ref, onMounted } from 'vue'
 
 const welcomePhrases = [

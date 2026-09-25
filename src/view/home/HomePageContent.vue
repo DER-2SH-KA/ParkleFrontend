@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import WelcomePhraseComponent from './subComponents/WelcomePhraseComponent.vue'
-import SearchBar from './subComponents/SearchBar.vue'
-import WebsitesBlock from './subComponents/WebsitesBlock.vue'
+import WelcomePhraseComponent from '../home/WelcomePhraseComponent.vue'
+import SearchBar from '../subComponents/SearchBar.vue'
+import WebsitesBlock from '../subComponents/WebsitesBlock.vue'
 import { ref } from 'vue'
-import WebsiteEditor from './subComponents/WebsiteEditor.vue'
-import { useCurrentUserStore } from './scripts/stores/piniaStore'
-import WebsiteTagBlockCompose from './subComponents/WebsiteTagBlockCompose.vue'
+import WebsiteEditor from '../subComponents/WebsiteEditor.vue'
+import { useCurrentUserStore } from '../../scripts/stores/piniaStore.ts'
+import WebsiteTagBlockCompose from '../subComponents/WebsiteTagBlockCompose.vue'
 
 const searchBarEngineText = ref<string>('')
 const searchBarWebsiteText = ref<string>('')
 
-const isShowSearchEngineSettings = ref<boolean>(false)
+// const isShowSearchEngineSettings = ref<boolean>(false)
 const isShowSearchWebsiteSettings = ref<boolean>(false)
 
 const isEditingModeActive = ref<boolean>(false)

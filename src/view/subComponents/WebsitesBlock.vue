@@ -2,7 +2,7 @@
 import type { ErrorResponseDto, UserResponseDto, WebsiteResponseDto } from '@/scripts/declaration'
 import WebsiteItem from './WebsiteItem.vue'
 import { computed, onMounted } from 'vue'
-import { sortWebsiteByName } from '../scripts/utils'
+import { sortWebsiteByName } from '../../scripts/utils.ts'
 import { deleteWebsite, getWebsitesByUserLogin } from '@/scripts/api/websiteApi'
 import { isAuthed } from '@/scripts/api/userApi'
 import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaStore'

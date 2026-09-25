@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useCurrentUserStore } from '../scripts/stores/piniaStore'
-import { deleteAccount, logout } from '../scripts/api/userApi'
-import { showAlert } from '../scripts/createToasts'
+import { useCurrentUserStore } from '../../scripts/stores/piniaStore'
+import { deleteAccount, logout } from '../../scripts/api/userApi'
+import { showAlert } from '../../scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
 const currentUserStore = useCurrentUserStore()
@@ -67,7 +67,7 @@ const onDeleteUserDenied = () => {
         <img
           id="header-left-side__logo-img"
           class="no-select"
-          src=".././resources/img/png/icon.png"
+          src="../../resources/img/png/icon.png"
           alt="Icon"
         />
         <p id="header-left-side__logo-title" class="no-select">Паркл</p>

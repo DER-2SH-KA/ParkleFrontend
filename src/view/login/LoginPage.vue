@@ -6,14 +6,14 @@ import {
   type ErrorResponseDto,
   type UserAuthDto,
   type UserResponseDto,
-} from './scripts/declaration'
-import { authorize } from './scripts/api/userApi'
-import { showAlert } from './scripts/createToasts'
+} from '../../scripts/declaration.ts'
+import { authorize } from '../../scripts/api/userApi.ts'
+import { showAlert } from '../../scripts/createToasts.ts'
 import { TYPE } from 'vue-toastification'
-import { useCurrentUserStore } from './scripts/stores/piniaStore'
-import { loginRules, passwordRules } from './scripts/validationRules'
-import { isUserResponseDto } from './scripts/typeGuards'
-import FooterComponent from './subComponents/FooterComponent.vue'
+import { useCurrentUserStore } from '../../scripts/stores/piniaStore.ts'
+import { loginRules, passwordRules } from '../../scripts/validationRules.ts'
+import { isUserResponseDto } from '../../scripts/typeGuards.ts'
+import FooterComponent from '../footer/FooterComponent.vue'
 
 const router = useRouter()
 

@@ -11,7 +11,7 @@ import { useCurrentUserStore, useWebsitesStore } from '@/scripts/stores/piniaSto
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
 
-import { websiteRules } from '../scripts/validationRules'
+import { websiteRules } from '../../scripts/validationRules.ts'
 import {
   isErrorResponseDto,
   isWebsiteDataResponseDto,

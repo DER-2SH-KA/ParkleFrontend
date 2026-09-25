@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HomePageMain from './HomePageMain.vue'
-import HeaderComponent from './subComponents/HeaderComponent.vue'
-import FooterComponent from './subComponents/FooterComponent.vue'
+import HomePageMain from './HomePageContent.vue'
+import HeaderComponent from '../header/HeaderComponent.vue'
+import FooterComponent from '../footer/FooterComponent.vue'
 </script>
 
 <template>
