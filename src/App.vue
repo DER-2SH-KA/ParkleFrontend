@@ -19,3 +19,10 @@ onMounted(async () => {
 <template>
   <RouterView id="body__router-view" />
 </template>
+
+<style css>
+* {
+  margin: 0;
+  padding: 0;
+}
+</style>

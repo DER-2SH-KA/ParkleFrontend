@@ -26,10 +26,6 @@ const onLogout = async () => {
     })
 }
 
-function settings() {
-  alert('Настройки на стадии разработки')
-}
-
 const deleteUser = () => {
   loadingDeleteAccount.value = true
   isShowDeleteAccountDialog.value = true
@@ -121,14 +117,11 @@ const onDeleteUserDenied = () => {
                   <v-row no-gutters>
                     <!-- Settings profile -->
                     <v-col class="pa-1 ma-0" cols="12">
-                      <v-btn
-                        @click="settings"
-                        :loading="loadingDeleteAccount"
-                        variant="flat"
-                        rounded="xl"
-                        block
-                        >Настройки</v-btn
-                      >
+                      <router-link to="/settings" style="text-decoration: none">
+                        <v-btn :loading="loadingDeleteAccount" variant="flat" rounded="xl" block
+                          >Настройки</v-btn
+                        >
+                      </router-link>
                     </v-col>
 
                     <!-- Delete profile -->

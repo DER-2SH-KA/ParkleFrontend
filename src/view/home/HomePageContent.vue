@@ -32,10 +32,6 @@ function showResultBySearchRequest() {
   window.open(`https://www.google.com/search?q=${encodedRequestText}`, '_blank')
 }
 
-function showWebsiteTagBlockDialog() {
-  isWebsiteTagBlockDialogActive.value = true
-}
-
 function showAddingModeDialog() {
   isAddingModeActive.value = true
 }
@@ -112,10 +108,6 @@ function showAddingModeDialog() {
                 >
                   <v-btn class="rounded-b-0" @click="showAddingModeDialog" elevation="0"
                     >Добавить</v-btn
-                  >
-
-                  <v-btn class="rounded-0" @click="showWebsiteTagBlockDialog" elevation="0"
-                    >Теги</v-btn
                   >
 
                   <v-btn class="rounded-t-0" @click="changeEditMode" elevation="0">{{
@@ -206,7 +198,7 @@ section {
   height: 20vh;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 599px) {
   section {
     width: 80%;
   }
