@@ -4,6 +4,7 @@ import { useCurrentUserStore } from '../../scripts/stores/piniaStore'
 import { deleteAccount, logout } from '../../scripts/api/userApi'
 import { showAlert } from '../../scripts/createToasts'
 import { TYPE } from 'vue-toastification'
+import routesApi from '@/scripts/api/routes'
 
 const currentUserStore = useCurrentUserStore()
 
@@ -59,7 +60,7 @@ const onDeleteUserDenied = () => {
 <template>
   <header>
     <div id="header-left-side__content">
-      <router-link id="header-left-side__relative-link-logo" to="/">
+      <router-link id="header-left-side__relative-link-logo" :to="routesApi.home">
         <img
           id="header-left-side__logo-img"
           class="no-select"
@@ -68,7 +69,7 @@ const onDeleteUserDenied = () => {
         />
         <p id="header-left-side__logo-title" class="no-select">Паркл</p>
       </router-link>
-      <router-link id="header-left-side__relative-link-menu" class="no-select" to="/about"
+      <router-link id="header-left-side__relative-link-menu" class="no-select" :to="routesApi.about"
         >Справка</router-link
       >
     </div>
@@ -78,7 +79,7 @@ const onDeleteUserDenied = () => {
       <div v-if="!isLogined" class="header-right-side__authentication-buttons">
         <!-- Sign in -->
         <button class="header-right-side__authentication-button no-select">
-          <router-link to="/auth/login">Войти</router-link>
+          <router-link :to="routesApi.auth.base + routesApi.auth.login">Войти</router-link>
         </button>
       </div>
 
@@ -117,7 +118,7 @@ const onDeleteUserDenied = () => {
                   <v-row no-gutters>
                     <!-- Settings profile -->
                     <v-col class="pa-1 ma-0" cols="12">
-                      <router-link to="/settings" style="text-decoration: none">
+                      <router-link :to="routesApi.settings.base" style="text-decoration: none">
                         <v-btn :loading="loadingDeleteAccount" variant="flat" rounded="xl" block
                           >Настройки</v-btn
                         >
