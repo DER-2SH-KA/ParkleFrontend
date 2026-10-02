@@ -1,5 +1,29 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import routesApi from '@/scripts/api/routes'
+import { useCurrentUserStore } from '@/scripts/stores/piniaStore'
+import { logout } from '@/scripts/api/userApi'
+import { showAlert } from '@/scripts/createToasts'
+import { TYPE } from 'vue-toastification'
+
+const currentUserStore = useCurrentUserStore()
+const isShowDeleteAccountDialog = ref<boolean>(false)
+
+const onDeleteUser = () => {
+  isShowDeleteAccountDialog.value = true
+}
+
+const onLogout = async () => {
+  await logout()
+    .then(() => {
+      currentUserStore.setCurrentUser(undefined)
+
+      showAlert('Вы вышли из системы!', TYPE.SUCCESS)
+    })
+    .catch(() => {
+      showAlert('Ошибка выхода из системы!', TYPE.ERROR)
+    })
+}
 </script>
 
 <template>
@@ -23,9 +47,15 @@ import routesApi from '@/scripts/api/routes'
         </v-list-item-action>
 
         <v-list-item-action>
-          <v-btn>Выйти</v-btn>
+          <v-btn @click="onDeleteUser">Удалить аккаунт</v-btn>
+        </v-list-item-action>
+
+        <v-list-item-action>
+          <v-btn @click="onLogout">Выйти</v-btn>
         </v-list-item-action>
       </v-list>
     </v-list-item>
   </v-list>
+
+  <DeleteUserDialogComponent v-model="isShowDeleteAccountDialog" />
 </template>
