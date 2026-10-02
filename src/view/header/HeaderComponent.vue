@@ -66,11 +66,17 @@ const onDeleteUserDenied = () => {
 </script>
 
 <template>
-  <v-app-bar density="compact" scroll-behavior="elevate" scroll-threshold="0" height="80">
+  <v-app-bar
+    density="compact"
+    scroll-behavior="elevate"
+    scroll-threshold="0"
+    height="80"
+    color="surface"
+  >
     <v-app-bar-title>
-      <router-link :to="routesApi.home" class="d-flex align-center flex-row">
-        <img src="../../resources/img/svg/icon.svg" alt="Icon" width="60" height="60" />
-        <p>Паркл</p>
+      <router-link :to="routesApi.home" class="d-flex align-center flex-row text-decoration-none">
+        <img src="../../resources/img/svg/icon.svg" alt="Icon" width="45" height="45" />
+        <p id="header__title_text" class="text-"><span class="text-primary">П</span>аркл</p>
       </router-link>
     </v-app-bar-title>
 
@@ -147,3 +153,12 @@ const onDeleteUserDenied = () => {
 </template>
 
 <!-- TODO: ВЫНЕСТИ ДИАЛОГОВЫЕ ОКНА В ОТДЕЛЬНЫЕ КОМПОНЕНТЫ -->
+
+<style lang="css">
+#header__title_text {
+  text-decoration: none;
+  font-size: 28pt;
+  font-weight: 500;
+  margin: 10px;
+}
+</style>

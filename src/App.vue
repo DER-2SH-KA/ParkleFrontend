@@ -26,6 +26,6 @@ onMounted(async () => {
       <router-view />
     </v-main>
 
-    <footer-component style="background-color: yellow" />
+    <footer-component />
   </v-app>
 </template>

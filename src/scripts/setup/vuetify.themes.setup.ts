@@ -19,7 +19,7 @@ const darkTheme: ThemeDefinition = {
   dark: true,
   colors: {
     background: '#0F0D14',
-    surface: '#18151F',
+    surface: '#1a1a21',
     primary: '#6F00FF',
     secondary: '#9B6DFF',
     success: '#22C55E',
