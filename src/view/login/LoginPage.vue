@@ -61,71 +61,46 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
   <main>
     <section>
       <v-form v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
-        <v-container id="login-form__container">
-          <v-row id="login-column" class="pa-0 ma-0">
+        <v-container>
+          <v-row>
             <!-- Title -->
-            <v-col cols="12" class="pa-0">
-              <p style="text-align: center; font-size: 18pt"><strong>Вход</strong></p>
+            <v-col>
+              <p><strong>Вход</strong></p>
             </v-col>
 
             <!-- Login -->
-            <v-col cols="12" class="pa-0 ma-0">
+            <v-col>
               <v-text-field
                 v-model="login"
                 :rules="loginRules"
                 placeholder="Логин..."
                 append-inner-icon="$account"
                 type="text"
-                variant="solo"
-                rounded="xl"
-                bg-color="#ebebeb"
-                required
               />
             </v-col>
 
             <!-- Password -->
-            <v-col cols="12" class="ma-0">
-              <v-row cols="12" class="pa-0">
-                <v-col cols="12" class="pa-0 ma-0">
+            <v-col>
+              <v-row>
+                <v-col>
                   <v-text-field
                     v-model="password"
                     :rules="passwordRules"
                     :type="passwordVisibleType"
                     placeholder="Пароль..."
                     :append-inner-icon="passwordVisibleType == 'password' ? '$eye' : '$eye_closed'"
-                    variant="solo"
-                    rounded="xl"
-                    bg-color="#ebebeb"
-                    required
                     @click:append-inner="changeTypeOfPasswordVisible"
                   />
                 </v-col>
               </v-row>
             </v-col>
 
-            <v-col cols="12" class="pa-0">
-              <v-btn
-                class="mt-0 text-capitalize"
-                :loading="loading"
-                :disabled="!isFormValid"
-                text="Войти"
-                type="submit"
-                rounded="xl"
-                base-color="#6f00ff"
-                style="font-size: 12pt"
-                block
-              />
+            <v-col>
+              <v-btn :loading="loading" :disabled="!isFormValid" text="Войти" type="submit" />
             </v-col>
 
-            <v-col cols="12" class="pa-0">
-              <v-btn
-                class="text-capitalize"
-                @click="router.go(-1)"
-                text="Назад"
-                rounded="xl"
-                style="font-size: 12pt"
-                block
-              />
+            <v-col>
+              <v-btn @click="router.go(-1)" text="Назад" />
             </v-col>
           </v-row>
         </v-container>
@@ -133,42 +108,5 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
     </section>
   </main>
 
-  <FooterComponent class="footer__footer-component" />
+  <FooterComponent />
 </template>
-
-<style lang="scss" scoped>
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  flex: 1 0 auto;
-}
-
-section {
-  width: 70%;
-  max-width: 700px;
-}
-
-#login-form__container {
-  background: white;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-}
-
-#login-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-}
-
-@media (max-width: 768px) {
-  section {
-    width: 90%;
-  }
-}
-</style>

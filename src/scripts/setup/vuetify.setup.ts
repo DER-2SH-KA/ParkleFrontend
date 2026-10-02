@@ -1,7 +1,7 @@
 import 'vuetify/styles'
 import * as components from 'vuetify/components'
-import { createVuetify } from 'vuetify'
 import * as directives from 'vuetify/directives'
+import { createVuetify } from 'vuetify'
 import {
   mdiAccount,
   mdiAt,
@@ -14,10 +14,12 @@ import {
   mdiPencil,
   mdiText,
   mdiTextLong,
+  mdiThemeLightDark,
   mdiWeb,
 } from '@mdi/js'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import { ru } from 'vuetify/locale'
+import customThemes from '@/scripts/setup/vuetify.themes.setup'
 
 export const configuredVuetify = createVuetify({
   icons: {
@@ -28,13 +30,14 @@ export const configuredVuetify = createVuetify({
       brush: mdiBrush,
       cog: mdiCog,
       delete: mdiDelete,
-      email_at: mdiAt,
+      emailAt: mdiAt,
       eye: mdiEye,
-      eye_closed: mdiEyeOff,
+      eyeClosed: mdiEyeOff,
       magnify: mdiMagnify,
       pencil: mdiPencil,
       text: mdiText,
-      text_long: mdiTextLong,
+      textLong: mdiTextLong,
+      themeLightDark: mdiThemeLightDark,
       web: mdiWeb,
     },
     sets: {
@@ -43,6 +46,7 @@ export const configuredVuetify = createVuetify({
   },
   components,
   directives,
+  theme: customThemes,
   locale: {
     locale: 'ru',
     fallback: 'en',

@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <footer>
+  <v-footer class="d-flex justify-center align-center text-center pa-0" app>
     <p>
       &copy;Создан
       <a
@@ -14,24 +14,5 @@
       </a>
       по MIT лицензии
     </p>
-  </footer>
+  </v-footer>
 </template>
-
-<style lang="scss" scoped>
-footer {
-  background-color: var(--background-second-color-dark-theme);
-  min-width: 100%;
-
-  & > p {
-    color: var(--text-color-dark-theme);
-    text-align: center;
-    font-size: 12pt;
-    margin: 10px 0px 10px 0px;
-
-    & > a {
-      color: var(--text-color-dark-theme);
-      text-decoration: underline;
-    }
-  }
-}
-</style>

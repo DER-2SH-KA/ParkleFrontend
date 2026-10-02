@@ -86,7 +86,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="website-item-from-block">
+  <div>
     <WebsiteItem
       v-for="website in websitesToShow"
       :key="website.id"
@@ -96,17 +96,3 @@ onMounted(async () => {
     />
   </div>
 </template>
-
-<style lang="scss">
-.website-item-from-block {
-  display: flex;
-  flex-flow: row wrap;
-  position: absolute;
-  top: 100%;
-  width: 100%;
-
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-}
-</style>

@@ -1,18 +1,11 @@
 <template>
-  <list>
-    <ul class="settings_list__item">
-      Пользователь
-    </ul>
-    <ul class="settings_list__item">
-      Теги
-    </ul>
-  </list>
-</template>
+  <v-card>
+    <v-list>
+      <v-list-item> Пользователь </v-list-item>
 
-<style lang="css" scoped>
-.settings_list__item {
-  text-align: right;
-  font-size: 16px;
-  color: white;
-}
-</style>
+      <v-divider />
+
+      <v-list-item> Теги </v-list-item>
+    </v-list>
+  </v-card>
+</template>

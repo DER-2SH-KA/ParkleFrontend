@@ -4,6 +4,8 @@ import { RouterView } from 'vue-router'
 import { ping } from './scripts/api/userApi'
 import { showAlert } from './scripts/createToasts'
 import { TYPE } from 'vue-toastification'
+import HeaderComponent from './view/header/HeaderComponent.vue'
+import FooterComponent from './view/footer/FooterComponent.vue'
 
 onMounted(async () => {
   await ping()
@@ -17,12 +19,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <RouterView id="body__router-view" />
-</template>
+  <v-app style="background-color: red">
+    <header-component v-if="!$route.meta.hideHeader" style="background-color: orange" />
 
-<style css>
-* {
-  margin: 0;
-  padding: 0;
-}
-</style>
+    <v-main>
+      <router-view />
+    </v-main>
+
+    <footer-component style="background-color: yellow" />
+  </v-app>
+</template>

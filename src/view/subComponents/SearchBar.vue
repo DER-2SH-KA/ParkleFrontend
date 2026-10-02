@@ -5,23 +5,16 @@ const emits = defineEmits(['whenEnter'])
 </script>
 
 <template>
-  <v-row class="ma-0">
-    <v-col class="pa-0">
+  <v-row>
+    <v-col>
       <v-text-field
-        class="search-bar__text-field"
         @keyup.enter="emits('whenEnter')"
         :placeholder="props.placeholder ?? 'Что-то...'"
         type="text"
-        variant="solo"
-        rounded="xl"
-        clearable
-        hide-details
         v-model="model"
-        bg-color="white"
-        elevation="0"
       >
         <template v-slot:prepend-inner>
-          <v-icon icon="$magnify" color="gray" />
+          <v-icon icon="$magnify" />
         </template>
       </v-text-field>
     </v-col>
