@@ -6,14 +6,12 @@ import {
   type ErrorResponseDto,
   type UserAuthDto,
   type UserResponseDto,
-} from '../../scripts/declaration.ts'
-import { authorize } from '../../scripts/api/userApi.ts'
-import { showAlert } from '../../scripts/createToasts.ts'
+} from '@/scripts/declaration.ts'
+import { authorize } from '@/scripts/api/userApi.ts'
+import { showAlert } from '@/scripts/createToasts.ts'
 import { TYPE } from 'vue-toastification'
-import { useCurrentUserStore } from '../../scripts/stores/piniaStore.ts'
-import { loginRules, passwordRules } from '../../scripts/validationRules.ts'
-import { isUserResponseDto } from '../../scripts/typeGuards.ts'
-import FooterComponent from '../footer/FooterComponent.vue'
+import { useCurrentUserStore } from '@/scripts/stores/piniaStore.ts'
+import { isUserResponseDto } from '@/scripts/typeGuards.ts'
 
 const router = useRouter()
 
@@ -26,8 +24,11 @@ const currentUserStore = useCurrentUserStore()
 
 const isFormValid = ref<boolean | null>(null)
 
+const loginTextFieldCounter = 50
+const passwordTextFieldCounter = 72
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
-async function submitForm(event: SubmitEventPromise) {
+async function onSubmitLoginForm(event: SubmitEventPromise) {
   loading.value = true
 
   const userAuthDto: UserAuthDto = {
@@ -41,7 +42,7 @@ async function submitForm(event: SubmitEventPromise) {
   if (isUserResponseDto(responseDto)) {
     currentUserStore.setCurrentUser(responseDto)
     showAlert(`Привет, ${responseDto.login}!`, TYPE.SUCCESS)
-    router.go(-1)
+    router.replace('/')
   } else {
     showAlert(responseDto.messageForClient, TYPE.ERROR)
   }
@@ -58,55 +59,82 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 </script>
 
 <template>
-  <main>
-    <section>
-      <v-form v-model="isFormValid" validate-on="input" @submit.prevent="submitForm">
+  <div class="login__background">
+    <v-card class="ma-5" rounded="20">
+      <v-form v-model="isFormValid" @submit.prevent="onSubmitLoginForm">
         <v-container>
           <v-row>
             <!-- Title -->
-            <v-col>
-              <p><strong>Вход</strong></p>
+            <v-col cols="12">
+              <p class="text-center login_card__title"><strong>Вход</strong></p>
             </v-col>
 
             <!-- Login -->
-            <v-col>
+            <v-col cols="12">
               <v-text-field
                 v-model="login"
-                :rules="loginRules"
                 placeholder="Логин..."
                 append-inner-icon="$account"
                 type="text"
+                :counter="loginTextFieldCounter"
+                required
               />
             </v-col>
 
             <!-- Password -->
-            <v-col>
-              <v-row>
-                <v-col>
-                  <v-text-field
-                    v-model="password"
-                    :rules="passwordRules"
-                    :type="passwordVisibleType"
-                    placeholder="Пароль..."
-                    :append-inner-icon="passwordVisibleType == 'password' ? '$eye' : '$eye_closed'"
-                    @click:append-inner="changeTypeOfPasswordVisible"
-                  />
-                </v-col>
-              </v-row>
+            <v-col cols="12">
+              <v-text-field
+                v-model="password"
+                @click:append-inner="changeTypeOfPasswordVisible"
+                :type="passwordVisibleType"
+                placeholder="Пароль..."
+                :append-inner-icon="passwordVisibleType == 'password' ? '$eye' : '$eye_closed'"
+                :counter="passwordTextFieldCounter"
+                required
+              />
             </v-col>
 
-            <v-col>
-              <v-btn :loading="loading" :disabled="!isFormValid" text="Войти" type="submit" />
+            <!-- Buttons -->
+            <v-col cols="12">
+              <v-btn
+                text="Войти"
+                type="submit"
+                color="primary"
+                :loading="loading"
+                :disabled="!isFormValid"
+                block
+              />
             </v-col>
 
-            <v-col>
-              <v-btn @click="router.go(-1)" text="Назад" />
+            <v-col cols="12">
+              <v-btn text="Назад" @click="router.go(-1)" block />
             </v-col>
           </v-row>
         </v-container>
       </v-form>
-    </section>
-  </main>
-
-  <FooterComponent />
+    </v-card>
+  </div>
 </template>
+
+<style lang="css" scoped>
+.login__background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.login_card__title {
+  font-size: 16pt;
+}
+
+.v-text-field .v-input__details {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding-inline: 12px;
+  background-color: transparent;
+}
+</style>
