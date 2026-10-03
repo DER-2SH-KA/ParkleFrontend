@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import HomePage from '../../view/home/HomePage.vue'
-import LoginPage from '../../view/login/LoginPage.vue'
-import AboutSitePage from '../../view/about/AboutSitePage.vue'
+import HomePage from '@/view/home/HomePage.vue'
+import LoginPage from '@/view/login/LoginPage.vue'
+import AboutSitePage from '@/view/about/AboutSitePage.vue'
 import SettingsPage from '@/view/settings/SettingsPage.vue'
 import routesApi from '@/scripts/api/routes.ts'
 
