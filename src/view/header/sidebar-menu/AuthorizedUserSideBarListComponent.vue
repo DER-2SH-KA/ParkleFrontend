@@ -5,6 +5,7 @@ import { useCurrentUserStore } from '@/scripts/stores/piniaStore'
 import { logout } from '@/scripts/api/userApi'
 import { showAlert } from '@/scripts/createToasts'
 import { TYPE } from 'vue-toastification'
+import DeleteUserDialogComponent from '@/view/header/sidebar-menu/dialog/DeleteUserDialogComponent.vue'
 
 const currentUserStore = useCurrentUserStore()
 const isShowDeleteAccountDialog = ref<boolean>(false)
@@ -28,8 +29,8 @@ const onLogout = async () => {
 
 <template>
   <v-list class="d-flex flex-column justify-center align-space-between">
+    <!-- Top side bar menu part -->
     <v-list-item>
-      <!-- Top side bar menu part -->
       <v-list>
         <v-list-item-action>
           <router-link :to="routesApi.about">Справка</router-link>
@@ -47,11 +48,11 @@ const onLogout = async () => {
         </v-list-item-action>
 
         <v-list-item-action>
-          <v-btn @click="onDeleteUser">Удалить аккаунт</v-btn>
+          <a @click="onDeleteUser">Удалить аккаунт</a>
         </v-list-item-action>
 
         <v-list-item-action>
-          <v-btn @click="onLogout">Выйти</v-btn>
+          <a @click="onLogout">Выйти</a>
         </v-list-item-action>
       </v-list>
     </v-list-item>

@@ -2,8 +2,8 @@
 import { ref, computed } from 'vue'
 import { useCurrentUserStore } from '@/scripts/stores/piniaStore'
 import routesApi from '@/scripts/api/routes'
-import UnauthorizedUserSideBarListComponent from './sidebar-menu/UnauthorizedUserSideBarListComponent.vue'
-import AuthorizedUserSideBarListComponent from './sidebar-menu/AuthorizedUserSideBarListComponent.vue'
+import UnauthorizedUserSideBarListComponent from '@/view/header/sidebar-menu/UnauthorizedUserSideBarListComponent.vue'
+import AuthorizedUserSideBarListComponent from '@/view/header/sidebar-menu/AuthorizedUserSideBarListComponent.vue'
 import { useTheme } from 'vuetify'
 
 const navigationDrawer = ref<boolean>(false)
@@ -46,8 +46,6 @@ const isLogined = computed<boolean>(() => {
     <AuthorizedUserSideBarListComponent v-else />
   </v-navigation-drawer>
 </template>
-
-<!-- TODO: ВЫНЕСТИ ДИАЛОГОВЫЕ ОКНА В ОТДЕЛЬНЫЕ КОМПОНЕНТЫ -->
 
 <style lang="css">
 #header__title_text {
