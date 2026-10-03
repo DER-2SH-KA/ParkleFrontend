@@ -19,8 +19,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-app style="background-color: red">
-    <header-component v-if="!$route.meta.hideHeader" style="background-color: orange" />
+  <v-app>
+    <header-component v-if="!$route.meta.hideHeader" />
 
     <v-main>
       <router-view />
