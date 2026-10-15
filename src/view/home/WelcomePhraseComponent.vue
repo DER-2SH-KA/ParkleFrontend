@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <p @click="setRandomWelcomePhrase()">
+  <p class="text-center" @click="setRandomWelcomePhrase()">
     <b>{{ welcomePhrase }}</b>
   </p>
 </template>
