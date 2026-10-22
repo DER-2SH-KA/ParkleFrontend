@@ -36,34 +36,39 @@ const onDeleteWebsiteDenie = () => {
 </script>
 
 <template>
-  <div>
-    <div>
-      <!-- Website favicon -->
-      <img :src="linkFetchFavicon" alt=">" />
+  <v-sheet
+    class="pa-2 d-flex justify-center align-center flex-nowrap flex-grow-1 flex-shrink-1"
+    color="surface"
+    elevation="1"
+    rounded="lg"
+    style="max-width: 250px"
+  >
+    <!-- Website favicon -->
+    <img
+      :src="linkFetchFavicon"
+      alt="favicon"
+      style="width: 24px; height: 24px; margin-right: 3px"
+    />
 
-      <!-- Website href -->
-      <a
-        :href="props.website.url"
-        :title="website.description ? website.description : website.title"
-        target="_blank"
-        ><span>{{ props.website.title.charAt(0) }}</span
-        >{{ props.website.title.slice(1) }}</a
-      >
+    <!-- Website href -->
+    <a
+      class="website-item__title"
+      :href="props.website.url"
+      :title="website.description ? website.description : website.title"
+      target="_blank"
+      ><span>{{ props.website.title.charAt(0) }}</span
+      >{{ props.website.title.slice(1) }}</a
+    >
 
-      <!-- Website settings buttons -->
-      <div v-if="props.isEditingModeActive">
-        <!-- Edit website button -->
-        <v-btn @click="onEditWebsite">
-          <v-icon icon="$pencil" />
-        </v-btn>
+    <!-- Website settings buttons -->
+    <div class="d-flex flex-row flex-nowrap ga-0 pl-1" v-if="props.isEditingModeActive">
+      <!-- Edit website button -->
+      <v-btn @click="onEditWebsite" density="compact" variant="text" icon="$pencil" />
 
-        <!-- Delete website button -->
-        <v-btn @click="onDeleteWebsite">
-          <v-icon icon="$delete" />
-        </v-btn>
-      </div>
+      <!-- Delete website button -->
+      <v-btn @click="onDeleteWebsite" density="compact" variant="text" icon="$delete" color="red" />
     </div>
-  </div>
+  </v-sheet>
 
   <!-- Website Editor Dialog -->
   <WebsiteEditor :website="website" v-model="isEditingBegun" />
@@ -90,3 +95,14 @@ const onDeleteWebsiteDenie = () => {
     </v-card>
   </v-dialog>
 </template>
+
+<style lang="css" scoped>
+.website-item__title {
+  font-size: 16pt;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+}
+</style>
