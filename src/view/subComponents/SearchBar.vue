@@ -5,18 +5,15 @@ const emits = defineEmits(['whenEnter'])
 </script>
 
 <template>
-  <v-row>
-    <v-col>
-      <v-text-field
-        @keyup.enter="emits('whenEnter')"
-        :placeholder="props.placeholder ?? 'Что-то...'"
-        type="text"
-        v-model="model"
-      >
-        <template v-slot:prepend-inner>
-          <v-icon icon="$magnify" />
-        </template>
-      </v-text-field>
-    </v-col>
-  </v-row>
+  <v-text-field
+    v-model="model"
+    @keyup.enter="emits('whenEnter')"
+    type="text"
+    :placeholder="props.placeholder ?? 'Текст-заглушка'"
+    hide-details
+    variant="solo"
+    density="default"
+    rounded="lg"
+    prepend-inner-icon="$magnify"
+  />
 </template>
