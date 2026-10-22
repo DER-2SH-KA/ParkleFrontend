@@ -12,6 +12,7 @@ import { showAlert } from '@/scripts/createToasts.ts'
 import { TYPE } from 'vue-toastification'
 import { useCurrentUserStore } from '@/scripts/stores/piniaStore.ts'
 import { isUserResponseDto } from '@/scripts/typeGuards.ts'
+import { loginRules, passwordRules } from '@/scripts/validationRules.ts'
 
 const router = useRouter()
 
@@ -59,82 +60,56 @@ function changeTypeOfPasswordVisible(e: MouseEvent) {
 </script>
 
 <template>
-  <div class="login__background">
-    <v-card class="ma-5" rounded="20">
-      <v-form v-model="isFormValid" @submit.prevent="onSubmitLoginForm">
-        <v-container>
-          <v-row>
+  <v-container class="d-flex align-center fill-height pa-4" fluid>
+    <v-row justify="center">
+      <v-col cols="12" sm="10" md="8" lg="6" xl="4">
+        <v-sheet class="pa-6" color="surface" elevation="3" rounded="lg">
+          <v-form v-model="isFormValid" @submit.prevent="onSubmitLoginForm">
             <!-- Title -->
-            <v-col cols="12">
-              <p class="text-center login_card__title"><strong>Вход</strong></p>
-            </v-col>
+            <h2 class="text-center font-weight-bold mb-7">Авторизация</h2>
 
             <!-- Login -->
-            <v-col cols="12">
-              <v-text-field
-                v-model="login"
-                placeholder="Логин..."
-                append-inner-icon="$account"
-                type="text"
-                :counter="loginTextFieldCounter"
-                required
-              />
-            </v-col>
+            <v-text-field
+              class="py-2"
+              v-model="login"
+              placeholder="Логин..."
+              append-inner-icon="$account"
+              :counter="loginTextFieldCounter"
+              :rules="loginRules"
+              variant="solo"
+              required
+            />
 
             <!-- Password -->
-            <v-col cols="12">
-              <v-text-field
-                v-model="password"
-                @click:append-inner="changeTypeOfPasswordVisible"
-                :type="passwordVisibleType"
-                placeholder="Пароль..."
-                :append-inner-icon="passwordVisibleType == 'password' ? '$eye' : '$eye_closed'"
-                :counter="passwordTextFieldCounter"
-                required
-              />
-            </v-col>
+            <v-text-field
+              class="pb-4"
+              v-model="password"
+              placeholder="Пароль..."
+              :type="passwordVisibleType"
+              :append-inner-icon="passwordVisibleType === 'password' ? '$eye' : '$eye_closed'"
+              :counter="passwordTextFieldCounter"
+              :rules="passwordRules"
+              variant="solo"
+              required
+              @click:append-inner="changeTypeOfPasswordVisible"
+            />
 
             <!-- Buttons -->
-            <v-col cols="12">
-              <v-btn
-                text="Войти"
-                type="submit"
-                color="primary"
-                :loading="loading"
-                :disabled="!isFormValid"
-                block
-              />
-            </v-col>
+            <v-btn
+              text="Войти"
+              type="submit"
+              color="primary"
+              :loading="loading"
+              :disabled="!isFormValid"
+              block
+              class="mb-3"
+              style="font-size: 12pt"
+            />
 
-            <v-col cols="12">
-              <v-btn text="Назад" @click="router.go(-1)" block />
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
-    </v-card>
-  </div>
+            <v-btn text="Назад" block style="font-size: 12pt" @click="router.go(-1)" />
+          </v-form>
+        </v-sheet>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
-
-<style lang="css" scoped>
-.login__background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
-.login_card__title {
-  font-size: 16pt;
-}
-
-.v-text-field .v-input__details {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  padding-inline: 12px;
-  background-color: transparent;
-}
-</style>
