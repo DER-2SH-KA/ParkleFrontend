@@ -14,28 +14,23 @@ function setColorPickerModelValueToHEX() {
 </script>
 
 <template>
-  <v-dialog v-model="dialogModel" max-width="320" class="blurred-dialog">
-    <v-card color="surface" rounded="xl" class="pa-4 border">
-      <v-color-picker v-model="colorPickerModel" mode="hex" hide-inputs class="mx-auto" />
+  <v-dialog v-model="dialogModel" max-width="335" class="blurred-dialog">
+    <v-sheet color="surface" rounded="xl" class="pa-4 border">
+      <v-color-picker v-model="colorPickerModel" mode="hex" />
       <div class="d-flex ga-2 mt-4">
         <v-btn
           color="primary"
           rounded="lg"
           flat
-          class="flex-grow-1 font-weight-bold"
+          class="flex-grow-1"
           @click="setColorPickerModelValueToHEX"
         >
           Выбрать
         </v-btn>
-        <v-btn
-          variant="tonal"
-          rounded="lg"
-          class="flex-grow-1 font-weight-bold"
-          @click="dialogModel = false"
-        >
+        <v-btn variant="tonal" rounded="lg" class="flex-grow-1" @click="dialogModel = false">
           Закрыть
         </v-btn>
       </div>
-    </v-card>
+    </v-sheet>
   </v-dialog>
 </template>

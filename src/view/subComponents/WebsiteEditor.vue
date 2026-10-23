@@ -280,27 +280,14 @@ watch(model, (newX) => {
           <v-btn
             type="submit"
             color="primary"
+            variant="flat"
             rounded="lg"
-            block
-            height="46"
-            flat
             :loading="loading"
             :disabled="!isFormValid"
-            class="font-weight-bold"
+            >Сохранить</v-btn
           >
-            СОХРАНИТЬ
-          </v-btn>
 
-          <v-btn
-            variant="tonal"
-            rounded="lg"
-            block
-            height="46"
-            class="font-weight-bold"
-            @click="cancel"
-          >
-            ОТМЕНА
-          </v-btn>
+          <v-btn variant="tonal" rounded="lg" @click="cancel">Отмена</v-btn>
         </div>
       </v-form>
     </v-card>
