@@ -86,7 +86,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="d-flex flex-row justify-space-between align-start flex-wrap w-100 h-0 ga-2">
+  <div class="d-flex flex-row justify-center align-start flex-wrap w-100 h-0 ga-2">
     <WebsiteItem
       v-for="website in websitesToShow"
       :key="website.id"
