@@ -41,7 +41,6 @@ const onDeleteWebsiteDenie = () => {
     color="surface"
     elevation="1"
     rounded="lg"
-    style="max-width: 250px"
   >
     <!-- Website favicon -->
     <img
