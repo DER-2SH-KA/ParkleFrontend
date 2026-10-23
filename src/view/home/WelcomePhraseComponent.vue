@@ -26,11 +26,11 @@ onMounted(() => {
 
 <style lang="css" scoped>
 .welcome-phrase {
-  font-size: 22pt;
+  font-size: 28pt;
   text-align: center;
 
   &::first-letter {
-    font-size: 24pt;
+    font-size: 32pt;
     color: rgb(var(--v-theme-primary));
   }
 }
