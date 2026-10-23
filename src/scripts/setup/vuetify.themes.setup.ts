@@ -33,7 +33,7 @@ const customThemes: ThemeOptions = {
   transition: {
     origin: '100% 0%',
   },
-  defaultTheme: 'system',
+  defaultTheme: 'dark',
   themes: {
     light: lightTheme,
     dark: darkTheme,
