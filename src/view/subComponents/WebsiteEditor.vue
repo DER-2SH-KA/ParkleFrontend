@@ -18,9 +18,11 @@ import {
   isWebsiteResponseDto,
 } from '@/scripts/typeGuards'
 import WebsiteTagComponent from './WebsiteTagComponent.vue'
+import ColorPickerComponent from './ColorPickerComponent.vue'
 
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
+const colorPickerModel = ref<string>()
 
 const props = defineProps<{
   website: WebsiteResponseDto | undefined
@@ -39,8 +41,6 @@ const tags = ref<Set<WebsiteTagResponseDto>>(new Set())
 
 const titleCounter = 40
 const descriptionCounter = 255
-
-const colorPickerModel = ref<string>()
 
 const isFormValid = ref<boolean | null>(null)
 
@@ -162,15 +162,6 @@ function showColorPickerDialog() {
   }
 
   colorPickerDialogModel.value = true
-}
-
-function setColorPickerModelValueToHEX() {
-  console.log(colorPickerModel.value)
-
-  if (!!colorPickerModel.value) {
-    hex.value = colorPickerModel.value
-  }
-  colorPickerDialogModel.value = false
 }
 
 function getWebsiteTitleAndDescriptionByUrl() {
@@ -314,31 +305,11 @@ watch(model, (newX) => {
       </v-form>
     </v-card>
 
-    <!-- Диалог выбора цвета -->
-    <v-dialog v-model="colorPickerDialogModel" max-width="320" class="blurred-dialog">
-      <v-card color="surface" rounded="xl" class="pa-4 border">
-        <v-color-picker v-model="colorPickerModel" mode="hex" hide-inputs class="mx-auto" />
-        <div class="d-flex ga-2 mt-4">
-          <v-btn
-            color="primary"
-            rounded="lg"
-            flat
-            class="flex-grow-1 font-weight-bold"
-            @click="setColorPickerModelValueToHEX"
-          >
-            Выбрать
-          </v-btn>
-          <v-btn
-            variant="tonal"
-            rounded="lg"
-            class="flex-grow-1 font-weight-bold"
-            @click="colorPickerDialogModel = false"
-          >
-            Закрыть
-          </v-btn>
-        </div>
-      </v-card>
-    </v-dialog>
+    <ColorPickerComponent
+      v-model:dialog-model="colorPickerDialogModel"
+      v-model:hex-website-model="hex"
+      v-model:color-picker-model="colorPickerModel"
+    />
   </v-dialog>
 </template>
 
@@ -349,9 +320,5 @@ watch(model, (newX) => {
   height: 42px;
   cursor: pointer;
   transition: opacity 0.2s ease;
-}
-
-.color-preview-box:hover {
-  opacity: 0.85;
 }
 </style>
