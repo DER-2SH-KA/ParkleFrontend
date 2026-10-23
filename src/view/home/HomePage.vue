@@ -41,11 +41,11 @@ function showAddingModeDialog() {
     <div style="flex: 1 1 0; min-height: 0" />
 
     <!-- 2. Центральный блок: фраза + инпуты + кнопки (высота по контенту, не сжимается) -->
-    <v-container class="d-flex flex-column px-4 flex-shrink-0" align="center" fluid>
+    <v-container class="d-flex flex-column pa-0 px-4 flex-shrink-0" fluid>
       <v-row justify="center">
-        <v-col cols="12" sm="10" md="8" lg="6">
+        <v-col cols="12" sm="10" md="7" lg="4">
           <!-- Приветственная фраза -->
-          <WelcomePhraseComponent />
+          <WelcomePhraseComponent class="my-3" />
 
           <!-- Поисковые строки -->
           <div class="w-100 d-flex flex-column ga-3">
@@ -113,7 +113,7 @@ function showAddingModeDialog() {
     <div class="w-100 d-flex justify-center websites-block-on-home-page__div">
       <v-container class="d-flex justify-center" fluid>
         <v-row justify="center" align="start">
-          <v-col cols="12" sm="10" lg="8">
+          <v-col cols="12" sm="10" md="8" lg="6">
             <WebsitesBlock
               v-model="searchBarWebsiteText"
               :is-editing-mode-active="isEditingModeActive"
@@ -123,7 +123,7 @@ function showAddingModeDialog() {
       </v-container>
     </div>
 
-    <div style="flex: 1 1 0; min-height: 0" />
+    <div style="flex: 0.5 1 0; min-height: 0" />
 
     <!-- Модальное окно добавления/редактирования -->
     <WebsiteEditor :website="undefined" v-model="isAddingModeActive" />
@@ -136,7 +136,7 @@ function showAddingModeDialog() {
 }
 
 .websites-block-on-home-page__div {
-  flex: 3 1 0;
+  flex: 2 1 0;
   overflow-y: scroll;
   scrollbar-width: none;
 }
