@@ -110,17 +110,20 @@ function showAddingModeDialog() {
     </v-container>
 
     <!-- 3. Нижняя зона: забирает 3 части (3/4) свободного места и вмещает сайты -->
-    <div
-      class="w-100 d-flex justify-center px-4 pt-6"
-      style="flex: 3 1 0; min-height: 0; overflow-y: auto"
-    >
-      <div style="max-width: 840px; width: 100%" class="d-flex justify-center">
-        <WebsitesBlock
-          v-model="searchBarWebsiteText"
-          :is-editing-mode-active="isEditingModeActive"
-        />
-      </div>
+    <div class="w-100 d-flex justify-center websites-block-on-home-page__div">
+      <v-container class="d-flex justify-center" fluid>
+        <v-row justify="center" align="start">
+          <v-col cols="12" sm="10" lg="8">
+            <WebsitesBlock
+              v-model="searchBarWebsiteText"
+              :is-editing-mode-active="isEditingModeActive"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
+
+    <div style="flex: 1 1 0; min-height: 0" />
 
     <!-- Модальное окно добавления/редактирования -->
     <WebsiteEditor :website="undefined" v-model="isAddingModeActive" />
@@ -130,5 +133,11 @@ function showAddingModeDialog() {
 <style lang="css" scoped>
 .website-cog-menu__v-list-item-title {
   font-size: 11pt;
+}
+
+.websites-block-on-home-page__div {
+  flex: 3 1 0;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 </style>
