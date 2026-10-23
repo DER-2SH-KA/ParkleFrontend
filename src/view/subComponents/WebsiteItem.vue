@@ -55,7 +55,7 @@ const onDeleteWebsiteDenie = () => {
       :href="props.website.url"
       :title="website.description ? website.description : website.title"
       target="_blank"
-      ><span>{{ props.website.title.charAt(0) }}</span
+      ><span :style="'color: ' + website.hexColor">{{ props.website.title.charAt(0) }}</span
       >{{ props.website.title.slice(1) }}</a
     >
 
