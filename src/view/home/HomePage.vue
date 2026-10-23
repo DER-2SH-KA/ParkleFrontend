@@ -4,7 +4,7 @@ import SearchBar from '../subComponents/SearchBar.vue'
 import WebsitesBlock from '../subComponents/WebsitesBlock.vue'
 import { ref } from 'vue'
 import WebsiteEditor from '../subComponents/WebsiteEditor.vue'
-// import { useCurrentUserStore } from '../../scripts/stores/piniaStore.ts'
+import { useCurrentUserStore } from '../../scripts/stores/piniaStore.ts'
 
 const searchBarEngineText = ref<string>('')
 const searchBarWebsiteText = ref<string>('')
@@ -13,7 +13,7 @@ const isShowSearchWebsiteSettings = ref<boolean>(false)
 const isEditingModeActive = ref<boolean>(false)
 const isAddingModeActive = ref<boolean>(false)
 
-// const currentUserStore = useCurrentUserStore()
+const currentUserStore = useCurrentUserStore()
 
 function changeEditMode() {
   isEditingModeActive.value = !isEditingModeActive.value
@@ -69,7 +69,7 @@ function showAddingModeDialog() {
             </div>
 
             <!-- 2. Поиск сохранённых сайтов -->
-            <div class="d-flex align-center ga-3">
+            <div class="d-flex align-center ga-3" v-if="currentUserStore.currentUser != undefined">
               <div class="flex-grow-1">
                 <SearchBar
                   v-model="searchBarWebsiteText"
