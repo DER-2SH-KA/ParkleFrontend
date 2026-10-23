@@ -34,8 +34,11 @@ const loading = ref<boolean>(false)
 const title = ref<string>('')
 const description = ref<string>('')
 const url = ref<string>('')
-const hex = ref<string>('#')
+const hex = ref<string>('#fff')
 const tags = ref<Set<WebsiteTagResponseDto>>(new Set())
+
+const titleCounter = 40
+const descriptionCounter = 255
 
 const colorPickerModel = ref<string>()
 
@@ -194,118 +197,161 @@ watch(model, (newX) => {
 </script>
 
 <template>
-  <v-dialog v-model="model">
-    <v-form v-model="isFormValid" validate-on="input" @submit.prevent="saveWebsiteFromAddDialog">
-      <v-container>
-        <v-row>
-          <v-col>
-            <!-- Dialog title -->
-            <p><strong>Сайт</strong></p>
-          </v-col>
+  <v-dialog v-model="model" max-width="480">
+    <v-card color="surface" rounded="lg" class="pa-6 border">
+      <v-form
+        v-model="isFormValid"
+        validate-on="input"
+        class="d-flex flex-column ga-4"
+        @submit.prevent="saveWebsiteFromAddDialog"
+      >
+        <!-- Заголовок -->
+        <h2 class="my-0 py-0 text-h6 font-weight-bold text-center text-high-emphasis mb-2">Сайт</h2>
 
-          <v-col>
-            <!-- Website title -->
-            <VTextField
-              v-model="title"
-              :rules="websiteRules.title"
-              label="Название"
-              placeholder="Название..."
-              append-inner-icon="$text"
-            />
-          </v-col>
+        <!-- Название -->
+        <v-text-field
+          v-model="title"
+          label="Название"
+          :rules="websiteRules.title"
+          :counter="titleCounter"
+          placeholder="Его вы будете видеть часто"
+          append-inner-icon="$text"
+          variant="solo"
+          rounded="lg"
+          hide-details="auto"
+        />
 
-          <v-col>
-            <!-- Description -->
-            <VTextField
-              v-model="description"
-              :rules="websiteRules.description"
-              label="Описание"
-              placeholder="Описание..."
-              append-inner-icon="$text_long"
-            />
-          </v-col>
+        <!-- Описание -->
+        <v-textarea
+          v-model="description"
+          label="Описание"
+          :rules="websiteRules.description"
+          :counter="descriptionCounter"
+          placeholder="Опишите сайт поподробнее, чтобы было проще его узнать или найти"
+          rows="2"
+          append-inner-icon="$textLong"
+          variant="solo"
+          rounded="lg"
+          hide-details="auto"
+          no-resize
+        />
 
-          <v-col>
-            <!-- URL -->
-            <v-container>
-              <v-row>
-                <v-col>
-                  <VTextField
-                    v-model="url"
-                    :rules="websiteRules.url"
-                    label="URL"
-                    placeholder="URL..."
-                    append-inner-icon="$web"
-                  />
-                </v-col>
-                <v-col>
-                  <v-btn>
-                    <v-icon icon="$magnify" @click="getWebsiteTitleAndDescriptionByUrl()" />
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-col>
+        <!-- URL -->
+        <v-text-field
+          v-model="url"
+          label="Ссылка"
+          :rules="websiteRules.url"
+          placeholder="Ссылка на сайт"
+          append-inner-icon="$web"
+          variant="solo"
+          rounded="lg"
+          hide-details="auto"
+        />
 
-          <v-col>
-            <!-- HEX first letter color -->
-            <VTextField
-              v-model="hex"
-              :rules="websiteRules.hex"
-              label="HEX (цвет)"
-              placeholder="Цвет первой буквы (пример: #000)..."
-              append-inner-icon="$brush"
-              @click:append-inner="showColorPickerDialog()"
-            />
-          </v-col>
+        <!-- Превью и выбор цвета (открывает палитру по клику) -->
+        <div class="d-flex flex-column ga-2">
+          <span class="text-body-2 text-medium-emphasis font-weight-medium">
+            Цвет первой буквы (поле ниже):
+          </span>
+          <div
+            class="color-preview-box rounded-lg border d-flex align-center justify-center"
+            :style="hex ? { backgroundColor: hex } : undefined"
+            role="button"
+            tabindex="0"
+            @click="showColorPickerDialog"
+            @keydown.enter="showColorPickerDialog"
+          >
+            <span v-if="!hex" class="text-caption text-medium-emphasis">
+              Нажмите для выбора цвета
+            </span>
+          </div>
+        </div>
 
-          <v-col>
-            <p>Цвет (поле ниже):</p>
-            <div>* Цвет *</div>
-          </v-col>
+        <!-- Теги -->
+        <div class="d-flex flex-row ga-2">
+          <span class="text-body-2 text-medium-emphasis font-weight-medium">Теги:</span>
+          <div class="d-flex flex-wrap align-center ga-2">
+            <WebsiteTagComponent v-for="item in tags" :key="item.id" :website-tag="item" />
+            <v-btn
+              size="small"
+              variant="tonal"
+              color="surface-variant"
+              rounded="md"
+              class="text-high-emphasis"
+            >
+              +
+            </v-btn>
+          </div>
+        </div>
 
-          <v-col>
-            <v-row>
-              <v-col>
-                <p>Теги:</p>
-              </v-col>
+        <!-- Кнопки действий -->
+        <div class="d-flex flex-column ga-3 pt-2">
+          <v-btn
+            type="submit"
+            color="primary"
+            rounded="lg"
+            block
+            height="46"
+            flat
+            :loading="loading"
+            :disabled="!isFormValid"
+            class="font-weight-bold"
+          >
+            СОХРАНИТЬ
+          </v-btn>
 
-              <v-col>
-                <WebsiteTagComponent v-for="item in tags" :key="item.id" :website-tag="item" />
+          <v-btn
+            variant="tonal"
+            rounded="lg"
+            block
+            height="46"
+            class="font-weight-bold"
+            @click="cancel"
+          >
+            ОТМЕНА
+          </v-btn>
+        </div>
+      </v-form>
+    </v-card>
 
-                <v-btn>+</v-btn>
-              </v-col>
-            </v-row>
-          </v-col>
-
-          <v-col>
-            <VBtn :loading="loading" :disabled="!isFormValid" text="Сохранить" />
-          </v-col>
-
-          <v-col>
-            <VBtn @click="cancel" text="Отмена" />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
-
-    <v-dialog v-model="colorPickerDialogModel">
-      <v-container>
-        <v-row>
-          <v-col>
-            <!-- Color Picker -->
-            <v-color-picker v-model="colorPickerModel" mode="hex" />
-          </v-col>
-
-          <v-col>
-            <v-btn text="Выбрать" @click="setColorPickerModelValueToHEX()" />
-          </v-col>
-
-          <v-col>
-            <v-btn text="Закрыть" @click="colorPickerDialogModel = false" />
-          </v-col>
-        </v-row>
-      </v-container>
+    <!-- Диалог выбора цвета -->
+    <v-dialog v-model="colorPickerDialogModel" max-width="320" class="blurred-dialog">
+      <v-card color="surface" rounded="xl" class="pa-4 border">
+        <v-color-picker v-model="colorPickerModel" mode="hex" hide-inputs class="mx-auto" />
+        <div class="d-flex ga-2 mt-4">
+          <v-btn
+            color="primary"
+            rounded="lg"
+            flat
+            class="flex-grow-1 font-weight-bold"
+            @click="setColorPickerModelValueToHEX"
+          >
+            Выбрать
+          </v-btn>
+          <v-btn
+            variant="tonal"
+            rounded="lg"
+            class="flex-grow-1 font-weight-bold"
+            @click="colorPickerDialogModel = false"
+          >
+            Закрыть
+          </v-btn>
+        </div>
+      </v-card>
     </v-dialog>
   </v-dialog>
 </template>
+
+<style scoped>
+/* Область предпросмотра цвета */
+.color-preview-box {
+  width: 100%;
+  height: 42px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.color-preview-box:hover {
+  opacity: 0.85;
+}
+</style>
