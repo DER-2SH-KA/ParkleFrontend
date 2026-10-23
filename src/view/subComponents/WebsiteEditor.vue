@@ -17,7 +17,7 @@ import {
   isWebsiteDataResponseDto,
   isWebsiteResponseDto,
 } from '@/scripts/typeGuards'
-import WebsiteTagComponent from './WebsiteTagComponent.vue'
+import WebsiteTagItem from '@/view/subComponents/WebsiteTagItem.vue'
 import ColorPickerComponent from './ColorPickerComponent.vue'
 
 const model = defineModel<boolean>()
@@ -259,19 +259,11 @@ watch(model, (newX) => {
         </div>
 
         <!-- Теги -->
-        <div class="d-flex flex-row ga-2">
+        <div class="d-flex flex-column justify-center align-start ga-2">
           <span class="text-body-2 text-medium-emphasis font-weight-medium">Теги:</span>
           <div class="d-flex flex-wrap align-center ga-2">
-            <WebsiteTagComponent v-for="item in tags" :key="item.id" :website-tag="item" />
-            <v-btn
-              size="small"
-              variant="tonal"
-              color="surface-variant"
-              rounded="md"
-              class="text-high-emphasis"
-            >
-              +
-            </v-btn>
+            <WebsiteTagItem v-for="item in tags" :key="item.id" :website-tag="item" />
+            <v-btn variant="tonal" color="surface-variant" rounded="lg"> + </v-btn>
           </div>
         </div>
 

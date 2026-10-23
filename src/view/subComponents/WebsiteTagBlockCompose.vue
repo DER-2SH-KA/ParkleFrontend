@@ -17,7 +17,7 @@ import {
   isWebsiteDataResponseDto,
   isWebsiteResponseDto,
 } from '@/scripts/typeGuards'
-import WebsiteTagComponent from './WebsiteTagComponent.vue'
+import WebsiteTagComponent from './WebsiteTagItem.vue/index.js'
 
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
