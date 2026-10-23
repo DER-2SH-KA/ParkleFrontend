@@ -19,10 +19,13 @@ import {
 } from '@/scripts/typeGuards'
 import WebsiteTagItem from '@/view/subComponents/WebsiteTagItem.vue'
 import ColorPickerComponent from './ColorPickerComponent.vue'
+import SearchWebsiteTagComponent from './SearchWebsiteTagComponent.vue'
 
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
 const colorPickerModel = ref<string>()
+
+const findWebsiteTagDialogModel = ref<boolean>()
 
 const props = defineProps<{
   website: WebsiteResponseDto | undefined
@@ -37,7 +40,7 @@ const title = ref<string>('')
 const description = ref<string>('')
 const url = ref<string>('')
 const hex = ref<string>('#fff')
-const tags = ref<Set<WebsiteTagResponseDto>>(new Set())
+const tags = ref<WebsiteTagResponseDto[]>([])
 
 const titleCounter = 40
 const descriptionCounter = 255
@@ -138,6 +141,7 @@ function clearFields() {
   description.value = ''
   url.value = ''
   hex.value = ''
+  tags.value = []
 }
 
 function fillFields() {
@@ -263,7 +267,14 @@ watch(model, (newX) => {
           <span class="text-body-2 text-medium-emphasis font-weight-medium">Теги:</span>
           <div class="d-flex flex-wrap align-center ga-2">
             <WebsiteTagItem v-for="item in tags" :key="item.id" :website-tag="item" />
-            <v-btn variant="tonal" color="surface-variant" rounded="lg"> + </v-btn>
+            <v-btn
+              variant="tonal"
+              color="surface-variant"
+              rounded="lg"
+              @click="findWebsiteTagDialogModel = !findWebsiteTagDialogModel"
+            >
+              +
+            </v-btn>
           </div>
         </div>
 
@@ -289,6 +300,14 @@ watch(model, (newX) => {
       v-model:hex-website-model="hex"
       v-model:color-picker-model="colorPickerModel"
     />
+  </v-dialog>
+
+  <v-dialog v-model="findWebsiteTagDialogModel">
+    <v-card color="surface" rounded="lg" class="pa-0 border">
+      <SearchWebsiteTagComponent
+        @add-tag-to-website="(tag: WebsiteTagResponseDto) => tags.push(tag)"
+      />
+    </v-card>
   </v-dialog>
 </template>
 

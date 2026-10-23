@@ -49,7 +49,7 @@ export interface WebsiteResponseDto extends IEntity {
   description?: string | undefined
   url: string
   hexColor: string
-  tags: Set<WebsiteTagResponseDto>
+  tags: WebsiteTagResponseDto[]
 }
 
 export interface WebsiteCreateDto {
@@ -58,7 +58,7 @@ export interface WebsiteCreateDto {
   description?: string | undefined
   url: string
   hexColor: string
-  tags: Set<WebsiteTagResponseDto>
+  tags: WebsiteTagResponseDto[]
 }
 
 export interface WebsiteUpdateDto extends IEntity {
@@ -67,7 +67,7 @@ export interface WebsiteUpdateDto extends IEntity {
   description?: string | undefined
   hexColor: string
   url: string
-  tags: Set<WebsiteTagResponseDto>
+  tags: WebsiteTagResponseDto[]
 }
 
 // Website Tag.
