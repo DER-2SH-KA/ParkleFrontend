@@ -1,17 +1,22 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import type { WebsiteTagResponseDto } from '@/scripts/declaration.ts'
 import WebsiteTagItem from './WebsiteTagItem.vue'
 import { getUsersWebsiteTags } from '@/scripts/api/websiteTagApi.ts'
+import { sortWebsiteTagsByName } from '@/scripts/utils.ts'
 
+const websiteTagsModel = defineModel<WebsiteTagResponseDto[]>({ default: () => [] })
 const emits = defineEmits(['add-tag-to-website'])
 
 const allTags = ref<WebsiteTagResponseDto[]>([])
-const tagsToShow = allTags
+
+const tagsToShow = computed(() => {
+  const selectedTagIds = new Set(websiteTagsModel.value.map((t) => t.id))
+  return sortWebsiteTagsByName(allTags.value.filter((tag) => !selectedTagIds.has(tag.id)))
+})
 
 function onTagClick(tag: WebsiteTagResponseDto) {
   emits('add-tag-to-website', tag)
-  tagsToShow.value = tagsToShow.value.filter((x) => x.id != tag.id)
 }
 
 onMounted(async () => {

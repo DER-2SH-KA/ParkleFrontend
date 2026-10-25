@@ -20,6 +20,7 @@ import {
 import WebsiteTagItem from '@/view/subComponents/WebsiteTagItem.vue'
 import ColorPickerComponent from './ColorPickerComponent.vue'
 import SearchWebsiteTagComponent from './SearchWebsiteTagComponent.vue'
+import { sortWebsiteTagsByName } from '@/scripts/utils.ts'
 
 const model = defineModel<boolean>()
 const colorPickerDialogModel = ref<boolean>(false)
@@ -150,7 +151,7 @@ function fillFields() {
     description.value = props.website.description?.toString() ?? ''
     url.value = props.website.url.toString()
     hex.value = props.website.hexColor.toString()
-    tags.value = props.website.tags
+    tags.value = sortWebsiteTagsByName(props.website.tags)
   } else {
     clearFields()
   }
@@ -305,6 +306,7 @@ watch(model, (newX) => {
   <v-dialog v-model="findWebsiteTagDialogModel">
     <v-card color="surface" rounded="lg" class="pa-0 border">
       <SearchWebsiteTagComponent
+        v-model="tags"
         @add-tag-to-website="(tag: WebsiteTagResponseDto) => tags.push(tag)"
       />
     </v-card>

@@ -1,4 +1,4 @@
-import type { WebsiteResponseDto } from './declaration'
+import type { WebsiteResponseDto, WebsiteTagResponseDto } from './declaration'
 
 export function chooseRandomStringItemFromList(list: string[]): string {
   const randomIndex = Math.floor((Math.random() * 100) % list.length)
@@ -9,10 +9,20 @@ export function chooseRandomStringItemFromList(list: string[]): string {
 
 export function sortWebsiteByName(websites: WebsiteResponseDto[]): WebsiteResponseDto[] {
   if (websites == undefined) {
-    console.info('list is null')
+    console.info('websites list is null')
 
-    return websites
+    return []
   }
 
   return websites.sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
+}
+
+export function sortWebsiteTagsByName(tags: WebsiteTagResponseDto[]): WebsiteTagResponseDto[] {
+  if (tags == undefined) {
+    console.info('tags list is null')
+
+    return []
+  }
+
+  return tags.sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
 }
