@@ -43,7 +43,7 @@ function showAddingModeDialog() {
     <!-- 2. Центральный блок: фраза + инпуты + кнопки (высота по контенту, не сжимается) -->
     <v-container class="d-flex flex-column pa-0 px-4 flex-shrink-0" fluid>
       <v-row justify="center">
-        <v-col cols="12" sm="10" md="7" lg="4">
+        <v-col cols="12" sm="10" md="8" lg="6">
           <!-- Приветственная фраза -->
           <WelcomePhraseComponent class="my-3" />
 
