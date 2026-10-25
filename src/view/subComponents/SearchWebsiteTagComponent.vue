@@ -44,6 +44,7 @@ onMounted(async () => {
             v-for="websiteTag in tagsToShow"
             :key="websiteTag.id"
             :website-tag="websiteTag"
+            :show-close-button="false"
             @click="onTagClick(websiteTag)"
           />
         </v-sheet>

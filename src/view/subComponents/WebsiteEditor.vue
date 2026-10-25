@@ -187,6 +187,10 @@ function getWebsiteTitleAndDescriptionByUrl() {
   }
 }
 
+function removeTag(tag: WebsiteTagResponseDto) {
+  tags.value = tags.value.filter((x) => x.id != tag.id)
+}
+
 watch(model, (newX) => {
   fillFields()
 })
@@ -267,7 +271,13 @@ watch(model, (newX) => {
         <div class="d-flex flex-column justify-center align-start ga-2">
           <span class="text-body-2 text-medium-emphasis font-weight-medium">Теги:</span>
           <div class="d-flex flex-wrap align-center ga-2">
-            <WebsiteTagItem v-for="item in tags" :key="item.id" :website-tag="item" />
+            <WebsiteTagItem
+              v-for="item in tags"
+              :key="item.id"
+              :website-tag="item"
+              :show-close-button="true"
+              @remove-tag="(tag) => removeTag(tag)"
+            />
             <v-btn
               variant="tonal"
               color="surface-variant"
