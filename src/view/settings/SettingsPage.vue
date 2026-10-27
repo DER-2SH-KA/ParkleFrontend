@@ -1,26 +1,14 @@
 <script setup lang="ts">
 import SettingsPageList from '@/view/settings/SettingsPageList.vue'
-import HeaderComponent from '../header/HeaderComponent.vue'
-import FooterComponent from '../footer/FooterComponent.vue'
 </script>
 
 <template>
-  <v-app-bar>
-    <HeaderComponent />
-  </v-app-bar>
-
-  <v-main>
-    <v-container>
-      <v-row>
-        <!-- Settings List -->
-        <v-col>
-          <SettingsPageList />
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-main>
-
-  <v-footer>
-    <FooterComponent />
-  </v-footer>
+  <v-container class="d-flex flex-column flex-1-0-0 h-100" fluid>
+    <v-row justify="center" align="start">
+      <!-- Settings List -->
+      <v-col cols="12" md="6" xl="4">
+        <SettingsPageList />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>

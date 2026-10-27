@@ -317,7 +317,8 @@ watch(model, (newX) => {
     <v-card color="surface" rounded="lg" class="pa-0 border">
       <SearchWebsiteTagComponent
         v-model="tags"
-        @add-tag-to-website="(tag: WebsiteTagResponseDto) => tags.push(tag)"
+        :show-close-button="false"
+        @click-on-tag="(tag: WebsiteTagResponseDto) => tags.push(tag)"
       />
     </v-card>
   </v-dialog>

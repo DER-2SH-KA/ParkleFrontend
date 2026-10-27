@@ -74,3 +74,17 @@ export function isWebsiteDataResponseDto(obj: unknown): obj is WebsiteDataRespon
 
   return result
 }
+
+export function isWebsiteTagResponseDto(obj: unknown): obj is WebsiteResponseDto {
+  const result =
+    !!obj &&
+    typeof obj === 'object' &&
+    'id' in obj &&
+    'title' in obj &&
+    'hex' in obj &&
+    typeof obj.id === 'string' &&
+    typeof obj.title === 'string' &&
+    typeof obj.hex === 'string'
+
+  return result
+}

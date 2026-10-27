@@ -115,3 +115,40 @@ export const websiteRules = {
     },
   ],
 }
+
+export const websiteTagRules = {
+  title: [
+    (v: string) => {
+      if (!!v.trim()) {
+        return true
+      }
+
+      return 'Название не может быть пустым!'
+    },
+    (v: string) => {
+      if (v.trim().length <= 50) {
+        return true
+      }
+
+      return 'Название не должно быть длиннее 50 символов!'
+    },
+  ],
+  hex: [
+    (v: string) => {
+      if (!!v.trim()) {
+        return true
+      }
+
+      return 'HEX обязателен!'
+    },
+    (v: string) => {
+      const regexpUrl: RegExp = new RegExp('^#([a-zA-Z0-9]{3}|[a-zA-Z0-9]{6})$')
+
+      if (regexpUrl.test(v.trim())) {
+        return true
+      }
+
+      return "HEX должен быть формата '#fff' или '#ffffff'"
+    },
+  ],
+}
